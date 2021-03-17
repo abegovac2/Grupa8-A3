@@ -2,14 +2,6 @@
 # Grupa8 - A3
 ## TEMA: Aplikacija za postavljanje pitanja i odgovora 
 
-#### moguca imena:
-* "Pometej" simbol (vatrica)
-* "Sourice" simbol (izvor vode ili nesto tako)
-* "Eexchange"
-* Nešto na fazon "Genie"
-* ProgressTogether? <3<3
-* CodeConnector
-
 ## Članovi tima:
 
 * [Admir Ihtijarević](https://github.com/Admir-Walker)
