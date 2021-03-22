@@ -2,6 +2,8 @@
 # Grupa8 - A3
 ## TEMA: Aplikacija za postavljanje pitanja i odgovora 
 
+![alt text](https://i.ibb.co/GPFFXqH/unknown.png)
+
 ## Članovi tima:
 
 * [Admir Ihtijarević](https://github.com/Admir-Walker)
