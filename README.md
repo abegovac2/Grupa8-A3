@@ -40,40 +40,40 @@ Funkcionalni zahtjevi su usko vezani za aktere sistema, tako da smo u skladu sa 
 
 ### Gost:
 
-* Mogućnost pretrage pitanja u sistemu, po tekstu pitanja ili po tagovima 
-*	Mogućnost pregleda pitanja po popularnosti
-*	Mogućnost pravljenja korisničkog računa
+*	Pretraga pitanja u sistemu, po tekstu pitanja ili po tagovima 
+*	Pregled pitanja po popularnosti
+*	Pravljenje korisničkog računa
 
 ### Korisnik:
 
 *	Nasljeđuje funkcionalne zahtjeve neregistrovanih korisnika
-*	Mogućnost postavljanja pitanja i izvršenje klasifikacije pitanja određivanjem tagova
-*	Mogućnost postavljanja odgovara na pitanja
-*	Mogućnost prepravke pitanja i odgovora
-*	Mogućnost pretrage sopstvenih neodgovorenih pitanja
-*	Mogućnost brisanja pitanja i odgovora
-*	Mogućnost uređivanja vlastitog profila
-*	Mogućnost kreiranja chat grupa sa 1 ili više korisnika
+*	Postavljanje pitanja i izvršenje klasifikacije pitanja određivanjem tagova
+*	Postavljanje odgovara na pitanja
+*	Prepravka pitanja i odgovora
+*	Pretraga sopstvenih neodgovorenih pitanja
+*	Brisanje pitanja i odgovora
+*	Uređivanje vlastitog profila
+*	Kreiranje chat grupa sa 1 ili više korisnika
 
 
 ### Administrator:
 
 *	Nasljeđuje funkcionalne zahtjeve registrovanih korisnika
-*	Mogućnost promjene tagova na pitanju ukoliko nisu dovoljno desktriptivni
-*	Mogućnost brisanja pitanja ukoliko nisu u skladu sa pravilima platforme
-*	Mogućnost označavanja pitanja kao duplikat
-*	Mogućnost onačavanja odgovora kao prihvaćenog
-*	Mogućnost brisanja korisnika sa platforme
+*	Promjena tagova na pitanju ukoliko nisu dovoljno desktriptivni
+*	Brisanje pitanja ukoliko nisu u skladu sa pravilima platforme
+*	Označavanje pitanja kao duplikat
+*	Označavanje odgovora kao prihvaćenog
+*	Brisanje korisnika sa platforme
 
 ### Sistem za preporuke:
-* Mogućnost preporuke pitanja (kod registrovanih korisnika) na osnovu historije pretrage
-* Mogućnost preporuke tagova prilikom unosa taga
-* Mogućnost izdvajanja popularnih pitanja
+* 	Generisanje preporuke pitanja (kod registrovanih korisnika) na osnovu historije pretrage
+*	Generisanje preporuke tagova prilikom unosa taga
+* 	Izdvajanje popularnih pitanja
 
 ### Sistem za obavještavanje
-* Mogućnosti obavještavanja korisnika u slučaju modifikacije korisničkog računa
-* Mogućnosti obavještavanja korisnika u slučaju aktivnosti na pitanjima
-* Mogućnosti obavještavanja svih korisnika u grupama za razgovore
+* 	Obavještavanje korisnika u slučaju modifikacije korisničkog računa
+*	Obavještavanje korisnika u slučaju aktivnosti na pitanjima
+*	Slanje obavjesti svim korisnicima u grupnim razgovorima
 
 
 ## Nefunkcionalni zahtjevi
