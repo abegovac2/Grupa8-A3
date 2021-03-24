@@ -29,14 +29,12 @@ Uz sve navedeno, registrovani korisnici će moći komunicirati međusobno sa dru
   * Neregistrovani korisnici – gosti
 * Administratori
 * Sistem za preporuke
-  *	Sistem za preporuku pitanja
-  *	Sistem za preporuku tagova
 * Sistem za obavještavanje
 
 
 ## Funkcionalnosti:
 
-Funkcionalni zahtjevi su usko vezani za aktere sistema, tako da smo u skladu sa time, napravili i podjelu ovih zahtjeva, koje ćemo navesti u nastavku.
+Funkcionalni zahtjevi su usko vezani za aktere sistema, tako da su u skladu sa time, napravljene i podjele ovih zahtjeva, navedene u nastavku.
 
 ### Gost:
 
@@ -66,19 +64,19 @@ Funkcionalni zahtjevi su usko vezani za aktere sistema, tako da smo u skladu sa 
 *	Brisanje korisnika sa platforme
 
 ### Sistem za preporuke:
-* 	Generisanje preporuke pitanja (kod registrovanih korisnika) na osnovu historije pretrage
+* Generisanje preporuke pitanja (kod registrovanih korisnika) na osnovu historije pretrage
 *	Generisanje preporuke tagova prilikom unosa taga
-* 	Izdvajanje popularnih pitanja
+* Izdvajanje popularnih pitanja
 
 ### Sistem za obavještavanje
-* 	Obavještavanje korisnika u slučaju modifikacije korisničkog računa
+* Obavještavanje korisnika u slučaju modifikacije korisničkog računa
 *	Obavještavanje korisnika u slučaju aktivnosti na pitanjima
 *	Slanje obavjesti svim korisnicima u grupnim razgovorima
 
 
 ## Nefunkcionalni zahtjevi
 
-Nefunkcionalni zahtjevi su osobine sistema koje sistem nudi kao platforma svim korisnicima, te zbog toga nećemo vršiti podjelu ovih zahtjeva kao u odjeljku ispred, nego ćemo izvršiti njihovo navođenje u nastavku.
+Nefunkcionalni zahtjevi su osobine sistema koje sistem nudi kao platforma svim korisnicima, te se zbog toga neće vršiti podjela ovih zahtjeva kao u odjeljku ispred, nego će se izvršiti njihovo navođenje u nastavku.
 * Poruke u chat grupama će se prenositi u realnom vremenu (u roku od 1 s)
 * Sistem će obavještavati korisnika, u roku od 2 s, za različite aktivnosti (npr. aktivnost na profilu, aktivnost na pitanju, aktivnost u chat grupama)
 * Svakim refreshom na pitanje se vrši update, u roku od 1 s, liste sa odgovorima i rejting
