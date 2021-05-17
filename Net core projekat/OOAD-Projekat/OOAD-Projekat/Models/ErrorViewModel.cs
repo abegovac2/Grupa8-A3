@@ -1,5 +1,3 @@
-using System;
-
 namespace OOAD_Projekat.Models
 {
     public class ErrorViewModel
