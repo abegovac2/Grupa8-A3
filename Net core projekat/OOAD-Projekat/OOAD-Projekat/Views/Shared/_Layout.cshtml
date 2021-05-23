@@ -7,14 +7,14 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - OOAD_Projekat</title>
+    <title>@ViewData["Title"]</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/template.css" />
     <link rel="stylesheet" href="~/font-awesome-4.7.0/css/font-awesome.min.css" />
 </head>
 <body>
     <nav class="navbar navbar-expand-lg navbar-light bg-light nav-fill fixed-top">
-        <a class="navbar-brand mr-auto" asp-controller="Home" asp-action="Index">Bitstack</a>
+        <a class="navbar-brand mr-auto" asp-controller="Question" asp-action="Index">Bitstack</a>
         <button class="navbar-toggler"
                 type="button"
                 data-toggle="collapse"
@@ -27,9 +27,6 @@
 
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
-                <li class="nav-item d-lg-none">
-                    <a class="nav-link" asp-controller="Home" asp-action="Index">Home <span class="sr-only">(current)</span></a>
-                </li>
                 <li class="nav-item d-lg-none">
                     <a class="nav-link" asp-controller="Question" asp-action="Index">Questions</a>
                 </li>
@@ -59,7 +56,7 @@
                             <a class="dropdown-item" asp-controller="Question" asp-action="Index">My Questions</a>
                             <div class="dropdown-divider"></div>
                             <a class="dropdown-item">
-                                <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+                                <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Question", new { area = "" })">
                                     <button type="submit" class="nav-link btn btn-link text-dark">Logout</button>
                                 </form>
                             </a>
@@ -108,7 +105,7 @@
                             <a class="dropdown-item" asp-controller="Question" asp-action="MyQuestions">My Questions</a>
                             <div class="dropdown-divider"></div>
                             <a class="dropdown-item">
-                                <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+                                <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Question", new { area = "" })">
                                     <button type="submit" class="nav-link btn btn-link text-dark">Logout</button>
                                 </form>
                             </a>
@@ -129,9 +126,6 @@
         {
             <div class="sidebar d-none d-lg-block ml-0 pl-0 bg-light pt-3 pl-3">
                 <ul class="list-unstyled components">
-                    <li class="mb-3">
-                        <a asp-controller="Home" asp-action="Index">Home<span class="sr-only">(current)</span></a>
-                    </li>
                     <li class="mb-3">
                         <a asp-controller="Question" asp-action="Index">Questions</a>
                     </li>

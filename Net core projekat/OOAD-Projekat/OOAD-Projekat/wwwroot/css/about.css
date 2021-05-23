@@ -51,9 +51,10 @@
   justify-content: space-between;
 }
 .my-card-front > img {
-  width: 150px;
-  height: 150px;
+  width: 140px;
+  height: 140px;
   border-radius: 50%;
+  object-fit: cover;
 }
 
 .my-card-inner {
@@ -110,6 +111,49 @@
   margin: 20px;
   text-align: center;
 }
+
+
+/* Animations */
+.text-focus-in {
+    -webkit-animation: text-focus-in 1s cubic-bezier(0.550, 0.085, 0.680, 0.530) both;
+    animation: text-focus-in 1s cubic-bezier(0.550, 0.085, 0.680, 0.530) both;
+}
+.medium-animation-duration {
+    -webkit-animation-duration: 1.5s;
+    animation-duration: 1.5s;
+}
+.long-animation-duration {
+    -webkit-animation-duration: 2s;
+    animation-duration: 2s;
+}
+@-webkit-keyframes text-focus-in {
+    0% {
+        -webkit-filter: blur(12px);
+        filter: blur(12px);
+        opacity: 0;
+    }
+
+    100% {
+        -webkit-filter: blur(0px);
+        filter: blur(0px);
+        opacity: 1;
+    }
+}
+
+@keyframes text-focus-in {
+    0% {
+        -webkit-filter: blur(12px);
+        filter: blur(12px);
+        opacity: 0;
+    }
+
+    100% {
+        -webkit-filter: blur(0px);
+        filter: blur(0px);
+        opacity: 1;
+    }
+}
+
 
 @media screen and (max-width: 680px) {
   .about-us-site-data {

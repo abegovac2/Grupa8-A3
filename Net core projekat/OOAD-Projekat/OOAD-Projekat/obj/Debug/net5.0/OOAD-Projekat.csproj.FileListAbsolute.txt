@@ -424,8 +424,6 @@ C:\Users\admir\Documents\GitHub\Grupa8-A3\Net core projekat\OOAD-Projekat\OOAD-P
 C:\Users\admir\Documents\GitHub\Grupa8-A3\Net core projekat\OOAD-Projekat\OOAD-Projekat\obj\Debug\net5.0\Razor\Areas\Identity\Pages\_ValidationScriptsPartial.cshtml.g.cs
 C:\Users\admir\Documents\GitHub\Grupa8-A3\Net core projekat\OOAD-Projekat\OOAD-Projekat\obj\Debug\net5.0\Razor\Areas\Identity\Pages\_ViewImports.cshtml.g.cs
 C:\Users\admir\Documents\GitHub\Grupa8-A3\Net core projekat\OOAD-Projekat\OOAD-Projekat\obj\Debug\net5.0\Razor\Areas\Identity\Pages\_ViewStart.cshtml.g.cs
-C:\Users\admir\Documents\GitHub\Grupa8-A3\Net core projekat\OOAD-Projekat\OOAD-Projekat\obj\Debug\net5.0\Razor\Views\Home\Index.cshtml.g.cs
-C:\Users\admir\Documents\GitHub\Grupa8-A3\Net core projekat\OOAD-Projekat\OOAD-Projekat\obj\Debug\net5.0\Razor\Views\Home\Privacy.cshtml.g.cs
 C:\Users\admir\Documents\GitHub\Grupa8-A3\Net core projekat\OOAD-Projekat\OOAD-Projekat\obj\Debug\net5.0\Razor\Views\Shared\Error.cshtml.g.cs
 C:\Users\admir\Documents\GitHub\Grupa8-A3\Net core projekat\OOAD-Projekat\OOAD-Projekat\obj\Debug\net5.0\Razor\Views\Shared\_Layout.cshtml.g.cs
 C:\Users\admir\Documents\GitHub\Grupa8-A3\Net core projekat\OOAD-Projekat\OOAD-Projekat\obj\Debug\net5.0\Razor\Views\Shared\_LoginPartial.cshtml.g.cs
