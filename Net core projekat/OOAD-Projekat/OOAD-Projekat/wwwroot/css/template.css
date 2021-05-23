@@ -1,0 +1,45 @@
+.container {
+    padding-top: 100px;
+}
+.wrapper {
+  display: flex;
+  width: 100%;
+  align-items: stretch;
+}
+
+.sidebar {
+  min-width: 20%;
+  max-width: 20%;
+  height: 100%;
+  position: fixed;
+  top: 50px;
+  left: 0;
+  bottom: 0;
+}
+.content {
+  display: flex;
+  width: 80%;
+  padding-top: 50px;
+  padding-left: 20%;
+  overflow-y: auto;
+  overflow-x: hidden;
+  margin: auto;
+}
+/* Fixes dropdown menus placed on the right side */
+.ml-auto .dropdown-menu {
+  left: auto !important;
+  right: 0px;
+}
+
+/* Media queries */
+
+@media screen and (max-width: 991px) {
+  /* Fixa na mobilnim uredjajima width za search */
+  .my-class-w-100 {
+    width: 100% !important;
+  }
+  .content {
+    width: 100%;
+    padding-left: 0%;
+  }
+}

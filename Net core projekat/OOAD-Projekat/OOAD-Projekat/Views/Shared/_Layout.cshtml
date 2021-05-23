@@ -1,46 +1,162 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNetCore.Identity
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - OOAD_Projekat</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/css/site.css" />
+    <link rel="stylesheet" href="~/css/template.css" />
+    <link rel="stylesheet" href="~/font-awesome-4.7.0/css/font-awesome.min.css" />
 </head>
 <body>
-    <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">OOAD_Projekat</a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
-                    </ul>
-                    <partial name="_LoginPartial" />
+    <nav class="navbar navbar-expand-lg navbar-light bg-light nav-fill fixed-top">
+        <a class="navbar-brand mr-auto" asp-controller="Home" asp-action="Index">Bitstack</a>
+        <button class="navbar-toggler"
+                type="button"
+                data-toggle="collapse"
+                data-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent"
+                aria-expanded="false"
+                aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item d-lg-none">
+                    <a class="nav-link" asp-controller="Home" asp-action="Index">Home <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item d-lg-none">
+                    <a class="nav-link" asp-controller="Question" asp-action="Index">Questions</a>
+                </li>
+                <li class="nav-item d-lg-none">
+                    <a class="nav-link" asp-controller="Tag" asp-action="Index">Tags</a>
+                </li>
+                <li class="nav-item d-lg-none">
+                    <a class="nav-link" asp-controller="Home" asp-action="About">About</a>
+                </li>
+                <div class="dropdown-divider"></div>
+
+                <div class="nav-item dropdown d-lg-none mb-3 mb-md-0">
+                    <a class="nav-link dropdown-toggle"
+                       href="#"
+                       id="navbarDropdown"
+                       role="button"
+                       data-toggle="dropdown"
+                       aria-haspopup="true"
+                       aria-expanded="false">
+                        Profile
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        @if (SignInManager.IsSignedIn(User))
+                        {
+                            <a class="dropdown-item" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">@User.Identity.Name!</a>
+                            <a class="dropdown-item" href="#">Messages</a>
+                            <a class="dropdown-item" asp-controller="Question" asp-action="Index">My Questions</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item">
+                                <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+                                    <button type="submit" class="nav-link btn btn-link text-dark">Logout</button>
+                                </form>
+                            </a>
+                        }
+                        else
+                        {
+                            <a class="dropdown-item" asp-area="Identity" asp-page="/Account/Register">Register</a>
+                            <a class="dropdown-item" asp-area="Identity" asp-page="/Account/Login">Login</a>
+                        }
+                    </div>
                 </div>
+            </ul>
+            <ul class="navbar-nav ml-auto mr-auto w-50 my-class-w-100">
+                <li class="nav-item">
+                    <form>
+                        <div class="input-group">
+                            <input class="form-control py-3 border-right-0 border"
+                                   type="search"
+                                   placeholder="Search..."
+                                   id="search-input" />
+                            <span class="input-group-prepend">
+                                <div class="input-group-text bg-transparent">
+                                    <i class="fa fa-search"></i>
+                                </div>
+                            </span>
+                        </div>
+                    </form>
+                </li>
+            </ul>
+            <ul class="navbar-nav ml-auto mr-2">
+                <li class="nav-item dropdown d-none d-lg-block ml-0 pl-0">
+                    <a class="nav-link dropdown-toggle"
+                       href="#"
+                       id="navbarDropdown"
+                       role="button"
+                       data-toggle="dropdown"
+                       aria-haspopup="true"
+                       aria-expanded="false">
+                        <i class="fa fa-user" aria-hidden="true"></i>
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        @if (SignInManager.IsSignedIn(User))
+                        {
+                            <a class="dropdown-item" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">@User.Identity.Name!</a>
+                            <a class="dropdown-item" href="#">Messages</a>
+                            <a class="dropdown-item" asp-controller="Question" asp-action="MyQuestions">My Questions</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item">
+                                <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+                                    <button type="submit" class="nav-link btn btn-link text-dark">Logout</button>
+                                </form>
+                            </a>
+                        }
+                        else
+                        {
+                            <a class="dropdown-item" asp-area="Identity" asp-page="/Account/Register">Register</a>
+                            <a class="dropdown-item" asp-area="Identity" asp-page="/Account/Login">Login</a>
+                        }
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="wrapper">
+        @if (!Url.Action().Contains("About") && !Url.Action().Contains("Login") && !Url.Action().Contains("Register"))
+        {
+            <div class="sidebar d-none d-lg-block ml-0 pl-0 bg-light pt-3 pl-3">
+                <ul class="list-unstyled components">
+                    <li class="mb-3">
+                        <a asp-controller="Home" asp-action="Index">Home<span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="mb-3">
+                        <a asp-controller="Question" asp-action="Index">Questions</a>
+                    </li>
+                    <li class="mb-3">
+                        <a asp-controller="Tag" asp-action="Index">Tags</a>
+                    </li>
+                    <li class="mb-3">
+                        <a asp-controller="Home" asp-action="About">About</a>
+                    </li>
+                </ul>
             </div>
-        </nav>
-    </header>
-    <div class="container">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
+        }
+        @{
+            var className = @Url.Action().Contains("Manage") ? "container" : "content";
+            <div class=@className>
+                @RenderBody()
+            </div>
+        }
     </div>
 
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2021 - OOAD_Projekat - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-        </div>
-    </footer>
+    @*    <footer class="border-top footer text-muted">
+            <div class="container">
+                &copy; 2021 - OOAD_Projekat - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            </div>
+        </footer>*@
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>

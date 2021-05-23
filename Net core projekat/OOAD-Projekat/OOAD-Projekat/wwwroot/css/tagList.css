@@ -1,0 +1,41 @@
+.tag-page-content {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding-top: 10px;
+}
+.page-info {
+  padding: 15px;
+}
+.tag-page-content .page-info h1 {
+  margin-bottom: 10px;
+}
+.tag-search {
+  margin: 5px 10px;
+}
+
+.tag-cards {
+  display: flex;
+  flex-wrap: wrap;
+}
+.tag-card {
+  padding: 15px 30px;
+  margin: 10px;
+  border: 1px solid #000;
+  border-radius: 9px;
+  transition: background-color 1s ease-in-out;
+}
+.tag-card:hover {
+  background-color: rgb(214, 212, 212);
+  cursor: pointer;
+}
+.tag-search .input-group {
+  width: 25%;
+  margin-bottom: 25px;
+}
+
+@media screen and (max-width: 576px) {
+  .tag-search .input-group {
+    width: 100%;
+  }
+}
