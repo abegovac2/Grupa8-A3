@@ -1,6 +1,6 @@
 ﻿@using Microsoft.AspNetCore.Identity
-@inject SignInManager<IdentityUser> SignInManager
-@inject UserManager<IdentityUser> UserManager
+@inject SignInManager<User> SignInManager
+@inject UserManager<User> UserManager
 
 <!DOCTYPE html>
 <html lang="en">
@@ -139,7 +139,7 @@
             </div>
         }
         @{
-            var className = @Url.Action().Contains("Manage") ? "container" : "content";
+            var className = @Url.Action().Contains("Manage") || @Url.Action().Contains("RegisterConfirmation") ? "container" : "content";
             <div class=@className>
                 @RenderBody()
             </div>

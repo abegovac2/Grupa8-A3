@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using OOAD_Projekat.Data;
 
 namespace OOAD_Projekat.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210524023905_Dio_Veza_Dodan")]
+    partial class Dio_Veza_Dodan
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -286,14 +288,9 @@ namespace OOAD_Projekat.Data.Migrations
                     b.Property<int>("PostTypeId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("QuestionId")
-                        .HasColumnType("int");
-
                     b.HasKey("id");
 
                     b.HasIndex("AnswerId");
-
-                    b.HasIndex("QuestionId");
 
                     b.ToTable("Rating");
                 });
@@ -504,15 +501,9 @@ namespace OOAD_Projekat.Data.Migrations
 
             modelBuilder.Entity("OOAD_Projekat.Models.Rating", b =>
                 {
-                    b.HasOne("OOAD_Projekat.Models.Answer", "Answer")
+                    b.HasOne("OOAD_Projekat.Models.Answer", null)
                         .WithMany("Ratings")
                         .HasForeignKey("AnswerId");
-
-                    b.HasOne("OOAD_Projekat.Models.Question", null)
-                        .WithMany("Ratings")
-                        .HasForeignKey("QuestionId");
-
-                    b.Navigation("Answer");
                 });
 
             modelBuilder.Entity("OOAD_Projekat.Models.Answer", b =>
@@ -523,8 +514,6 @@ namespace OOAD_Projekat.Data.Migrations
             modelBuilder.Entity("OOAD_Projekat.Models.Question", b =>
                 {
                     b.Navigation("Answers");
-
-                    b.Navigation("Ratings");
 
                     b.Navigation("Tags");
                 });

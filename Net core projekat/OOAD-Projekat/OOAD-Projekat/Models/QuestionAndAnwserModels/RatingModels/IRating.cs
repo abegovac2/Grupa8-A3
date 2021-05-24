@@ -4,7 +4,7 @@ namespace OOAD_Projekat.Models
 {
     public interface IRating
     {
-        public Tuple<int, int> GetRatingForPost(int postId, PostType postType);
+        public Tuple<int, int> GetRatingForPost(int postId, PostTypeId postType);
         public void AddReaction(Reaction reaction);
     }
 }

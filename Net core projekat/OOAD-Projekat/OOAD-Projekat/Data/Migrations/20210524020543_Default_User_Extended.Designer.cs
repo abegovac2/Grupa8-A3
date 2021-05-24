@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using OOAD_Projekat.Data;
 
 namespace OOAD_Projekat.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210524020543_Default_User_Extended")]
+    partial class Default_User_Extended
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -154,168 +156,6 @@ namespace OOAD_Projekat.Data.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("OOAD_Projekat.Models.Answer", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<bool>("AcceptedAsAnwser")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("Content")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("QuestionID")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("TimeStamp")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("QuestionID");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("Answer");
-                });
-
-            modelBuilder.Entity("OOAD_Projekat.Models.Question", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<bool>("Anwsered")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("Content")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("Duplicate")
-                        .HasColumnType("bit");
-
-                    b.Property<DateTime>("TimeStamp")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Title")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("Question");
-                });
-
-            modelBuilder.Entity("OOAD_Projekat.Models.QuestionAndAnwserModels.HotQuestion", b =>
-                {
-                    b.Property<int>("QuestionId")
-                        .HasColumnType("int");
-
-                    b.HasIndex("QuestionId");
-
-                    b.ToTable("HotQuestion");
-                });
-
-            modelBuilder.Entity("OOAD_Projekat.Models.QuestionAndAnwserModels.RatingModels.PostType", b =>
-                {
-                    b.Property<int>("PostTypeId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("PostTypeId");
-
-                    b.ToTable("PostType");
-
-                    b.HasData(
-                        new
-                        {
-                            PostTypeId = 0,
-                            name = "QUESTION"
-                        },
-                        new
-                        {
-                            PostTypeId = 1,
-                            name = "ANWSER"
-                        });
-                });
-
-            modelBuilder.Entity("OOAD_Projekat.Models.QuestionAndAnwserModels.RatingModels.TagPost", b =>
-                {
-                    b.Property<int>("TagId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("QuestionId")
-                        .HasColumnType("int");
-
-                    b.HasKey("TagId", "QuestionId");
-
-                    b.HasIndex("QuestionId");
-
-                    b.ToTable("TagPost");
-                });
-
-            modelBuilder.Entity("OOAD_Projekat.Models.Rating", b =>
-                {
-                    b.Property<int>("id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int?>("AnswerId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("PostId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("PostType")
-                        .HasColumnType("int");
-
-                    b.Property<int>("PostTypeId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("QuestionId")
-                        .HasColumnType("int");
-
-                    b.HasKey("id");
-
-                    b.HasIndex("AnswerId");
-
-                    b.HasIndex("QuestionId");
-
-                    b.ToTable("Rating");
-                });
-
-            modelBuilder.Entity("OOAD_Projekat.Models.Tag", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("NumOfUses")
-                        .HasColumnType("int");
-
-                    b.Property<string>("TagContent")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Tag");
-                });
-
             modelBuilder.Entity("OOAD_Projekat.Models.User", b =>
                 {
                     b.Property<string>("Id")
@@ -323,11 +163,6 @@ namespace OOAD_Projekat.Data.Migrations
 
                     b.Property<int>("AccessFailedCount")
                         .HasColumnType("int");
-
-                    b.Property<bool>("Blocked")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bit")
-                        .HasDefaultValue(false);
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
@@ -444,94 +279,6 @@ namespace OOAD_Projekat.Data.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("OOAD_Projekat.Models.Answer", b =>
-                {
-                    b.HasOne("OOAD_Projekat.Models.Question", "Question")
-                        .WithMany("Answers")
-                        .HasForeignKey("QuestionID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("OOAD_Projekat.Models.User", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId");
-
-                    b.Navigation("Question");
-
-                    b.Navigation("User");
-                });
-
-            modelBuilder.Entity("OOAD_Projekat.Models.Question", b =>
-                {
-                    b.HasOne("OOAD_Projekat.Models.User", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId");
-
-                    b.Navigation("User");
-                });
-
-            modelBuilder.Entity("OOAD_Projekat.Models.QuestionAndAnwserModels.HotQuestion", b =>
-                {
-                    b.HasOne("OOAD_Projekat.Models.Question", "Question")
-                        .WithMany()
-                        .HasForeignKey("QuestionId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Question");
-                });
-
-            modelBuilder.Entity("OOAD_Projekat.Models.QuestionAndAnwserModels.RatingModels.TagPost", b =>
-                {
-                    b.HasOne("OOAD_Projekat.Models.Question", "Question")
-                        .WithMany("Tags")
-                        .HasForeignKey("QuestionId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("OOAD_Projekat.Models.Tag", "Tag")
-                        .WithMany("TagPosts")
-                        .HasForeignKey("TagId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Question");
-
-                    b.Navigation("Tag");
-                });
-
-            modelBuilder.Entity("OOAD_Projekat.Models.Rating", b =>
-                {
-                    b.HasOne("OOAD_Projekat.Models.Answer", "Answer")
-                        .WithMany("Ratings")
-                        .HasForeignKey("AnswerId");
-
-                    b.HasOne("OOAD_Projekat.Models.Question", null)
-                        .WithMany("Ratings")
-                        .HasForeignKey("QuestionId");
-
-                    b.Navigation("Answer");
-                });
-
-            modelBuilder.Entity("OOAD_Projekat.Models.Answer", b =>
-                {
-                    b.Navigation("Ratings");
-                });
-
-            modelBuilder.Entity("OOAD_Projekat.Models.Question", b =>
-                {
-                    b.Navigation("Answers");
-
-                    b.Navigation("Ratings");
-
-                    b.Navigation("Tags");
-                });
-
-            modelBuilder.Entity("OOAD_Projekat.Models.Tag", b =>
-                {
-                    b.Navigation("TagPosts");
                 });
 #pragma warning restore 612, 618
         }
