@@ -7,11 +7,9 @@ namespace OOAD_Projekat.Models.ChatModels
     {
         [Key]
         public string UserId { get; set; }
-        [NotMapped]
         public User User { get; set; }
-        [ForeignKey("Chat")]
         public int ChatId { get; set; }
-        [NotMapped]
+
         public Chat Chat { get; set; }
         public UserRole Role { get; set; }
     }

@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using OOAD_Projekat.Models;
+using OOAD_Projekat.Models.ChatModels;
 using OOAD_Projekat.Models.QuestionAndAnwserModels;
 using OOAD_Projekat.Models.QuestionAndAnwserModels.RatingModels;
 using System;
@@ -21,6 +22,9 @@ namespace OOAD_Projekat.Data
 
         public DbSet<Rating> Ratings;
         public DbSet<PostType> PostTypes;
+        public DbSet<ChatUser> ChatUsers;
+        public DbSet<Chat> Chats;
+        // public DbSet<Message> Messages;
 
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
@@ -49,6 +53,10 @@ namespace OOAD_Projekat.Data
             // Configure hot questions
 
             builder.Entity<HotQuestion>().HasNoKey();
+
+            // Configure composite key
+
+            builder.Entity<ChatUser>().HasKey(cu => new { cu.ChatId, cu.UserId });
         }
     }
 }

@@ -11,9 +11,8 @@ namespace OOAD_Projekat.Models
         public int Id { get; set; }
         public string ChatName { get; set; }
         public ChatType ChatType{ get; set; }
+        public ICollection<ChatUser> Users { get; set; }
 
-        [NotMapped]
-        public List<ChatUser> Users { get; set; }
         [NotMapped]
         public List<Message> Messages { get; set; }
 

@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using OOAD_Projekat.Data;
 
 namespace OOAD_Projekat.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210526131855_jos-message-tabela")]
+    partial class josmessagetabela
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -183,24 +185,6 @@ namespace OOAD_Projekat.Data.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Answer");
-                });
-
-            modelBuilder.Entity("OOAD_Projekat.Models.Chat", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("ChatName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("ChatType")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Chat");
                 });
 
             modelBuilder.Entity("OOAD_Projekat.Models.ChatModels.ChatUser", b =>
@@ -501,21 +485,11 @@ namespace OOAD_Projekat.Data.Migrations
 
             modelBuilder.Entity("OOAD_Projekat.Models.ChatModels.ChatUser", b =>
                 {
-                    b.HasOne("OOAD_Projekat.Models.Chat", "Chat")
-                        .WithMany("Users")
-                        .HasForeignKey("ChatId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("OOAD_Projekat.Models.User", "User")
+                    b.HasOne("OOAD_Projekat.Models.User", null)
                         .WithMany("Chats")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("Chat");
-
-                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("OOAD_Projekat.Models.Question", b =>
@@ -573,11 +547,6 @@ namespace OOAD_Projekat.Data.Migrations
             modelBuilder.Entity("OOAD_Projekat.Models.Answer", b =>
                 {
                     b.Navigation("Ratings");
-                });
-
-            modelBuilder.Entity("OOAD_Projekat.Models.Chat", b =>
-                {
-                    b.Navigation("Users");
                 });
 
             modelBuilder.Entity("OOAD_Projekat.Models.Question", b =>
