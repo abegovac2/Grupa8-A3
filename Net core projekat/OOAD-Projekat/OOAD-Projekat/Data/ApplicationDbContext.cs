@@ -16,7 +16,6 @@ namespace OOAD_Projekat.Data
 
         public DbSet<Question> Questions;
         public DbSet<Answer> Answers;
-        public DbSet<HotQuestion> HotQuestions;
         public DbSet<Tag> Tags;
         public DbSet<TagPost> TagPosts;
 
@@ -50,9 +49,6 @@ namespace OOAD_Projekat.Data
 
             builder.Entity<User>().Property(u => u.Blocked).HasDefaultValue(false);
 
-            // Configure hot questions
-
-            builder.Entity<HotQuestion>().HasNoKey();
 
             // Configure composite key
 

@@ -16,6 +16,7 @@ namespace OOAD_Projekat.Models
         public string Content { get; set; }
         public DateTime TimeStamp { get; set; }
         public bool Anwsered { get; set; }
+        public bool HotQuestion { get; set; }
 
         // One to Many relatinship with rating
         public ICollection<Rating> Ratings { get; set; }
