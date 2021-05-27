@@ -14,15 +14,15 @@ namespace OOAD_Projekat.Data
     public class ApplicationDbContext : IdentityDbContext<User>
     {
 
-        public DbSet<Question> Questions;
-        public DbSet<Answer> Answers;
-        public DbSet<Tag> Tags;
-        public DbSet<TagPost> TagPosts;
+        public DbSet<Question> Questions { get; set; }
+        public DbSet<Answer> Answers { get; set; }
+        public DbSet<Tag> Tags { get; set; }
+        public DbSet<TagPost> TagPosts { get; set; }
 
-        public DbSet<Rating> Ratings;
-        public DbSet<PostType> PostTypes;
-        public DbSet<ChatUser> ChatUsers;
-        public DbSet<Chat> Chats;
+        public DbSet<Rating> Ratings { get; set; }
+        public DbSet<PostType> PostTypes { get; set; }
+        public DbSet<ChatUser> ChatUsers { get; set; }
+        public DbSet<Chat> Chats { get; set; }
         // public DbSet<Message> Messages;
 
 

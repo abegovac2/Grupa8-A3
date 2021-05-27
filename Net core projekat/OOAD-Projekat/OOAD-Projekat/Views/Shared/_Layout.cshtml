@@ -2,6 +2,7 @@
 @inject SignInManager<User> SignInManager
 @inject UserManager<User> UserManager
 
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -78,7 +79,7 @@
                                    placeholder="Search..."
                                    id="search-input" />
                             <span class="input-group-prepend">
-                                <div class="input-group-text bg-transparent">
+                                <div id="search-button" class="input-group-text bg-transparent">
                                     <i class="fa fa-search"></i>
                                 </div>
                             </span>
@@ -155,5 +156,22 @@
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
+    <script type="text/javascript">
+        $(function () {
+            $("#search-button").click(function () {
+                console.log("Hello");
+                $.ajax({
+                    type: 'GET',
+                    url: '@Url.Action("Pretrazi", "Question")',
+                    contentType: 'application/json; charset=utf-8',
+                    data: {
+                        searchParam: $("#search-input").val()
+                    },
+                    success: (data) => { console.log(data); },
+                    error: (err) => { console.log(err); }
+                })
+            });
+        });
+    </script>
 </body>
 </html>
