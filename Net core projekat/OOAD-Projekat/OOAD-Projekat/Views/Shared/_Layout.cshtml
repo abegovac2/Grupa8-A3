@@ -156,22 +156,13 @@
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
-    <script type="text/javascript">
+<script type="text/javascript">
         $(function () {
             $("#search-button").click(function () {
                 console.log("Hello");
-                $.ajax({
-                    type: 'GET',
-                    url: '@Url.Action("Pretrazi", "Question")',
-                    contentType: 'application/json; charset=utf-8',
-                    data: {
-                        searchParam: $("#search-input").val()
-                    },
-                    success: (data) => { console.log(data); },
-                    error: (err) => { console.log(err); }
-                })
+                window.location.href = '@Url.Action("Pretrazi", "Question")' + '?searchParam=' + $("#search-input").val();
             });
         });
-    </script>
+</script>
 </body>
 </html>

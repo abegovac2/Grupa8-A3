@@ -1,36 +1,34 @@
 ﻿@*
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
+@model List<OOAD_Projekat.Models.Question>
 
 <link href="~/css/questions.css" rel="stylesheet" type="text/css" />
 <div class="questions-page-content">
+
     <div class="my-buttons">
         <div class="my-filter-buttons">
-            <a href="" class="my-button my-active-button">New</a>
-            <a href="" class="my-button">Popular</a>
-            <a href="" class="my-button">Unanswered</a>
-            <a href="" class="my-button">Recommended</a>
+            <a class="my-button my-active-button" asp-controller="Question" asp-action="Index">New</a>
+            <a class="my-button" asp-controller="Question" asp-action="Popular">Popular</a>
+            <a class="my-button" asp-controller="Question" asp-action="Unanswered">Unanswered</a>
+            <a class="my-button" asp-controller="Question" asp-action="Recommended">Recommended</a>
         </div>
         <div class="my-question-adder-buttons">
             <a href="" class="my-button">Add Question</a>
         </div>
     </div>
     <div class="my-questions">
+        @foreach (var question in Model)
+        {
         <div class="question-card">
             <div class="question-rating">
-                <span class="upvotes">+55</span>
-                <span class="downvotes">-2</span>
+                <span class="upvotes">Dummy</span>
+                <span class="downvotes">Dummy</span>
             </div>
             <div class="question-content">
-                <span class="question-title">Question Title</span>
+                <span class="question-title">@question.Title</span>
                 <span class="question-text">
-                    Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ex
-                    alias, eos earum suscipit id quas fugit modi consequuntur?
-                    Culpa exercitationem at architecto necessitatibus. At,
-                    aspernatur facere nostrum esse atque dicta accusantium fuga
-                    veritatis. Natus provident nostrum incidunt at explicabo omnis
-                    eos fuga similique veniam, dicta officiis unde, quos cumque
-                    pariatur.
+                    @question.Content
                 </span>
             </div>
             <div class="question-options">
@@ -48,69 +46,6 @@
                 </a>
             </div>
         </div>
-        <div class="question-card">
-            <div class="question-rating">
-                <span class="upvotes">+55</span>
-                <span class="downvotes">-2</span>
-            </div>
-            <div class="question-content">
-                <span class="question-title">Question Title</span>
-                <span class="question-text">
-                    Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ex
-                    alias, eos earum suscipit id quas fugit modi consequuntur?
-                    Culpa exercitationem at architecto necessitatibus. At,
-                    aspernatur facere nostrum esse atque dicta accusantium fuga
-                    veritatis. Natus provident nostrum incidunt at explicabo omnis
-                    eos fuga similique veniam, dicta officiis unde, quos cumque
-                    pariatur.
-                </span>
-            </div>
-            <div class="question-options">
-                <div class="my-dropdown">
-                    <i class="fa fa-cog my-button no-border"
-                       aria-hidden="true"></i>
-                    <div class="my-dropdown-content">
-                        <a href="#">Edit</a>
-                        <a href="#">Delete</a>
-                    </div>
-                </div>
-                <a href="#">
-                    <i class="fa fa-user my-button no-border"
-                       aria-hidden="true"></i>
-                </a>
-            </div>
-        </div>
-        <div class="question-card">
-            <div class="question-rating">
-                <span class="upvotes">+55</span>
-                <span class="downvotes">-2</span>
-            </div>
-            <div class="question-content">
-                <span class="question-title">Question Title</span>
-                <span class="question-text">
-                    Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ex
-                    alias, eos earum suscipit id quas fugit modi consequuntur?
-                    Culpa exercitationem at architecto necessitatibus. At,
-                    aspernatur facere nostrum esse atque dicta accusantium fuga
-                    veritatis. Natus provident nostrum incidunt at explicabo omnis
-                    eos fuga similique veniam, dicta officiis unde, quos cumque
-                    pariatur.
-                </span>
-            </div>
-            <div class="question-options">
-                <div class="my-dropdown">
-                    <i class="fa fa-cog my-button no-border"
-                       aria-hidden="true"></i>
-                    <div class="my-dropdown-content">
-                        <a href="#">Edit</a>
-                        <a href="#">Delete</a>
-                    </div>
-                </div>
-                <a href="#">
-                    <i class="fa fa-user my-button no-border"
-                       aria-hidden="true"></i>
-                </a>
-            </div>
-        </div>
+        }
     </div>
 </div>
