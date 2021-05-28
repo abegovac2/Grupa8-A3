@@ -156,7 +156,7 @@ namespace OOAD_Projekat
                     });
             }
 
-            _chatRepository.CreateNewChat(chat);
+            await _chatRepository.CreateNewChat(chat);
 
             return RedirectToAction("Details", new { id = chat.Id, });
         }
@@ -168,18 +168,18 @@ namespace OOAD_Projekat
         {
             var UserId = (await _chatRepository.GetUserByName(User.Identity.Name)).Id;
 
-            _chatRepository.DeleteChatUser(ChatId, UserId);
+            await _chatRepository.DeleteChatUser(UserId, ChatId);
 
             var numOfUsersInChat = _chatRepository.NumberOfUsersInAChat(ChatId);
-            if (numOfUsersInChat <= 1) return DeleteChat(ChatId);
+            if (numOfUsersInChat <= 1) return await DeleteChat(ChatId);
             
             return RedirectToAction("Details", new { id = ChatId, });
         }
 
         [HttpPost]
-        public IActionResult DeleteChat(int Id)
+        public async Task<IActionResult> DeleteChat(int Id)
         {
-            _chatRepository.DeleteChat(Id);
+            await _chatRepository.DeleteChat(Id);
             return RedirectToAction(nameof(Index));
         }
 
@@ -187,7 +187,7 @@ namespace OOAD_Projekat
         [HttpPost]
         public async Task<IActionResult> SendMessage([FromForm(Name = "chatId")] string chatId, [FromForm(Name = "name")] string name, [FromForm(Name = "text")] string text)
         {
-            _chatRepository.SaveMessage(int.Parse(chatId), name, text);
+            await _chatRepository.SaveMessage(int.Parse(chatId), name, text);
             Console.WriteLine($"UPISANA PORUKA U BAZU {chatId}, {name}, {text}");
             return RedirectToAction("Details", new { id = int.Parse(chatId) });
         }

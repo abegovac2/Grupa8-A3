@@ -15,10 +15,10 @@ namespace OOAD_Projekat.Data.ChatData
         public Task<Chat> GetChat(int? Id);
         public Task<List<User>> GetUsers();
         public Task<List<User>> SearchUsers(string name);
-        public void CreateNewChat(Chat chat);
-        public void DeleteChatUser(int ChatId, string UserId);
-        public void DeleteChat(int ChatId);
+        public Task CreateNewChat(Chat chat);
+        public Task DeleteChatUser(string UserId, int ChatId);
+        public Task DeleteChat(int ChatId);
         public int NumberOfUsersInAChat(int ChatId);
-        public void SaveMessage(int chatId, string name, string message);
+        public Task SaveMessage(int chatId, string name, string message);
     }
 }

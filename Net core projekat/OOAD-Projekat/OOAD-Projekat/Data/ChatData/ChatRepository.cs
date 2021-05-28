@@ -17,22 +17,25 @@ namespace OOAD_Projekat.Data.ChatData
             _context = context;
         }
 
-        public async void CreateNewChat(Chat chat)
+        public async Task CreateNewChat(Chat chat)
         {
             _context.Chats.Add(chat);
             await _context.SaveChangesAsync();
         }
 
-        public async void DeleteChat(int ChatId)
+        public async Task DeleteChat(int ChatId)
         {
-            var chat = await _context.Chats.FindAsync(ChatId);
+            var chat = await _context.Chats
+                .Include(x => x.Messages)
+                .Where(x => x.Id == ChatId)
+                .FirstAsync();
             _context.Chats.Remove(chat);
             await _context.SaveChangesAsync();
         }
 
-        public async void DeleteChatUser(int ChatId, string UserId)
+        public async Task DeleteChatUser(string UserId, int ChatId)
         {
-            var theUser = await _context.ChatUsers.FindAsync(UserId, ChatId);
+            var theUser = await _context.ChatUsers.FindAsync(ChatId, UserId);
             _context.ChatUsers.Remove(theUser);
             await _context.SaveChangesAsync();
         }
@@ -86,7 +89,7 @@ namespace OOAD_Projekat.Data.ChatData
             return _context.Users.Where(x => x.UserName.Contains(name)).ToListAsync();
         }
 
-        public void SaveMessage(int chatId, string name, string message)
+        public async Task SaveMessage(int chatId, string name, string message)
         {
             var msg = new Message
             {
@@ -97,7 +100,7 @@ namespace OOAD_Projekat.Data.ChatData
             };
 
             _context.Messages.Add(msg);
-            _context.SaveChangesAsync();
+            await _context.SaveChangesAsync();
         }
     }
 }
