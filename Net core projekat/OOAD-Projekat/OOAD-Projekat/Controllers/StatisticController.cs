@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using OOAD_Projekat.Data;
+using OOAD_Projekat.Data.Statistics;
 using OOAD_Projekat.Models.Statistics;
 using System;
 using System.Collections.Generic;
@@ -13,10 +14,10 @@ namespace OOAD_Projekat.Controllers
 {
     public class StatisticController : Controller
     {
-        private readonly ApplicationDbContext applicationDbContext;
-        public StatisticController(ApplicationDbContext applicationDbContext)
+        private readonly IStatisticsRepository statisticsRepository;
+        public StatisticController(IStatisticsRepository statisticsRepository)
         {
-            this.applicationDbContext = applicationDbContext;
+            this.statisticsRepository = statisticsRepository;
         }
         public IActionResult Index()
         {
@@ -26,22 +27,12 @@ namespace OOAD_Projekat.Controllers
 
         private async Task<List<SearchStatistics>> DajStatistiku(int brojSati)
         {
-            var trenutnoVrijeme = DateTime.Now;
-            var data = await applicationDbContext.SearchStatistics.Where(ss => ss.Timestamp > trenutnoVrijeme.AddHours(brojSati) && ss.Timestamp <= trenutnoVrijeme).ToListAsync();
-            return data;
+            return await statisticsRepository.DajStatistiku(brojSati);
         }
         [HttpPost]
         public async Task EvidentirajParametarPretrage([FromForm(Name = "searchParam")] string searchParam)
         {
-            var currentTimestamp = DateTime.Now;
-            var rijeci = Regex.Matches(searchParam, @"[^\W\d][\w'-]*(?<=\w)").ToList();
-
-            foreach (var rijec in rijeci)
-            {
-                var searchStatistics = new SearchStatistics { Search = rijec.ToString(), Timestamp = currentTimestamp };
-                await applicationDbContext.SearchStatistics.AddAsync(searchStatistics);
-            }
-            await applicationDbContext.SaveChangesAsync();
+            await statisticsRepository.EvidentirajParametarPretrage(searchParam);
         }
     }
 }
