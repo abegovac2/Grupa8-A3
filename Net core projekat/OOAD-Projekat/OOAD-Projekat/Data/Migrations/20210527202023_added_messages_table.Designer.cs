@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using OOAD_Projekat.Data;
 
 namespace OOAD_Projekat.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210527202023_added_messages_table")]
+    partial class added_messages_table
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -235,15 +237,12 @@ namespace OOAD_Projekat.Data.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Text")
-                        .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("Timestamp")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("ChatId");
 
                     b.ToTable("Messages");
                 });
@@ -538,17 +537,6 @@ namespace OOAD_Projekat.Data.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("OOAD_Projekat.Models.Message", b =>
-                {
-                    b.HasOne("OOAD_Projekat.Models.Chat", "Chat")
-                        .WithMany("Messages")
-                        .HasForeignKey("ChatId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Chat");
-                });
-
             modelBuilder.Entity("OOAD_Projekat.Models.Question", b =>
                 {
                     b.HasOne("OOAD_Projekat.Models.User", "User")
@@ -597,8 +585,6 @@ namespace OOAD_Projekat.Data.Migrations
 
             modelBuilder.Entity("OOAD_Projekat.Models.Chat", b =>
                 {
-                    b.Navigation("Messages");
-
                     b.Navigation("Users");
                 });
 

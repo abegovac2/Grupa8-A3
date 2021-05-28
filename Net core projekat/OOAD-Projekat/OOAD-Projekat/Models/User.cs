@@ -14,7 +14,6 @@ namespace OOAD_Projekat.Models
         public string Picture { get; set; }
 
         public bool Blocked { get; set; }
-
         public ICollection<ChatUser> Chats { get; set; }
         // TODO: Omogucit editovanje korisnickih podataka 
     }

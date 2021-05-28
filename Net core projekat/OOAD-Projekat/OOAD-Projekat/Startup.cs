@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using OOAD_Projekat.Controllers.Hubs;
 using OOAD_Projekat.Data;
 using OOAD_Projekat.Models;
 using System;
@@ -36,6 +37,7 @@ namespace OOAD_Projekat
             services.AddDefaultIdentity<User>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddEntityFrameworkStores<ApplicationDbContext>();
             services.AddControllersWithViews();
+            services.AddSignalR();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -65,6 +67,7 @@ namespace OOAD_Projekat
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Question}/{action=Index}/{id?}");
+                endpoints.MapHub<ChatHub>("/chatHub");
                 endpoints.MapRazorPages();
             });
         }

@@ -53,7 +53,7 @@
                         @if (SignInManager.IsSignedIn(User))
                         {
                             <a class="dropdown-item" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">@User.Identity.Name!</a>
-                            <a class="dropdown-item" href="#">Messages</a>
+                            <a class="dropdown-item" asp-controller="Chats" asp-action="Index">Messages</a>
                             <a class="dropdown-item" asp-controller="Question" asp-action="Index">My Questions</a>
                             <div class="dropdown-divider"></div>
                             <a class="dropdown-item">
@@ -102,7 +102,7 @@
                         @if (SignInManager.IsSignedIn(User))
                         {
                             <a class="dropdown-item" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">@User.Identity.Name!</a>
-                            <a class="dropdown-item" href="#">Messages</a>
+                            <a class="dropdown-item" asp-controller="Chats" asp-action="Index">Messages</a>
                             <a class="dropdown-item" asp-controller="Question" asp-action="MyQuestions">My Questions</a>
                             <div class="dropdown-divider"></div>
                             <a class="dropdown-item">
@@ -156,13 +156,13 @@
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
-<script type="text/javascript">
+    <script type="text/javascript">
         $(function () {
             $("#search-button").click(function () {
                 console.log("Hello");
                 window.location.href = '@Url.Action("Pretrazi", "Question")' + '?searchParam=' + $("#search-input").val();
             });
         });
-</script>
+    </script>
 </body>
 </html>

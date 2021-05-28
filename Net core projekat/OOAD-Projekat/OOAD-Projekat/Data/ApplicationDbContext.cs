@@ -23,7 +23,7 @@ namespace OOAD_Projekat.Data
         public DbSet<PostType> PostTypes { get; set; }
         public DbSet<ChatUser> ChatUsers { get; set; }
         public DbSet<Chat> Chats { get; set; }
-        // public DbSet<Message> Messages;
+        public DbSet<Message> Messages { get; set; }
 
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
@@ -53,6 +53,7 @@ namespace OOAD_Projekat.Data
             // Configure composite key
 
             builder.Entity<ChatUser>().HasKey(cu => new { cu.ChatId, cu.UserId });
+
         }
     }
 }

@@ -1,0 +1,45 @@
+﻿@model IEnumerable<OOAD_Projekat.Models.Chat>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<link rel="stylesheet" href="~/css/chat_style.css" />
+
+<body>
+    <div class="container">
+        <h3 class=" text-center">Messaging</h3>
+        <div class="individual_user">
+            <div class="headind_srch">
+                <div class="recent_heading">
+                    <h4>Recent</h4>
+                </div>
+                <div class="srch_bar">
+                    <form asp-controller="Chats" asp-action="SearchForChat">
+                        <div class="stylish-input-group">
+                            <input type="text" class="search-bar" name="ChatName" placeholder="Search">
+                            <button class="input-group-addon" type="submit">Search</button>
+                        </div>
+                    </form>
+                </div>
+                <a asp-controller="Chats" asp-action="Create"><button type="button">Create new</button></a>
+            </div>
+
+            <div class="inbox_chat">
+                @foreach (var item in Model)
+                {
+                    <a asp-controller="Chats" asp-action="Details" asp-route-id="@item.Id">
+                        <div class="select_chat_list">
+                            <div class="chat_people">
+                                <div class="chat_img"> <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil"> </div>
+                                <div class="chat_ib">
+                                    <h5> @item.ChatName <span class="chat_date">Danas </span></h5>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                }
+            </div>
+        </div>
+    </div>
+</body>

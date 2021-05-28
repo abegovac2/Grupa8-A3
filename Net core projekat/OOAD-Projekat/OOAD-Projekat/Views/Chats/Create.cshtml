@@ -1,0 +1,68 @@
+﻿@model Tuple<List<OOAD_Projekat.Models.User>, string>
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<link rel="stylesheet" href="~/css/chat_style.css" />
+
+<body>
+    <div class="container">
+        <div id="createChat" class="create_chat">
+            <form asp-controller="Chats" asp-action="CreateNewChat" method="post">
+                <input type="text" class="chat_name" name="chatName" placeholder="Chat name" />
+                <input type="hidden" name="AddedUsers" value="@Model.Item2" />
+                <input type="submit" value="Create new chat">
+            </form>
+            <div class="added_users">
+                <div class="">Added users: </div>
+                @{
+                    var users = Model.Item2.Split("::");
+                    @foreach (var user in users)
+                    {
+                        if (user.Length == 0) continue;
+                        <div class="added_user">
+                            <p>@user</p>
+                            <form asp-controller="Chats" asp-action="RemoveUserFromAddedUsers">
+                                <input type="hidden" value="@user" name="user" />
+                                <input type="hidden" value="@Model.Item2" name="AddedUsers" />
+                                <button id="remove" class="btn" type="submit">x</button>
+                            </form>
+                        </div>
+                    }
+                }
+            </div>
+            <label for="group1">Group Chat</label>
+            <div class="chat_create_setup">
+                <form asp-controller="Chats" asp-action="SearchForNewChatUsers">
+                    <input type="text" class="search_user" name="name" placeholder="Search" />
+                    <input type="hidden" name="AddedUsers" value="@Model.Item2" />
+                    <button class="user_search_button" type="submit"> Search </button>
+                </form>
+            </div>
+            <br />
+            <div class="select_user_list">
+                @for (int j = 0; j < Model.Item1.Count(); ++j)
+                {
+                    var item = Model.Item1[j];
+                    <div class="select_chat_list">
+                        <div class="chat_people">
+                            <div class="user_img"> <img src="https://ptetutorials.com/images/user-profile.png" alt="Error"> </div>
+                            <div class="chat_ib">
+                                <form asp-controller="Chats" asp-action="AddUserToAddedUsers">
+                                    <input name="AddUser" type="hidden" value="@item.UserName" />
+                                    <input name="AddedUsers" type="hidden" value="@Model.Item2" />
+                                    <h5>@item.UserName <button class="add_user_button" type="submit">Add</button></h5>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</body>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

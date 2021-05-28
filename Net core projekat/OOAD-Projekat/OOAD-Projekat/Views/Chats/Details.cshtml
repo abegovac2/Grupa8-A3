@@ -1,0 +1,119 @@
+﻿@model Tuple<OOAD_Projekat.Models.Chat, OOAD_Projekat.Models.ChatModels.UserRole>
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<link rel="stylesheet" href="~/css/chat_style.css" />
+
+<body>
+    <h1>@Model.Item1.ChatName</h1>
+    <div class="dropdown">
+        <button class="dropbtn">Edit</button>
+        <div class="dropdown-content">
+            @if (Model.Item2 == OOAD_Projekat.Models.ChatModels.UserRole.ADMIN)
+            {
+                <form asp-controller="Chats" asp-action="DeleteChat">
+                    <input type="hidden" name="id" value="@Model.Item1.Id" />
+                    <button type="submit">Delete Chat</button>
+                </form>
+            }
+            else
+            {
+                <form asp-controller="Chats" asp-action="DeleteUserFromChat">
+                    <input type="hidden" name="ChatId" value="@Model.Item1.Id" />
+                    <button type="submit">Leave Chat</button>
+                </form>
+            }
+
+            <div class="dropdown">
+                <button class="dropbtn">Chat Users</button>
+                <div class="dropdown-content">
+                    @foreach (var item in Model.Item1.Users)
+                    {
+                        if (item.User.UserName == User.Identity.Name) continue;
+                        <div>
+                            <p>@item.User.UserName</p>
+                            @if (Model.Item2 == OOAD_Projekat.Models.ChatModels.UserRole.ADMIN)
+                            {
+                                <form asp-controller="Chats" asp-action="DeleteUser">
+                                    <input type="hidden" name="UserId" value="@item.UserId" />
+                                    <input type="hidden" name="ChatId" value="@item.ChatId" />
+                                    <button type="submit">Delete</button>
+                                </form>
+                            }
+                        </div>
+                    }
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="chat_list">
+            <div id="messagesList" class="msg_history">
+                @foreach (var item in Model.Item1.Messages)
+                {
+                    if (!item.Name.Equals(User.Identity.Name))
+                    {
+                        <div class="incoming_msg">
+                            <div class="incoming_msg_img">
+                                <img src="https://ptetutorials.com/images/user-profile.png" alt="Missing picture" />
+                            </div>
+                            <div class="received_msg">
+                                <div class="received_withd_msg">
+                                    <span class="time_date">@item.Name</span>
+                                    <p>@item.Text</p>
+                                    <span class="time_date">@item.Timestamp.ToShortTimeString()</span>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="outgoing_msg">
+                            <div class="sent_msg">
+                                <p>@item.Text</p>
+                                <span class="time_date">@item.Timestamp.ToShortTimeString()</span>
+                            </div>
+                        </div>
+
+                    }
+                }
+            </div>
+            <div class="type_msg" onsubmit="event.preventDefault()">
+                <form id="messageForm">
+                    <input id="chatInput" type="hidden" name="chatId" value="@Model.Item1.Id" />
+                    <input id="userInput" type="hidden" name="name" value="@User.Identity.Name" />
+                    <input id="messageInput" type="text" name="text" class="write_msg" placeholder="Type a message" />
+                    <button id="sendMessageButton" class="msg_send_btn" type="button">Send</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+<script src="~/js/signalr/dist/browser/signalr.js"></script>
+<script src="~/js/chat.js"></script>
+<script type="text/javascript">
+    var saveMessage = function () {
+        $.post({
+            url: '@Url.Action("SendMessage", "Chats")',
+            data: {
+                chatId: $("#chatInput").val(),
+                name: $("#userInput").val(),
+                text: $("#messageInput").val()
+            },
+            success: null,
+            error: null
+        })
+        sendMessageSR()
+    }
+
+    document.getElementById("messageInput").addEventListener("keyup", function (event) {
+        event.preventDefault();
+        //enter click
+        if (event.keyCode === 13) saveMessage();
+     });
+
+    document.getElementById('sendMessageButton').addEventListener('click', saveMessage);
+</script>
