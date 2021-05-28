@@ -11,5 +11,6 @@ namespace OOAD_Projekat.Data.Questions
         public Task<List<Question>> Find(String SearchParam);
         public Task<List<Question>> FindAll();
         public Task<List<Question>> FindMine(String UserName);
+        public Task AddQuestion(Question question);
     }
 }

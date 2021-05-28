@@ -30,5 +30,11 @@ namespace OOAD_Projekat.Data.Questions
             var data = await applicationDbContext.Questions.Where(q => q.User.Email == UserName).ToListAsync();
             return data;
         }
+        public async Task AddQuestion(Question question)
+        {
+            applicationDbContext.Questions.Add(question);
+            await applicationDbContext.SaveChangesAsync();
+        }
+        //todo: DeleteQuestion
     }
 }

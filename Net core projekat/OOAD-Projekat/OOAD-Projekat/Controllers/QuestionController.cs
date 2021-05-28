@@ -50,5 +50,28 @@ namespace OOAD_Projekat.Controllers
         {
             return View("Index", new List<Question>());
         }
+        // GET: Questions/Create
+        public IActionResult Create()
+        {
+
+            return View();
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create(string title, string content, string tags)
+        {
+            var question = new Question();
+            if (ModelState.IsValid)
+            {
+                question.TimeStamp = DateTime.UtcNow;
+                question.Content = content;
+                question.Title = title;
+
+                questionsRepository.AddQuestion(question);
+
+                return RedirectToAction(nameof(Index));
+            }
+            return View(question);
+        }
     }
 }
