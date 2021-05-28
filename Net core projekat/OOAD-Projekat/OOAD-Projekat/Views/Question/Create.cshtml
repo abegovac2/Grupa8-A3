@@ -1,0 +1,64 @@
+﻿
+@model OOAD_Projekat.Models.Question
+@{
+    ViewData["Title"] = "Create";
+}
+<link href="~/css/createQuestion.css" rel="stylesheet" type="text/css" />
+<link rel="stylesheet" href="https://cdn.metroui.org.ua/v4/css/metro-all.min.css">
+
+<div class="wrapper-1">
+    <div class="col-md-7 col-lg-10 col-sm-12">
+        <h2>Create new question</h2>
+        <div class="container_form">
+            <form asp-action="Create">
+                <!--Naziv pitanja-->
+                <div class="form-group naziv">
+                    <label asp-for="Title">Title</label>
+                    <textarea name="title" class="form-control" rows="1"></textarea>
+                    <span asp-validation-for="Title" class="text-danger"></span>
+                </div>
+
+                <!--Unos pitanja-->
+                <div class="form-group unos">
+                    <label asp-for="Content" class="control-label"></label>
+                    <textarea name="content" class="form-control" rows="4"></textarea>
+                    <span asp-validation-for="Content" class="text-danger"></span>
+                </div>
+                <!--kreiranje taga-->
+                <div class="form-group unos_taga">
+                    <label>Create tag:</label>
+                    <div class="class-1">
+
+                        <input type="text" name="tags"
+                               data-role="taginput" value=" ">
+
+                    </div>
+
+                </div>
+                <!--postojeći tagovi-->
+                <div class="tagovi">
+                    @for (int i = 0; i < 10; i++)
+                    {
+                        <a href="#">tag</a>
+                    }
+
+
+                </div>
+                <!--buttons-->
+                <div class="buttons">
+                    <button type="button" class="btn btn-outline-dark">Back</button>
+                    <input class="btn btn-outline-dark submit" type="submit" value="Submit">
+                </div>
+            </form>
+        </div>
+
+    </div>
+</div>
+
+
+<script src="https://cdn.metroui.org.ua/v4.3.2/js/metro.min.js"></script>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+

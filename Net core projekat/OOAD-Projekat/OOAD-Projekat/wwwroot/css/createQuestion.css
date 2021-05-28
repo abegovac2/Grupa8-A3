@@ -1,0 +1,81 @@
+﻿:root {
+    --pastel-green: #a8e6cf;
+    --pastel-light-green: #dcedc1;
+    --pastel-orange: #ffd3b6;
+    --dark-red: #641E16;
+    --clr-red: #E74C3C;
+    --light-salmon: #FEB362;
+    --baby-yellow: #FCF3CF;
+    --gradient: linear-gradient( 45deg, --clr-red:#E74C3C, --light-salmon: #FEB362, );
+}
+
+.container_form {
+    box-shadow: 2rem 2rem 5rem gray;
+    padding: 2rem;
+    background-color: white;
+}
+
+
+.wrapper-1 {
+    align-self:center;
+    margin-top: 2rem;
+    display: flex;
+    justify-content: center;
+    height:89vh;
+    width:100vh;
+}
+
+    .wrapper-1 .container_form div {
+        display: flex;
+    }
+
+        .wrapper-1 .container_form div label {
+            flex-grow: 1;
+            font-weight: bold;
+        }
+
+        .wrapper-1 .container_form div textarea {
+            flex: 1;
+            resize: none;
+            outline-style: none;
+        }
+
+.tagovi, .buttons, .class-1 {
+    flex-wrap: wrap;
+    flex-basis: 100%;
+}
+
+.buttons {
+    margin-top: 1rem;
+}
+
+    .buttons button {
+        margin-left: auto;
+    }
+
+.tagovi a:hover {
+    background-color: black;
+    color: white;
+}
+
+body > div.wrapper > div.content > div > div > div > form > div.tagovi > a {
+    padding: 0.1em 0.5em;
+    border: 1px solid black;
+    border-radius: 5px;
+    text-decoration: none;
+   
+    color: black;
+}
+
+.tagovi, .buttons, .class-1 {
+    gap: 0.9em;
+}
+
+.naziv, .unos, .unos_taga {
+    display: flex;
+    flex-direction: column;
+}
+
+.class-1 button {
+    margin-left: auto;
+}
