@@ -123,7 +123,7 @@
     </nav>
 
     <div class="wrapper">
-        @if (!Url.Action().Contains("About") && !Url.Action().Contains("Login") && !Url.Action().Contains("Register"))
+        @if (!Url.Action().Contains("About") && !Url.Action().Contains("Login") && !Url.Action().Contains("Register") && !Url.Action().Contains("Identity/Account"))
         {
             <div class="sidebar d-none d-lg-block ml-0 pl-0 bg-light pt-3 pl-3">
                 <ul class="list-unstyled components">
@@ -140,7 +140,7 @@
             </div>
         }
         @{
-            var className = @Url.Action().Contains("Manage") || @Url.Action().Contains("RegisterConfirmation") ? "container" : "content";
+            var className = @Url.Action().Contains("Manage") || @Url.Action().Contains("RegisterConfirmation") || Url.Action().Contains("Identity/Account") ? "container" : "content";
             <div class=@className>
                 @RenderBody()
             </div>
@@ -157,12 +157,29 @@
     <script src="~/js/site.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
     <script type="text/javascript">
-        $(function () {
-            $("#search-button").click(function () {
-                console.log("Hello");
-                window.location.href = '@Url.Action("Pretrazi", "Question")' + '?searchParam=' + $("#search-input").val();
-            });
-        });
+            $(function () {
+                const pretraga = (event) => {
+                    event.preventDefault();
+                    let searchParam = $("#search-input").val();
+
+                        $.post({
+                            url: '@Url.Action("EvidentirajParametarPretrage", "Statistic")',
+                            data: {
+                                searchParam: searchParam
+                            },
+                            success: null,
+                            error: null
+                        })
+                        // Prebaci na pitanja
+                        window.location.href = '@Url.Action("Pretrazi", "Question")' + '?searchParam=' + searchParam;
+                }
+                $("#search-button").click((event) => pretraga(event));
+                document.getElementById("search-input").addEventListener('keydown', (event) => {
+                    if (event.keyCode === 13) {
+                        pretraga(event);
+                    }
+                    });
+                });
     </script>
 </body>
 </html>

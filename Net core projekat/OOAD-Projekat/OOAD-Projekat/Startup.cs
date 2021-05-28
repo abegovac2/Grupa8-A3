@@ -9,6 +9,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using OOAD_Projekat.Controllers.Hubs;
 using OOAD_Projekat.Data;
+using OOAD_Projekat.Data.Questions;
 using OOAD_Projekat.Models;
 using System;
 using System.Collections.Generic;
@@ -38,6 +39,7 @@ namespace OOAD_Projekat
                 .AddEntityFrameworkStores<ApplicationDbContext>();
             services.AddControllersWithViews();
             services.AddSignalR();
+            services.AddScoped<IQuestionsRepository, QuestionsRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

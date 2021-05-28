@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using OOAD_Projekat.Data;
+using OOAD_Projekat.Data.Questions;
 using OOAD_Projekat.Models;
 using OOAD_Projekat.Models.ViewModels;
 using System;
@@ -13,26 +14,26 @@ namespace OOAD_Projekat.Controllers
 {
     public class QuestionController : Controller
     {
-        private readonly ApplicationDbContext applicationDbContext;
-        public QuestionController(ApplicationDbContext applicationDbContext)
+        private readonly IQuestionsRepository questionsRepository;
+        public QuestionController(IQuestionsRepository questionsRepository)
         {
-            this.applicationDbContext = applicationDbContext;
+            this.questionsRepository = questionsRepository;
         }
 
         public async Task<IActionResult> Index()
         {
-            return View(await NadjiSvaPitanja());
+            return View(await questionsRepository.FindAll());
         }
         [Authorize]
         public async Task<IActionResult> MyQuestions()
         {
-            return View("Index", await NadjiMojaPitanja(User.Identity.Name));
+            return View("Index", await questionsRepository.FindMine(User.Identity.Name));
         }
 
         [HttpGet]
         public async Task<IActionResult> Pretrazi([FromQuery(Name = "searchParam")] string SearchParam)
         {
-            return View("Index", await NadjiPitanja(SearchParam));
+            return View("Index", await questionsRepository.Find(SearchParam));
         }
         // TODO
         public IActionResult Popular()
@@ -48,22 +49,6 @@ namespace OOAD_Projekat.Controllers
         public IActionResult Recommended()
         {
             return View("Index", new List<Question>());
-        }
-
-        private async Task<List<Question>> NadjiPitanja(String SearchParam)
-        {
-            var data = await applicationDbContext.Questions.Where(q => q.Title.ToUpper().Contains(SearchParam)).ToListAsync();
-            return data;
-        }
-        private async Task<List<Question>> NadjiSvaPitanja()
-        {
-            return await applicationDbContext.Questions.ToListAsync();
-        }
-        [Authorize]
-        private async Task<List<Question>> NadjiMojaPitanja(String UserName)
-        {
-            var data = await applicationDbContext.Questions.Where(q => q.User.Email == UserName).ToListAsync();
-            return data;
         }
     }
 }
