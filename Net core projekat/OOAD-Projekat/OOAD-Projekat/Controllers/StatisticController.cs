@@ -12,27 +12,30 @@ using System.Threading.Tasks;
 // TODO View za statistiku :)
 namespace OOAD_Projekat.Controllers
 {
-    public class StatisticController : Controller
+    [Route("api/[controller]")]
+    [ApiController]
+    public class StatisticController : ControllerBase
     {
         private readonly IStatisticsRepository statisticsRepository;
         public StatisticController(IStatisticsRepository statisticsRepository)
         {
             this.statisticsRepository = statisticsRepository;
         }
-        public IActionResult Index()
-        {
-            return View(DajStatistiku(24));
-        }
 
-
-        private async Task<List<SearchStatistics>> DajStatistiku(int brojSati)
-        {
-            return await statisticsRepository.DajStatistiku(brojSati);
-        }
         [HttpPost]
-        public async Task EvidentirajParametarPretrage([FromForm(Name = "searchParam")] string searchParam)
+        public async Task SaveSearchTerms([FromForm(Name = "searchParam")] string searchParam)
         {
-            await statisticsRepository.EvidentirajParametarPretrage(searchParam);
+            await statisticsRepository.SaveSearchTerms(searchParam);
+        }
+        [HttpGet("termUsage")]
+        public async Task<List<TermUsageStatistics>> GetTermUsage([FromQuery(Name = "hours")] int brojSati, [FromQuery(Name = "elements")] int brojElemenata)
+        {
+            return await statisticsRepository.GetTermUsage(brojSati, brojElemenata);
+        }
+        [HttpGet("tagUsage")]
+        public async Task<List<TagUsageStatistics>> GetTagUsage([FromQuery(Name = "hours")] int brojSati, [FromQuery(Name = "elements")] int brojElemenata)
+        {
+            return await statisticsRepository.GetTagUsage(brojSati, brojElemenata);
         }
     }
 }

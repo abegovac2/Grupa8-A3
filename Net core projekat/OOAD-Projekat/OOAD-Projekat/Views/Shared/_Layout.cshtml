@@ -37,6 +37,9 @@
                 <li class="nav-item d-lg-none">
                     <a class="nav-link" asp-controller="Home" asp-action="About">About</a>
                 </li>
+                <li class="nav-item d-lg-none">
+                    <a class="nav-link" asp-controller="Home" asp-action="Statistics">Statistics</a>
+                </li>
                 <div class="dropdown-divider"></div>
 
                 <div class="nav-item dropdown d-lg-none mb-3 mb-md-0">
@@ -136,6 +139,9 @@
                     <li class="mb-3">
                         <a asp-controller="Home" asp-action="About">About</a>
                     </li>
+                    <li class="mb-3">
+                        <a asp-controller="Home" asp-action="Statistics">Statistics</a>
+                    </li>
                 </ul>
             </div>
         }
@@ -163,7 +169,7 @@
                     let searchParam = $("#search-input").val();
 
                         $.post({
-                            url: '@Url.Action("EvidentirajParametarPretrage", "Statistic")',
+                            url: '@Url.Action("SaveSearchTerms", "Statistic")',
                             data: {
                                 searchParam: searchParam
                             },
@@ -171,7 +177,7 @@
                             error: null
                         })
                         // Prebaci na pitanja
-                        window.location.href = '@Url.Action("Pretrazi", "Question")' + '?searchParam=' + searchParam;
+                        window.location.href = '@Url.Action("Find", "Question")' + '?searchParam=' + searchParam;
                 }
                 $("#search-button").click((event) => pretraga(event));
                 document.getElementById("search-input").addEventListener('keydown', (event) => {

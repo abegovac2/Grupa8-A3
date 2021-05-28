@@ -32,10 +32,10 @@
           "lib/net5.0/Microsoft.AspNetCore.Cryptography.KeyDerivation.dll": {}
         }
       },
-      "Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore/5.0.4": {
+      "Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore/5.0.6": {
         "type": "package",
         "dependencies": {
-          "Microsoft.EntityFrameworkCore.Relational": "5.0.4"
+          "Microsoft.EntityFrameworkCore.Relational": "5.0.6"
         },
         "compile": {
           "lib/net5.0/Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore.dll": {}
@@ -98,11 +98,11 @@
           "buildMultiTargeting/Microsoft.AspnetCore.Identity.UI.targets": {}
         }
       },
-      "Microsoft.AspNetCore.Mvc.Razor.Extensions/5.0.4": {
+      "Microsoft.AspNetCore.Mvc.Razor.Extensions/5.0.6": {
         "type": "package",
         "dependencies": {
-          "Microsoft.AspNetCore.Razor.Language": "5.0.4",
-          "Microsoft.CodeAnalysis.Razor": "5.0.4"
+          "Microsoft.AspNetCore.Razor.Language": "5.0.6",
+          "Microsoft.CodeAnalysis.Razor": "5.0.6"
         },
         "compile": {
           "lib/netstandard2.0/Microsoft.AspNetCore.Mvc.Razor.Extensions.dll": {}
@@ -111,11 +111,11 @@
           "lib/netstandard2.0/Microsoft.AspNetCore.Mvc.Razor.Extensions.dll": {}
         }
       },
-      "Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation/5.0.4": {
+      "Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation/5.0.6": {
         "type": "package",
         "dependencies": {
-          "Microsoft.AspNetCore.Mvc.Razor.Extensions": "5.0.4",
-          "Microsoft.CodeAnalysis.Razor": "5.0.4",
+          "Microsoft.AspNetCore.Mvc.Razor.Extensions": "5.0.6",
+          "Microsoft.CodeAnalysis.Razor": "5.0.6",
           "Microsoft.Extensions.DependencyModel": "5.0.0"
         },
         "compile": {
@@ -143,7 +143,7 @@
           "lib/netstandard2.0/Microsoft.AspNetCore.Razor.dll": {}
         }
       },
-      "Microsoft.AspNetCore.Razor.Language/5.0.4": {
+      "Microsoft.AspNetCore.Razor.Language/5.0.6": {
         "type": "package",
         "compile": {
           "lib/netstandard2.0/Microsoft.AspNetCore.Razor.Language.dll": {}
@@ -348,10 +348,10 @@
           }
         }
       },
-      "Microsoft.CodeAnalysis.Razor/5.0.4": {
+      "Microsoft.CodeAnalysis.Razor/5.0.6": {
         "type": "package",
         "dependencies": {
-          "Microsoft.AspNetCore.Razor.Language": "5.0.4",
+          "Microsoft.AspNetCore.Razor.Language": "5.0.6",
           "Microsoft.CodeAnalysis.CSharp": "3.8.0",
           "Microsoft.CodeAnalysis.Common": "3.8.0"
         },
@@ -2243,10 +2243,10 @@
         "microsoft.aspnetcore.cryptography.keyderivation.nuspec"
       ]
     },
-    "Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore/5.0.4": {
-      "sha512": "rgK89h9labCWL/SUndMuchzHmsvSW/jiHW1EON//QEswmHEde33dx/jPw6hlINZSVYs78z3Zquog2IvfS1Mg5g==",
+    "Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore/5.0.6": {
+      "sha512": "CfbSbq3cyYpAzotftmFzjCBih5wczuxK7MRtZLA/i1TEs96/63cejPn0R2+zDmOp4BJg1lhitAh3hG1hCCgpmA==",
       "type": "package",
-      "path": "microsoft.aspnetcore.diagnostics.entityframeworkcore/5.0.4",
+      "path": "microsoft.aspnetcore.diagnostics.entityframeworkcore/5.0.6",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
@@ -2254,7 +2254,7 @@
         "THIRD-PARTY-NOTICES.TXT",
         "lib/net5.0/Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore.dll",
         "lib/net5.0/Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore.xml",
-        "microsoft.aspnetcore.diagnostics.entityframeworkcore.5.0.4.nupkg.sha512",
+        "microsoft.aspnetcore.diagnostics.entityframeworkcore.5.0.6.nupkg.sha512",
         "microsoft.aspnetcore.diagnostics.entityframeworkcore.nuspec"
       ]
     },
@@ -2346,24 +2346,24 @@
         "staticwebassets/V4/lib/jquery/dist/jquery.min.map"
       ]
     },
-    "Microsoft.AspNetCore.Mvc.Razor.Extensions/5.0.4": {
-      "sha512": "RX0L0R8tcnQq15iluVk5GUQV7ScMl98WdHayMvFbvZTzlOgf3WcwdcqATfhqcgPOg6tnf6yf+A0fE5YPPNverQ==",
+    "Microsoft.AspNetCore.Mvc.Razor.Extensions/5.0.6": {
+      "sha512": "yygv2vC+GejwDytyW+AfX3zXb4/j1+980S5IoIVvidPh967yDfI5ZSy04O/0KAI72BdsLCchNfM6LFx4bCC27A==",
       "type": "package",
-      "path": "microsoft.aspnetcore.mvc.razor.extensions/5.0.4",
+      "path": "microsoft.aspnetcore.mvc.razor.extensions/5.0.6",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
         "Icon.png",
         "THIRD-PARTY-NOTICES.TXT",
         "lib/netstandard2.0/Microsoft.AspNetCore.Mvc.Razor.Extensions.dll",
-        "microsoft.aspnetcore.mvc.razor.extensions.5.0.4.nupkg.sha512",
+        "microsoft.aspnetcore.mvc.razor.extensions.5.0.6.nupkg.sha512",
         "microsoft.aspnetcore.mvc.razor.extensions.nuspec"
       ]
     },
-    "Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation/5.0.4": {
-      "sha512": "bWftQppFSpidx/V34DhutfykHtUWzV2C8bobcUU9cguHAtqL59s/VFbyXZhfRoOGMXHd/Xq25eoUVlVqQJWv3A==",
+    "Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation/5.0.6": {
+      "sha512": "TvAUI37XKXCBJc17bCWJLFa7ljA9w1wT4mdr+l9t+r76HYL6j4pNX/4UCbkAryqh4htJlbOBQRUFNZK2PUqhhg==",
       "type": "package",
-      "path": "microsoft.aspnetcore.mvc.razor.runtimecompilation/5.0.4",
+      "path": "microsoft.aspnetcore.mvc.razor.runtimecompilation/5.0.6",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
@@ -2373,7 +2373,7 @@
         "buildTransitive/net5.0/Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation.targets",
         "lib/net5.0/Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation.dll",
         "lib/net5.0/Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation.xml",
-        "microsoft.aspnetcore.mvc.razor.runtimecompilation.5.0.4.nupkg.sha512",
+        "microsoft.aspnetcore.mvc.razor.runtimecompilation.5.0.6.nupkg.sha512",
         "microsoft.aspnetcore.mvc.razor.runtimecompilation.nuspec"
       ]
     },
@@ -2390,17 +2390,17 @@
         "microsoft.aspnetcore.razor.nuspec"
       ]
     },
-    "Microsoft.AspNetCore.Razor.Language/5.0.4": {
-      "sha512": "8N1MLq6XITwIdvqubyCtELor6SFdlOKOb+RvjLKEj2VzJzisox1FM0CRNx55lsQoAUDisnj35uPTyDqC0x7i8w==",
+    "Microsoft.AspNetCore.Razor.Language/5.0.6": {
+      "sha512": "nrkAnHCRt6DrxCJ7DwZX+PjBJffR8GAL6IkXcZIAlJ61rBKC2vzobk5STDhnL0PU7PwpRZMShilmTqWOvPxFbQ==",
       "type": "package",
-      "path": "microsoft.aspnetcore.razor.language/5.0.4",
+      "path": "microsoft.aspnetcore.razor.language/5.0.6",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
         "Icon.png",
         "THIRD-PARTY-NOTICES.TXT",
         "lib/netstandard2.0/Microsoft.AspNetCore.Razor.Language.dll",
-        "microsoft.aspnetcore.razor.language.5.0.4.nupkg.sha512",
+        "microsoft.aspnetcore.razor.language.5.0.6.nupkg.sha512",
         "microsoft.aspnetcore.razor.language.nuspec"
       ]
     },
@@ -2678,17 +2678,17 @@
         "microsoft.codeanalysis.csharp.workspaces.nuspec"
       ]
     },
-    "Microsoft.CodeAnalysis.Razor/5.0.4": {
-      "sha512": "zDU3uQ6fBxitheny8bL+84wlohfT25P0oOLYuCuk2AF4VBRBF1nHXdL+kbC5TZcGjMsddayRRazRvTVoOgRDSA==",
+    "Microsoft.CodeAnalysis.Razor/5.0.6": {
+      "sha512": "gY95qNMQarYTokEB4q5hYkXcwIziqdjhzsweuYw0TSYZ3rpN5OmduGXpCNQ6JU5Z3dWxWHy6dRqeO2b83OHYmw==",
       "type": "package",
-      "path": "microsoft.codeanalysis.razor/5.0.4",
+      "path": "microsoft.codeanalysis.razor/5.0.6",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
         "Icon.png",
         "THIRD-PARTY-NOTICES.TXT",
         "lib/netstandard2.0/Microsoft.CodeAnalysis.Razor.dll",
-        "microsoft.codeanalysis.razor.5.0.4.nupkg.sha512",
+        "microsoft.codeanalysis.razor.5.0.6.nupkg.sha512",
         "microsoft.codeanalysis.razor.nuspec"
       ]
     },
@@ -7583,33 +7583,34 @@
   },
   "projectFileDependencyGroups": {
     "net5.0": [
-      "Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore >= 5.0.4",
+      "Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore >= 5.0.6",
       "Microsoft.AspNetCore.Identity.EntityFrameworkCore >= 5.0.6",
       "Microsoft.AspNetCore.Identity.UI >= 5.0.6",
-      "Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation >= 5.0.4",
+      "Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation >= 5.0.6",
       "Microsoft.EntityFrameworkCore.SqlServer >= 5.0.6",
       "Microsoft.EntityFrameworkCore.Tools >= 5.0.6",
       "Microsoft.VisualStudio.Web.CodeGeneration.Design >= 5.0.2"
     ]
   },
   "packageFolders": {
-    "C:\\Users\\BCI SISTEMI\\.nuget\\packages\\": {},
-    "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
+    "C:\\Users\\admir\\.nuget\\packages\\": {},
+    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\BCI SISTEMI\\OneDrive\\Documents\\GitHub\\Grupa8-A3\\Net core projekat\\OOAD-Projekat\\OOAD-Projekat\\OOAD-Projekat.csproj",
+      "projectUniqueName": "C:\\Users\\admir\\Documents\\GitHub\\Grupa8-A3\\Net core projekat\\OOAD-Projekat\\OOAD-Projekat\\OOAD-Projekat.csproj",
       "projectName": "OOAD-Projekat",
-      "projectPath": "C:\\Users\\BCI SISTEMI\\OneDrive\\Documents\\GitHub\\Grupa8-A3\\Net core projekat\\OOAD-Projekat\\OOAD-Projekat\\OOAD-Projekat.csproj",
-      "packagesPath": "C:\\Users\\BCI SISTEMI\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\BCI SISTEMI\\OneDrive\\Documents\\GitHub\\Grupa8-A3\\Net core projekat\\OOAD-Projekat\\OOAD-Projekat\\obj\\",
+      "projectPath": "C:\\Users\\admir\\Documents\\GitHub\\Grupa8-A3\\Net core projekat\\OOAD-Projekat\\OOAD-Projekat\\OOAD-Projekat.csproj",
+      "packagesPath": "C:\\Users\\admir\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\admir\\Documents\\GitHub\\Grupa8-A3\\Net core projekat\\OOAD-Projekat\\OOAD-Projekat\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
-        "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
       ],
       "configFilePaths": [
-        "C:\\Users\\BCI SISTEMI\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\admir\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -7637,7 +7638,7 @@
         "dependencies": {
           "Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore": {
             "target": "Package",
-            "version": "[5.0.4, )"
+            "version": "[5.0.6, )"
           },
           "Microsoft.AspNetCore.Identity.EntityFrameworkCore": {
             "target": "Package",
@@ -7649,7 +7650,7 @@
           },
           "Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation": {
             "target": "Package",
-            "version": "[5.0.4, )"
+            "version": "[5.0.6, )"
           },
           "Microsoft.EntityFrameworkCore.SqlServer": {
             "target": "Package",
@@ -7684,7 +7685,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.200\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.201\\RuntimeIdentifierGraph.json"
       }
     }
   }

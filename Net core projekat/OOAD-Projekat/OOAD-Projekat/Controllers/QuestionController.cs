@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using OOAD_Projekat.Data;
 using OOAD_Projekat.Data.Questions;
 using OOAD_Projekat.Models;
@@ -31,7 +30,7 @@ namespace OOAD_Projekat.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Pretrazi([FromQuery(Name = "searchParam")] string SearchParam)
+        public async Task<IActionResult> Find([FromQuery(Name = "searchParam")] string SearchParam)
         {
             return View("Index", await questionsRepository.Find(SearchParam));
         }
@@ -67,7 +66,7 @@ namespace OOAD_Projekat.Controllers
                 question.Content = content;
                 question.Title = title;
 
-                questionsRepository.AddQuestion(question);
+                await questionsRepository.AddQuestion(question);
 
                 return RedirectToAction(nameof(Index));
             }

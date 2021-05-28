@@ -8,7 +8,10 @@ namespace OOAD_Projekat.Data.Statistics
 {
     public interface IStatisticsRepository
     {
-        public Task<List<SearchStatistics>> DajStatistiku(int brojSati);
-        public Task EvidentirajParametarPretrage(string searchParam);
+        public Task<List<TermUsageStatistics>> GetTermUsage(int brojSati, int brojElemenata);
+
+        public Task SaveSearchTerms(string searchParam);
+
+        public Task<List<TagUsageStatistics>> GetTagUsage(int brojSati, int brojElemenata);
     }
 }

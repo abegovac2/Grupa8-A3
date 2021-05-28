@@ -1,0 +1,184 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+<script src="~/js/axios.min.js"></script>
+<script src="~/js/chart.min.js"></script>
+<link href="~/css/statistics.css" type="text/css" rel="stylesheet" />
+<div class="statistics-page-content">
+    <div class="my-row">
+        <div class="canvas-holder">
+            <canvas id="term-search-stats"></canvas>
+        </div>
+        <div class="canvas-holder">
+            <canvas id="tag-usage-stats"></canvas>
+        </div>
+    </div>
+</div>
+
+
+<script>
+
+    // Search Term Statistics
+    const searchTermStatistics = async () => {
+        const previewTermSearchStats = (data) => {
+            let context = document.getElementById("term-search-stats").getContext("2d");
+            let delayed;
+            let termSearchStatsChart = new Chart(context, {
+                type: 'pie',
+                data: data,
+                options: {
+                    animation: {
+                        onComplete: () => { delayed = true; },
+                        delay: (ctx) => {
+                            let delay = 0;
+                            if (ctx.type === 'data' && ctx.mode === 'default' && !delayed) {
+                                delay = ctx.dataIndex * 250 + ctx.datasetIndex * 70;
+                            }
+                            return delay;
+                        }
+                    },
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            position: 'bottom'
+                        },
+                        title: {
+                            display: true,
+                            text: 'Top Search Terms in Last 24h'
+                        }
+                    }
+                },
+            });
+        }
+        const prepareData = (response, label) => {
+            let rawLabels = [];
+            let data = [];
+            let backgroundColor = [];
+
+            const makeColor = () => {
+                const red = Math.floor(Math.random() * 256);
+                const green = Math.floor(Math.random() * 256);
+                const blue = Math.floor(Math.random() * 256);
+                const opacity = 1 - Math.abs(Math.random()-0.5); // 1- ({[0,0.5]})
+                return `rgba(${red},${blue}, ${green}, ${opacity})`;
+            }
+
+            for (let i = 0; i < response.length; i++) {
+                rawLabels.push(response[i].search);
+                data.push(response[i].count);
+                backgroundColor.push(makeColor());
+            }
+            return {
+                labels: rawLabels,
+                datasets: [{
+                    label,
+                    data,
+                    backgroundColor: backgroundColor
+                }]
+            };
+        }
+        const loadDataAndPreviewTermSearchStats = async () => {
+            let getData = async () => {
+                axios.get("@Url.Action("GetTermUsage", "Statistic")", {
+                    params: {
+                        hours: 24,
+                        elements: 10
+                    }
+                }).then((res) => {
+                    let data = prepareData(res.data, '# of Searchs');
+                    previewTermSearchStats(data);
+                }).catch((err) => {})
+            }
+            await getData();
+        }
+        await loadDataAndPreviewTermSearchStats();
+    }
+
+
+    // Tag Usage Statistics
+
+    const tagUsageStatistics = async () => {
+        const previewTagUsageStatistics = (data) => {
+            let context = document.getElementById("tag-usage-stats").getContext("2d");
+            let delayed;
+            let tagUsageStatsChart = new Chart(context, {
+                type: 'bar',
+                data: data,
+                options: {
+                    animation: {
+                        onComplete: () => { delayed = true; },
+                        delay: (ctx) => {
+                            let delay = 0;
+                            if (ctx.type === 'data' && ctx.mode === 'default' && !delayed) {
+                                delay = ctx.dataIndex * 250 + ctx.datasetIndex * 70;
+                            }
+                            return delay;
+                        }
+                    },
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            display: false
+                        },
+                        title: {
+                            display: true,
+                            text: 'Hot Tags in Last 24h'
+                        }
+                    }
+                },
+            });
+        }
+        const prepareData = (response) => {
+            let rawLabels = [];
+            let data = [];
+            let backgroundColor = [];
+
+            const makeColor = () => {
+                const red = Math.floor(Math.random() * 256);
+                const green = Math.floor(Math.random() * 256);
+                const blue = Math.floor(Math.random() * 256);
+                const opacity = 1 - Math.abs(Math.random() - 0.5); // 1- ({[0,0.5]})
+                return `rgba(${red},${blue}, ${green}, ${opacity})`;
+            }
+
+            for (let i = 0; i < response.length; i++) {
+                rawLabels.push(response[i].tag);
+                data.push(response[i].count);
+                backgroundColor.push(makeColor());
+            }
+            return {
+                labels: rawLabels,
+                datasets: [{
+                    data,
+                    backgroundColor: backgroundColor
+                }]
+            };
+        }
+        const loadDataAndTagUsageStats = async () => {
+            let getData = async () => {
+                axios.get("@Url.Action("GetTagUsage", "Statistic")", {
+                    params: {
+                        hours: 24,
+                        elements: 10
+                    }
+                }).then((res) => {
+                    console.log(res.data);
+                    let data = prepareData(res.data);
+                    previewTagUsageStatistics(data);
+                }).catch((err) => {
+                    console.log(err);
+                })
+            }
+            await getData();
+        }
+        await loadDataAndTagUsageStats();
+    }
+
+    // Usage of defined functions
+    searchTermStatistics();
+    tagUsageStatistics();
+
+
+</script>

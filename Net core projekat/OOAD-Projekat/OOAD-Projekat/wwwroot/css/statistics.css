@@ -1,0 +1,36 @@
+﻿.statistics-page-content {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+.my-row {
+    display: flex;
+    align-content: center;
+    align-items: center;
+    justify-content: center;
+}
+.canvas-holder {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    max-width: 500px;
+    max-height: 500px;
+    margin: 30px;
+    padding: 30px;
+    background-color: #F8F9FA;
+    border-radius: 30px;
+    align-items: center;
+}
+@media screen and (max-width: 991px) {
+    /* Fixa na mobilnim uredjajima width za search */
+    .statistics-page-content {
+        padding: 20px;
+    }
+
+    .my-row {
+        flex-direction: column;
+    }
+    .canvas-holder{
+        padding: 10px;
+    }
+}

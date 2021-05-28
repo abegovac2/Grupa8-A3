@@ -32,7 +32,7 @@ namespace OOAD_Projekat.Data.Questions
         }
         public async Task AddQuestion(Question question)
         {
-            applicationDbContext.Questions.Add(question);
+            await applicationDbContext.Questions.AddAsync(question);
             await applicationDbContext.SaveChangesAsync();
         }
         //todo: DeleteQuestion

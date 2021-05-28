@@ -16,13 +16,8 @@ namespace OOAD_Projekat.Data.Statistics
         {
             this.applicationDbContext = applicationDbContext;
         }
-        public async Task<List<SearchStatistics>> DajStatistiku(int brojSati)
-        {
-            var trenutnoVrijeme = DateTime.Now;
-            var data = await applicationDbContext.SearchStatistics.Where(ss => ss.Timestamp > trenutnoVrijeme.AddHours(brojSati) && ss.Timestamp <= trenutnoVrijeme).ToListAsync();
-            return data;
-        }
-        public async Task EvidentirajParametarPretrage(string searchParam)
+
+        public async Task SaveSearchTerms(string searchParam)
         {
             var currentTimestamp = DateTime.Now;
             var rijeci = Regex.Matches(searchParam, @"[^\W\d][\w'-]*(?<=\w)").ToList();
@@ -33,6 +28,28 @@ namespace OOAD_Projekat.Data.Statistics
                 await applicationDbContext.SearchStatistics.AddAsync(searchStatistics);
             }
             await applicationDbContext.SaveChangesAsync();
+        }
+        public async Task<List<TermUsageStatistics>> GetTermUsage(int brojSati, int brojElemenata)
+        {
+            var trenutnoVrijeme = DateTime.Now;
+            var data = await applicationDbContext.SearchStatistics.Where(ss => ss.Timestamp > trenutnoVrijeme.AddHours(-brojSati) && ss.Timestamp <= trenutnoVrijeme)
+                        .GroupBy(ss => ss.Search)
+                        .Select(ss => new TermUsageStatistics { Search = ss.Key, Count = ss.Count() })
+                        .OrderByDescending(tus => tus.Count)
+                        .Take(brojElemenata)
+                        .ToListAsync();
+            return data;
+        }
+
+        public async Task<List<TagUsageStatistics>> GetTagUsage(int brojSati, int brojElemenata)
+        {
+            var trenutnoVrijeme = DateTime.Now;
+            var data = await applicationDbContext.TagPosts.Where(tp => tp.Question.TimeStamp > trenutnoVrijeme.AddHours(-brojSati) && tp.Question.TimeStamp <= trenutnoVrijeme)
+                .Select(tp => new TagUsageStatistics { Tag = tp.Tag.TagContent, Count = tp.Tag.NumOfUses })
+                .OrderByDescending(tus => tus.Count)
+                .Take(brojElemenata)
+                .ToListAsync();
+            return data;
         }
     }
 }
