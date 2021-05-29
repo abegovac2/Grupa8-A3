@@ -31,11 +31,38 @@
   right: 0px;
 }
 
+.search-wrapper {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+}
+.search-results {
+    display: none;
+    position: absolute;
+    background-color: #fff;
+    top: 45px;
+    height: 100px;
+    overflow-y: auto;
+    width: 100%;
+    border: 1px solid #F8F9FA;
+    padding: 0;
+}
+.search-results > li {
+    list-style: none;
+    text-align: left;
+    padding: 5px;
+    border-bottom: 1px solid #cbcbcb;
+}
+.search-results > li:last-child{
+    border-bottom: none;
+}
+.search-results:hover{
+    display:block;
+}
 /* Media queries */
-
 @media screen and (max-width: 991px) {
-  /* Fixa na mobilnim uredjajima width za search */
-  .my-class-w-100 {
+    /* Fixa na mobilnim uredjajima width za search */
+    .my-class-w-100 {
     width: 100% !important;
   }
   .content {

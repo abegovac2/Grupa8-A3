@@ -75,18 +75,21 @@
             </ul>
             <ul class="navbar-nav ml-auto mr-auto w-50 my-class-w-100">
                 <li class="nav-item">
-                    <form>
-                        <div class="input-group">
-                            <input class="form-control py-3 border-right-0 border"
-                                   type="search"
-                                   placeholder="Search..."
-                                   id="search-input" />
-                            <span class="input-group-prepend">
-                                <div id="search-button" class="input-group-text bg-transparent">
-                                    <i class="fa fa-search"></i>
-                                </div>
-                            </span>
-                        </div>
+                    <form class="search-wrapper">
+                            <div class="input-group">
+                                <input class="form-control py-3 border-right-0 border my-input"
+                                       type="search"
+                                       autocomplete="off"
+                                       placeholder="Search..."
+                                       id="search-input" />
+                                <span class="input-group-prepend">
+                                    <div id="search-button" class="input-group-text bg-transparent">
+                                        <i class="fa fa-search"></i>
+                                    </div>
+                                </span>
+                            </div>
+                            <ul class="search-results">
+                            </ul>
                     </form>
                 </li>
             </ul>
@@ -160,9 +163,10 @@
         </footer>*@
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/axios.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
-    <script type="text/javascript">
+<script type="text/javascript">
             $(function () {
                 const pretraga = (event) => {
                     event.preventDefault();
@@ -184,8 +188,50 @@
                     if (event.keyCode === 13) {
                         pretraga(event);
                     }
-                    });
                 });
-    </script>
+                const delay = (callback, ms) => {
+                    let timer = 0;
+                    return function () {
+                        let context = this, args = arguments;
+                        clearTimeout(timer);
+                        timer = setTimeout(function () {
+                            callback.apply(context, args);
+                        }, ms || 0);
+                    };
+                }
+                // TODO - linkovi moraju voditi na detalje pitanja!
+                $('#search-input').keyup(delay(function (e) {
+                    axios.get("@Url.Action("SuggestBasedOnSearchInput", "Suggestion")", {
+                        params: {
+                            searchParam: $('#search-input').val()
+                        }
+                    }).then((res) => {
+                        // Obrisi stari sadrzaj pretrage
+                        const searchResult = $(".search-results");
+                        searchResult.empty();
+                        // Dodaj novi sadrzaj pretrage
+                        const data = res.data;
+                        for (let i = 0; i < data.length; i++) {
+                            searchResult.append(`<li>${data[i].title}</li>`);
+                        }
+                        if (searchResult.length > 0) {
+                            searchResult.css("display", "block");
+                        }
+                        else {
+                            searchResult.css("display", "none");
+                        }
+                    }).catch((err) => { });
+                }, 200));
+
+                $(".search-results").hover(
+                    () => { $(".search-results").css("display", "block"); },
+                    () => { $(".search-results").css("display", "none"); }
+                )
+                $(document).click((e) => {
+                    if ($(e.target).closest(".search-results").length > 0) return false;
+                    $(".search-results").css("display", "none");
+                });
+            });
+</script>
 </body>
 </html>
