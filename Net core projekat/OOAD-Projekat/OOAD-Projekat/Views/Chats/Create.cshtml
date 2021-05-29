@@ -14,15 +14,15 @@
                 <input type="hidden" name="AddedUsers" value="@Model.Item2" />
                 <input type="submit" value="Create new chat">
             </form>
+            <h2 class="">Added users: </h2>
             <div class="added_users">
-                <div class="">Added users: </div>
                 @{
                     var users = Model.Item2.Split("::");
                     @foreach (var user in users)
                     {
                         if (user.Length == 0) continue;
                         <div class="added_user">
-                            <p>@user</p>
+                            <div>@user</div>
                             <form asp-controller="Chats" asp-action="RemoveUserFromAddedUsers">
                                 <input type="hidden" value="@user" name="user" />
                                 <input type="hidden" value="@Model.Item2" name="AddedUsers" />
@@ -32,7 +32,7 @@
                     }
                 }
             </div>
-            <label for="group1">Group Chat</label>
+            <h2>Group Chat</h2>
             <div class="chat_create_setup">
                 <form asp-controller="Chats" asp-action="SearchForNewChatUsers">
                     <input type="text" class="search_user" name="name" placeholder="Search" />

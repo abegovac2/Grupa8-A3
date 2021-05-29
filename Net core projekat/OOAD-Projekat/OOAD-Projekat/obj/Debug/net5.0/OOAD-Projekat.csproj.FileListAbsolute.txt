@@ -427,9 +427,7 @@ C:\Users\admir\Documents\GitHub\Grupa8-A3\Net core projekat\OOAD-Projekat\OOAD-P
 C:\Users\admir\Documents\GitHub\Grupa8-A3\Net core projekat\OOAD-Projekat\OOAD-Projekat\obj\Debug\net5.0\Razor\Areas\Identity\Pages\_ViewImports.cshtml.g.cs
 C:\Users\admir\Documents\GitHub\Grupa8-A3\Net core projekat\OOAD-Projekat\OOAD-Projekat\obj\Debug\net5.0\Razor\Areas\Identity\Pages\_ViewStart.cshtml.g.cs
 C:\Users\admir\Documents\GitHub\Grupa8-A3\Net core projekat\OOAD-Projekat\OOAD-Projekat\obj\Debug\net5.0\Razor\Views\Chats\Create.cshtml.g.cs
-C:\Users\admir\Documents\GitHub\Grupa8-A3\Net core projekat\OOAD-Projekat\OOAD-Projekat\obj\Debug\net5.0\Razor\Views\Chats\Delete.cshtml.g.cs
 C:\Users\admir\Documents\GitHub\Grupa8-A3\Net core projekat\OOAD-Projekat\OOAD-Projekat\obj\Debug\net5.0\Razor\Views\Chats\Details.cshtml.g.cs
-C:\Users\admir\Documents\GitHub\Grupa8-A3\Net core projekat\OOAD-Projekat\OOAD-Projekat\obj\Debug\net5.0\Razor\Views\Chats\Edit.cshtml.g.cs
 C:\Users\admir\Documents\GitHub\Grupa8-A3\Net core projekat\OOAD-Projekat\OOAD-Projekat\obj\Debug\net5.0\Razor\Views\Chats\Index.cshtml.g.cs
 C:\Users\admir\Documents\GitHub\Grupa8-A3\Net core projekat\OOAD-Projekat\OOAD-Projekat\obj\Debug\net5.0\Razor\Views\Home\About.cshtml.g.cs
 C:\Users\admir\Documents\GitHub\Grupa8-A3\Net core projekat\OOAD-Projekat\OOAD-Projekat\obj\Debug\net5.0\Razor\Views\Home\Statistics.cshtml.g.cs

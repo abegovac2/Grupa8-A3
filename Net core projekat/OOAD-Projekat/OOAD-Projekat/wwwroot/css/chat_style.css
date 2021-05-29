@@ -1,5 +1,5 @@
 ﻿/*individual chat*/
-.container {
+.my-container {
     max-width: 1170px;
     margin: auto;
     overflow: hidden;
@@ -30,11 +30,11 @@ img {
 
 .received_withd_msg p {
     background: #ebebeb none repeat scroll 0 0;
-    border-radius: 3px;
+    border-radius: 15px;
     color: #646464;
     font-size: 14px;
     margin: 0;
-    padding: 5px 10px 5px 12px;
+    padding: 5px 15px 5px 15px;
     width: 100%;
 }
 
@@ -43,6 +43,9 @@ img {
     display: block;
     font-size: 12px;
     margin: 8px 0 0;
+}
+.sent_msg .time_date{
+    text-align: right;
 }
 
 .received_withd_msg {
@@ -58,11 +61,11 @@ img {
 
 .sent_msg p {
     background: #05728f none repeat scroll 0 0;
-    border-radius: 3px;
+    border-radius: 15px;
     font-size: 14px;
     margin: 0;
     color: #fff;
-    padding: 5px 10px 5px 12px;
+    padding: 5px 15px 5px 15px;
     width: 100%;
     text-align: right;
     overflow-wrap: break-word;
@@ -89,21 +92,20 @@ img {
 }
 
 .type_msg {
-    border-top: 1px solid #c4c4c4;
     position: relative;
 }
 
 .msg_send_btn {
     background: #05728f none repeat scroll 0 0;
     border: medium none;
-    border-radius: 50%;
+    border-radius: 10px;
     color: #fff;
     cursor: pointer;
     font-size: 17px;
     height: 33px;
     right: 0;
     top: 11px;
-    width: auto;
+    width: 10%;
 }
 
 .messaging {
@@ -112,14 +114,15 @@ img {
 }
 
 .msg_history {
-    height: 516px;
+    height: 600px;
     overflow-y: auto;
     align-content: baseline;
     padding: 1rem;
     border-style: solid;
     border-color: #4c4c4c;
     border-width: thin;
-    border-radius: 3px;
+    border-radius: 10px;
+
 }
 
 .dropbtn {
@@ -282,6 +285,7 @@ img {
 }
 
 .search_user {
+    margin-left: 20px;
     width: 90%;
 }
 
@@ -294,14 +298,14 @@ img {
 .add_user_button {
     background: #05728f none repeat scroll 0 0;
     border: medium none;
-    border-radius: 50%;
+    border-radius: 10px;
     color: #fff;
     cursor: pointer;
     font-size: 17px;
     height: 33px;
     right: 0;
     top: 11px;
-    width: auto;
+    width: 7%;
 }
 
 .create_chat {
@@ -316,19 +320,23 @@ img {
 .added_user {
     background-color: lightgray;
     border: 1px solid #c4c4c4;
-    margin: 0;
+    margin-right: 10px;
     padding: 2px 2px 2px 2px;
     width: max-content;
-    border-radius: 10% 10% 0 0;
+    border-radius: 10px;
     display: flex;
     align-items: center;
 }
-
-
-    .added_user > p {
-        display: flex;
-        align-items: center;
-    }
+.added_users{
+    display: flex;
+    flex-wrap: wrap;
+    padding-left: 20px;
+}
+.added_user > p {
+    display: flex;
+    align-self: center;
+    background-color: red;
+}
 
 .select_user_list {
     width: 100%;
@@ -336,4 +344,25 @@ img {
     outline: auto #c4c4c4;
     overflow: auto;
     height: 30rem;
+}
+
+
+/*Chat details*/
+
+.my-row{
+    display: flex;
+    flex-direction: row;
+    margin-top: 10px;
+}
+.my-row > input{
+    width: 90%;
+    margin-right: 1%;
+}
+.details-page-content{
+    padding-top: 30px;
+    width: 100%;
+}
+.heading-content {
+    display: flex;
+    justify-content: space-between;
 }

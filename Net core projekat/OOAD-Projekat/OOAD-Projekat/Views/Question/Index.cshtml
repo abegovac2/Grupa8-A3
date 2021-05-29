@@ -7,12 +7,24 @@
 <div class="questions-page-content">
 
     <div class="my-buttons">
-        <div class="my-filter-buttons">
-            <a class="my-button my-active-button" asp-controller="Question" asp-action="Index">New</a>
-            <a class="my-button" asp-controller="Question" asp-action="Popular">Popular</a>
-            <a class="my-button" asp-controller="Question" asp-action="Unanswered">Unanswered</a>
-            <a class="my-button" asp-controller="Question" asp-action="Recommended">Recommended</a>
-        </div>
+        @* my-active-button*@
+
+        @{
+            <div class="my-filter-buttons">
+                @if (!Url.Action().Contains("MyQuestions"))
+                {
+                    <a class="my-button" asp-controller="Question" asp-action="Index">New</a>
+                    <a class="my-button" asp-controller="Question" asp-action="Popular">Popular</a>
+                    <a class="my-button" asp-controller="Question" asp-action="Unanswered">Unanswered</a>
+                    <a class="my-button" asp-controller="Question" asp-action="Recommended">Recommended</a>
+                }
+                else
+                {
+                    <a class="my-button my-active-button" asp-controller="Question" asp-action="MyQuestions">My Questions</a>
+                }
+            </div>
+        }
+
         <div class="my-question-adder-buttons">
             <a asp-controller="Question" asp-action="Create" class="my-button">Add Question</a>
         </div>

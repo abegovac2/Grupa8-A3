@@ -6,50 +6,52 @@
 
 <link rel="stylesheet" href="~/css/chat_style.css" />
 
-<body>
-    <h1>@Model.Item1.ChatName</h1>
-    <div class="dropdown">
-        <button class="dropbtn">Edit</button>
-        <div class="dropdown-content">
-            @if (Model.Item2 == OOAD_Projekat.Models.ChatModels.UserRole.ADMIN)
-            {
-                <form asp-controller="Chats" asp-action="DeleteChat">
-                    <input type="hidden" name="id" value="@Model.Item1.Id" />
-                    <button type="submit">Delete Chat</button>
-                </form>
-            }
-            else
-            {
-                <form asp-controller="Chats" asp-action="DeleteUserFromChat">
-                    <input type="hidden" name="ChatId" value="@Model.Item1.Id" />
-                    <button type="submit">Leave Chat</button>
-                </form>
-            }
+<div class="details-page-content">
+    <div class="heading-content">
+        <h1>@Model.Item1.ChatName</h1>
+        <div class="dropdown">
+            <button class="dropbtn">Edit</button>
+            <div class="dropdown-content">
+                @if (Model.Item2 == OOAD_Projekat.Models.ChatModels.UserRole.ADMIN)
+                {
+                    <form asp-controller="Chats" asp-action="DeleteChat">
+                        <input type="hidden" name="id" value="@Model.Item1.Id" />
+                        <button type="submit">Delete Chat</button>
+                    </form>
+                }
+                else
+                {
+                    <form asp-controller="Chats" asp-action="DeleteUserFromChat">
+                        <input type="hidden" name="ChatId" value="@Model.Item1.Id" />
+                        <button type="submit">Leave Chat</button>
+                    </form>
+                }
 
-            <div class="dropdown">
-                <button class="dropbtn">Chat Users</button>
-                <div class="dropdown-content">
-                    @foreach (var item in Model.Item1.Users)
-                    {
-                        if (item.User.UserName == User.Identity.Name) continue;
-                        <div>
-                            <p>@item.User.UserName</p>
-                            @if (Model.Item2 == OOAD_Projekat.Models.ChatModels.UserRole.ADMIN)
-                            {
-                                <form asp-controller="Chats" asp-action="DeleteUser">
-                                    <input type="hidden" name="UserId" value="@item.UserId" />
-                                    <input type="hidden" name="ChatId" value="@item.ChatId" />
-                                    <button type="submit">Delete</button>
-                                </form>
-                            }
-                        </div>
-                    }
+                <div class="dropdown">
+                    <button class="dropbtn">Chat Users</button>
+                    <div class="dropdown-content">
+                        @foreach (var item in Model.Item1.Users)
+                        {
+                            if (item.User.UserName == User.Identity.Name) continue;
+                            <div>
+                                <p>@item.User.UserName</p>
+                                @if (Model.Item2 == OOAD_Projekat.Models.ChatModels.UserRole.ADMIN)
+                                {
+                                    <form asp-controller="Chats" asp-action="DeleteUser">
+                                        <input type="hidden" name="UserId" value="@item.UserId" />
+                                        <input type="hidden" name="ChatId" value="@item.ChatId" />
+                                        <button type="submit">Delete</button>
+                                    </form>
+                                }
+                            </div>
+                        }
 
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-    <div class="container">
+    <div class="my-container">
         <div class="chat_list">
             <div id="messagesList" class="msg_history">
                 @foreach (var item in Model.Item1.Messages)
@@ -85,16 +87,22 @@
                 <form id="messageForm">
                     <input id="chatInput" type="hidden" name="chatId" value="@Model.Item1.Id" />
                     <input id="userInput" type="hidden" name="name" value="@User.Identity.Name" />
-                    <input id="messageInput" type="text" name="text" class="write_msg" placeholder="Type a message" />
-                    <button id="sendMessageButton" class="msg_send_btn" type="button">Send</button>
+                    <div class="my-row">
+                        <input id="messageInput" type="text" name="text" class="write_msg" placeholder="Type a message" />
+                        <button id="sendMessageButton" class="msg_send_btn" type="button">Send</button>
+                    </div>
                 </form>
             </div>
         </div>
     </div>
-</body>
+</div>
+
+
 <script src="~/js/signalr/dist/browser/signalr.js"></script>
 <script src="~/js/chat.js"></script>
 <script type="text/javascript">
+    var element = document.getElementById("messagesList");
+    element.scrollTop = element.scrollHeight;
     var saveMessage = function () {
         $.post({
             url: '@Url.Action("SendMessage", "Chats")',

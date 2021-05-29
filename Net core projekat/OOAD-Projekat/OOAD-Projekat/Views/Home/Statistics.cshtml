@@ -34,7 +34,7 @@
                         delay: (ctx) => {
                             let delay = 0;
                             if (ctx.type === 'data' && ctx.mode === 'default' && !delayed) {
-                                delay = ctx.dataIndex * 250 + ctx.datasetIndex * 70;
+                                delay = ctx.dataIndex * 150 + ctx.datasetIndex * 70;
                             }
                             return delay;
                         }
