@@ -34,6 +34,11 @@ namespace OOAD_Projekat.Controllers
         {
             return View("Index", await questionsRepository.Find(SearchParam));
         }
+        [HttpGet("byTag")]
+        public async Task<IActionResult> ByTag([FromQuery(Name = "tagName")] string tagName)
+        {
+            return View("Index", await questionsRepository.ByTag(tagName.Trim().ToUpper()));
+        }
         // TODO
         public IActionResult Popular()
         {

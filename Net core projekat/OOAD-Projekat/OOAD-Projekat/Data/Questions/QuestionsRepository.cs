@@ -35,6 +35,13 @@ namespace OOAD_Projekat.Data.Questions
             await applicationDbContext.Questions.AddAsync(question);
             await applicationDbContext.SaveChangesAsync();
         }
+
+        public async Task<List<Question>> ByTag(string tagName)
+        {
+            return await applicationDbContext.Questions
+                .Join(applicationDbContext.TagPosts, q => q.Id, tp => tp.QuestionId, (q, tp) => new { question = q, tag = tp })
+                .Where(qtp => qtp.tag.Tag.TagContent.ToUpper().Contains(tagName)).Select(q => q.question).ToListAsync();
+        }
         //todo: DeleteQuestion
     }
 }

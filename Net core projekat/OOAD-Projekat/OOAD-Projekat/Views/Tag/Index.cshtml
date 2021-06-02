@@ -1,6 +1,8 @@
-﻿@*
+﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@*
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
+<script src="~/js/axios.min.js"></script>
 <link href="~/css/tagList.css" rel="stylesheet" type="text/css" />
 <div class="tag-page-content">
     <div class="page-info">
@@ -15,8 +17,9 @@
         <div class="input-group">
             <input class="form-control py-3 border-right-0 border"
                    type="search"
+                   value=""
                    placeholder="Filter tags"
-                   id="search-input" />
+                   id="search-input-tags" />
             <span class="input-group-prepend">
                 <div class="input-group-text bg-transparent">
                     <i class="fa fa-search"></i>
@@ -24,42 +27,50 @@
             </span>
         </div>
     </div>
-    <div class="tag-cards">
-        <div class="tag-card">
-            <span class="tag-card-heading">Lorem.</span>
-        </div>
-        <div class="tag-card">
-            <span class="tag-card-heading">Lorem, ipsum.</span>
-        </div>
-        <div class="tag-card">
-            <span class="tag-card-heading">Lorem, ipsum dolor.</span>
-        </div>
-        <div class="tag-card">
-            <span class="tag-card-heading">Lorem ipsum dolor sit.</span>
-        </div>
-        <div class="tag-card">
-            <span class="tag-card-heading">Lorem ipsum dolor sit amet.</span>
-        </div>
-        <div class="tag-card">
-            <span class="tag-card-heading">Lorem ipsum dolor sit amet consectetur.</span>
-        </div>
-        <div class="tag-card">
-            <span class="tag-card-heading">Lorem ipsum dolor sit amet consectetur adipisicing.</span>
-        </div>
-        <div class="tag-card">
-            <span class="tag-card-heading">Lorem, ipsum dolor sit amet consectetur adipisicing elit.</span>
-        </div>
-        <div class="tag-card">
-            <span class="tag-card-heading">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Earum?
-            </span>
-        </div>
-        <div class="tag-card">
-            <span class="tag-card-heading">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Quaerat, inventore.
-            </span>
-        </div>
-    </div>
+    <div class="tag-cards"></div>
 </div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const delay = (callback, ms) => {
+            let timer = 0;
+            return function () {
+                let context = this, args = arguments;
+                clearTimeout(timer);
+                timer = setTimeout(function () {
+                    callback.apply(context, args);
+                }, ms || 0);
+            };
+        }
+
+        const popuniTagCards = (data) => {
+            // Ukloni sve kartice
+            const tagCards = $(".tag-cards");
+            tagCards.empty();
+            for (const tag of data) {
+                let tagName = tag.tagContent.split(" ").join("+");
+                let tagId = "tag_" + tag.id;
+                tagCards.append(`
+                <div class="tag-card" id=${tagId}>
+                    <a class="tag-card-heading" >${tag.tagContent}</a>
+                </div>
+                `);
+                $("#" + tagId).click(() => {
+                    window.open(`@Url.Action("ByTag", "Question")?tagName=${tagName}`, "_self");
+                })
+            }
+        }
+        let dohvatiPodatke = () => {
+            axios.get("@Url.Action("GetTags", "Tag")", {
+                params: {
+                    searchParam: $("#search-input-tags").val()
+                }
+            }).then((res) => {
+                popuniTagCards(res.data);
+            }).catch((err) => { });
+        }
+        $('#search-input-tags').keyup(delay(function (e) { dohvatiPodatke() }, 200));
+        // Kada se dokument ucita, popuni ga sa defaultnim podacima
+        dohvatiPodatke();
+    });
+</script>

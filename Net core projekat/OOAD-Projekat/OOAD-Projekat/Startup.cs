@@ -11,6 +11,7 @@ using OOAD_Projekat.Controllers.Hubs;
 using OOAD_Projekat.Data;
 using OOAD_Projekat.Data.Questions;
 using OOAD_Projekat.Data.Statistics;
+using OOAD_Projekat.Data.Tags;
 using OOAD_Projekat.Models;
 using System;
 using System.Collections.Generic;
@@ -42,6 +43,7 @@ namespace OOAD_Projekat
             services.AddSignalR();
             services.AddScoped<IQuestionsRepository, QuestionsRepository>();
             services.AddScoped<IStatisticsRepository, StatisticsRepository>();
+            services.AddScoped<ITagsRepository, TagsRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
