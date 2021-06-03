@@ -14,9 +14,11 @@ namespace OOAD_Projekat.Controllers
     public class QuestionController : Controller
     {
         private readonly IQuestionsRepository questionsRepository;
-        public QuestionController(IQuestionsRepository questionsRepository)
+        private readonly IQuestionRecommendation questionRecommendation;
+        public QuestionController(IQuestionsRepository questionsRepository, IQuestionRecommendation questionRecommendation)
         {
             this.questionsRepository = questionsRepository;
+            this.questionRecommendation = questionRecommendation;
         }
 
         public async Task<IActionResult> Index()
@@ -50,9 +52,9 @@ namespace OOAD_Projekat.Controllers
             return View("Index", new List<Question>());
         }
         // TODO
-        public IActionResult Recommended()
+        public async Task<IActionResult> Recommended()
         {
-            return View("Index", new List<Question>());
+            return View("Index", await questionRecommendation.RecommendQuestions(User.Identity.Name.ToString()));
         }
         // GET: Questions/Create
         public IActionResult Create()

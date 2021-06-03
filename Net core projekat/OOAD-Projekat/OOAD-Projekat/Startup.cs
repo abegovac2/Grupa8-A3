@@ -44,6 +44,7 @@ namespace OOAD_Projekat
             services.AddScoped<IQuestionsRepository, QuestionsRepository>();
             services.AddScoped<IStatisticsRepository, StatisticsRepository>();
             services.AddScoped<ITagsRepository, TagsRepository>();
+            services.AddScoped<IQuestionRecommendation, QuestionRecommendation>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

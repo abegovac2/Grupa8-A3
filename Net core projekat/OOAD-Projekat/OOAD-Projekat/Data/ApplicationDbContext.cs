@@ -26,7 +26,7 @@ namespace OOAD_Projekat.Data
         public DbSet<Chat> Chats { get; set; }
         public DbSet<Message> Messages { get; set; }
         public DbSet<SearchStatistics> SearchStatistics { get; set; }
-
+        public DbSet<ViewedQuestionsHistory> ViewedQuestionsHistory { get; set; }
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
         {
@@ -54,6 +54,12 @@ namespace OOAD_Projekat.Data
             // Configure composite key
 
             builder.Entity<ChatUser>().HasKey(cu => new { cu.ChatId, cu.UserId });
+
+            // Many to many questions and users (history - for recommendation table)
+
+            builder.Entity<ViewedQuestionsHistory>().HasKey(vqh => new { vqh.QuestionId, vqh.UserId });
+            builder.Entity<ViewedQuestionsHistory>().HasOne(vqh => vqh.Question).WithMany(q => q.ViewedQuestionsHistory).HasForeignKey(vqh => vqh.QuestionId);
+            builder.Entity<ViewedQuestionsHistory>().HasOne(vqh => vqh.User).WithMany(u => u.ViewedQuestionsHistory).HasForeignKey(vqh => vqh.UserId);
 
         }
     }

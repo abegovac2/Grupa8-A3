@@ -28,6 +28,7 @@ namespace OOAD_Projekat.Models
         // One to many relationship with answers
         public ICollection<Answer> Answers { get; set; }
 
+        public ICollection<ViewedQuestionsHistory> ViewedQuestionsHistory { get; set; }
 
         public void AddAnswer(Answer answer)
         {
