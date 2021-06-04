@@ -129,7 +129,21 @@ namespace OOAD_Projekat
         public async Task<IActionResult> CreateNewChat(string chatName, string AddedUsers)
         {
             var users = AddedUsers.Split("::");
-            if (users.Length <= 2) return View("Error");
+            if (users.Length <= 2) return RedirectToAction(nameof(Create));
+
+            if (chatName == null) chatName = "";
+            else chatName.Trim();
+
+            if (chatName.Length == 0)
+            {
+                chatName = User.Identity.Name + ",";
+                for(int i = 0; i < users.Length; ++i)
+                {
+                    if (users[i].Length != 0) chatName += users[i];
+                    else continue;
+                    if (i != users.Length - 2) chatName += ",";
+                }
+            }
 
             var chat = new Chat
             {
