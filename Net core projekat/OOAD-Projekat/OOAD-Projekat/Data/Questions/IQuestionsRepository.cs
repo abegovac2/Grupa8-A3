@@ -13,5 +13,6 @@ namespace OOAD_Projekat.Data.Questions
         public Task<List<Question>> FindMine(String UserName);
         public Task AddQuestion(Question question);
         public Task<List<Question>> ByTag(String tagName);
+        public Task SaveOpening(string UserName, Question question);
     }
 }

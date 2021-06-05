@@ -52,6 +52,7 @@ namespace OOAD_Projekat.Controllers
             return View("Index", new List<Question>());
         }
         // TODO
+        [Authorize]
         public async Task<IActionResult> Recommended()
         {
             return View("Index", await questionRecommendation.RecommendQuestions(User.Identity.Name.ToString()));
@@ -78,6 +79,11 @@ namespace OOAD_Projekat.Controllers
                 return RedirectToAction(nameof(Index));
             }
             return View(question);
+        }
+        // Metoda koja se poziva kada se udje u detalj pitanja, kako bi sistem za preporuke ispravno radio
+        public async Task SaveOpening(Question question)
+        {
+            await questionsRepository.SaveOpening(User.Identity.Name.ToString(), question);
         }
     }
 }

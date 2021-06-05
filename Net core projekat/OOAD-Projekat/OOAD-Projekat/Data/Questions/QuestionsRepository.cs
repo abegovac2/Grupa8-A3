@@ -43,5 +43,11 @@ namespace OOAD_Projekat.Data.Questions
                 .Where(qtp => qtp.tag.Tag.TagContent.ToUpper().Contains(tagName)).Select(q => q.question).ToListAsync();
         }
         //todo: DeleteQuestion
+
+        public async Task SaveOpening(string UserName, Question question)
+        {
+            await applicationDbContext.ViewedQuestionsHistory.AddAsync(new Models.QuestionAndAnwserModels.ViewedQuestionsHistory { UserId = UserName, QuestionId = question.Id });
+            await applicationDbContext.SaveChangesAsync();
+        }
     }
 }
