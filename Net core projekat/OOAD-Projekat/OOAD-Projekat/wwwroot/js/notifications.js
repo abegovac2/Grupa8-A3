@@ -3,8 +3,10 @@
 var connection = new signalR.HubConnectionBuilder().withUrl("/NotificationUserHub?userId=" + userId).build();
 
 function chatNotification(postsId, notificationId, message) {
-    var chat = document.getElementById("chatNotif" + postId);
-    if(chat.textContent.length == 0) chat.textContent = "ImaNesto";
+    var notif = "chatNotif";
+    notif = notif.concat(parseInt(postsId));
+    var chat = document.getElementById(notif);
+    chat.textContent = "True";
 }
 
 function questionNotification( postsId, notificationId, message) {
