@@ -15,6 +15,13 @@ namespace OOAD_Projekat.Data.Tags
         {
             this.applicationDbContext = applicationDbContext;
         }
+
+        public async Task AddTags(Tag t)
+        {
+           applicationDbContext.Tags.AddAsync(t);
+           await applicationDbContext.SaveChangesAsync(); 
+        }
+
         [HttpGet]
         public async Task<List<Tag>> GetTags(string searchParam)
         {
@@ -25,5 +32,6 @@ namespace OOAD_Projekat.Data.Tags
             }
             else return await applicationDbContext.Tags.Where(t => t.TagContent.ToUpper().Contains(searchParam)).ToListAsync();
         }
+      
     }
 }

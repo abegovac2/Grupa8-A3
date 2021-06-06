@@ -1,11 +1,14 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using OOAD_Projekat.Data;
 using OOAD_Projekat.Data.Questions;
+using OOAD_Projekat.Data.Tags;
 using OOAD_Projekat.Models;
 using OOAD_Projekat.Models.ViewModels;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -15,10 +18,12 @@ namespace OOAD_Projekat.Controllers
     {
         private readonly IQuestionsRepository questionsRepository;
         private readonly IQuestionRecommendation questionRecommendation;
-        public QuestionController(IQuestionsRepository questionsRepository, IQuestionRecommendation questionRecommendation)
+        private readonly ITagsRepository tagsRepository;
+        public QuestionController(IQuestionsRepository questionsRepository, IQuestionRecommendation questionRecommendation, ITagsRepository tagsRepository)
         {
             this.questionsRepository = questionsRepository;
             this.questionRecommendation = questionRecommendation;
+            this.tagsRepository = tagsRepository;
         }
 
         public async Task<IActionResult> Index()
@@ -65,7 +70,7 @@ namespace OOAD_Projekat.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(string title, string content, string tags)
+        public async Task<IActionResult> Create( string title, string content, string tags)
         {
             var question = new Question();
             if (ModelState.IsValid)
@@ -73,9 +78,22 @@ namespace OOAD_Projekat.Controllers
                 question.TimeStamp = DateTime.UtcNow;
                 question.Content = content;
                 question.Title = title;
-
+                int id = question.Id;
                 await questionsRepository.AddQuestion(question);
 
+                if (tags != null)
+                {
+                    tags = tags + ",";
+                    string[] listOfTags = (tags).Split(",");
+                    for (int i = 0; i < listOfTags.Length -1; i++)
+                    {
+                        Tag t = new Tag();
+                        t.TagContent = listOfTags[i];
+                        t.NumOfUses = 1;
+                        await tagsRepository.AddTags(t);
+                    }
+                }
+            
                 return RedirectToAction(nameof(Index));
             }
             return View(question);

@@ -10,7 +10,6 @@ namespace OOAD_Projekat.Models
         public int Id { get; set; }
         public string TagContent { get; set; }
         public int NumOfUses { get; set; }
-
         public ICollection<TagPost> TagPosts { get; set; }
     }
 }

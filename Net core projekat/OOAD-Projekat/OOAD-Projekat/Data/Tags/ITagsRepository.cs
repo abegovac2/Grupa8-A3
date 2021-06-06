@@ -9,5 +9,7 @@ namespace OOAD_Projekat.Data.Tags
     public interface ITagsRepository
     {
         public Task<List<Tag>> GetTags(string searchParam);
+
+        public Task AddTags(Tag t);
     }
 }
