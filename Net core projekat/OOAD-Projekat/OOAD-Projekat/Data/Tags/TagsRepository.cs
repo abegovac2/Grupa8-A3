@@ -32,6 +32,11 @@ namespace OOAD_Projekat.Data.Tags
             }
             else return await applicationDbContext.Tags.Where(t => t.TagContent.ToUpper().Contains(searchParam)).ToListAsync();
         }
-      
+        public async Task<Tag> GetTagByName(string name)
+        {
+            return applicationDbContext.Tags.FirstOrDefault(p => p.TagContent == name);
+        }
+
+
     }
 }

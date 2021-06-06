@@ -3,8 +3,10 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using OOAD_Projekat.Data;
 using OOAD_Projekat.Data.Questions;
+using OOAD_Projekat.Data.TagPosts;
 using OOAD_Projekat.Data.Tags;
 using OOAD_Projekat.Models;
+using OOAD_Projekat.Models.QuestionAndAnwserModels.RatingModels;
 using OOAD_Projekat.Models.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -19,11 +21,13 @@ namespace OOAD_Projekat.Controllers
         private readonly IQuestionsRepository questionsRepository;
         private readonly IQuestionRecommendation questionRecommendation;
         private readonly ITagsRepository tagsRepository;
-        public QuestionController(IQuestionsRepository questionsRepository, IQuestionRecommendation questionRecommendation, ITagsRepository tagsRepository)
+        private readonly ITagPostRepository tagPostRepository;
+        public QuestionController(IQuestionsRepository questionsRepository, IQuestionRecommendation questionRecommendation, ITagsRepository tagsRepository, ITagPostRepository tagPostRepository)
         {
             this.questionsRepository = questionsRepository;
             this.questionRecommendation = questionRecommendation;
             this.tagsRepository = tagsRepository;
+            this.tagPostRepository = tagPostRepository;
         }
 
         public async Task<IActionResult> Index()
@@ -68,6 +72,12 @@ namespace OOAD_Projekat.Controllers
 
             return View();
         }
+        //todo edit question
+         public IActionResult Edit(int questionId)
+        {
+            
+            return View();
+        }
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create( string title, string content, string tags)
@@ -78,9 +88,8 @@ namespace OOAD_Projekat.Controllers
                 question.TimeStamp = DateTime.UtcNow;
                 question.Content = content;
                 question.Title = title;
-                int id = question.Id;
                 await questionsRepository.AddQuestion(question);
-
+                var AddedQuestion = await questionsRepository.getLastQuestion();
                 if (tags != null)
                 {
                     tags = tags + ",";
@@ -91,6 +100,11 @@ namespace OOAD_Projekat.Controllers
                         t.TagContent = listOfTags[i];
                         t.NumOfUses = 1;
                         await tagsRepository.AddTags(t);
+                        var addedTag = await tagsRepository.GetTagByName(listOfTags[i]);
+                        TagPost tp = new TagPost();
+                        tp.QuestionId = AddedQuestion.Id;
+                        tp.TagId = addedTag.Id;
+                        await tagPostRepository.AddTagPost(tp);
                     }
                 }
             

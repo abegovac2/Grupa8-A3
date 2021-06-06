@@ -42,12 +42,24 @@ namespace OOAD_Projekat.Data.Questions
                 .Join(applicationDbContext.TagPosts, q => q.Id, tp => tp.QuestionId, (q, tp) => new { question = q, tag = tp })
                 .Where(qtp => qtp.tag.Tag.TagContent.ToUpper().Contains(tagName)).Select(q => q.question).ToListAsync();
         }
-        //todo: DeleteQuestion
+        
 
         public async Task SaveOpening(string UserName, Question question)
         {
             await applicationDbContext.ViewedQuestionsHistory.AddAsync(new Models.QuestionAndAnwserModels.ViewedQuestionsHistory { UserId = UserName, QuestionId = question.Id });
             await applicationDbContext.SaveChangesAsync();
+        }
+
+//todo: DeleteQuestion
+        public Task DeleteQuestion(Question question)
+        {
+            throw new NotImplementedException();
+        }
+
+        public async Task<Question> getLastQuestion()
+        {
+            var maxId = applicationDbContext.Questions.Max(q => q.Id);
+            return applicationDbContext.Questions.FirstOrDefault(q => q.Id == maxId);
         }
     }
 }

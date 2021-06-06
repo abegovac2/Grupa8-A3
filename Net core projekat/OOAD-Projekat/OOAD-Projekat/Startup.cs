@@ -11,6 +11,7 @@ using OOAD_Projekat.Controllers.Hubs;
 using OOAD_Projekat.Data;
 using OOAD_Projekat.Data.Questions;
 using OOAD_Projekat.Data.Statistics;
+using OOAD_Projekat.Data.TagPosts;
 using OOAD_Projekat.Data.Tags;
 using OOAD_Projekat.Models;
 using System;
@@ -44,6 +45,7 @@ namespace OOAD_Projekat
             services.AddScoped<IQuestionsRepository, QuestionsRepository>();
             services.AddScoped<IStatisticsRepository, StatisticsRepository>();
             services.AddScoped<ITagsRepository, TagsRepository>();
+            services.AddScoped<ITagPostRepository, TagPostRepository>();
             services.AddScoped<IQuestionRecommendation, QuestionRecommendation>();
         }
 
