@@ -28,13 +28,17 @@
             <div class="inbox_chat">
                 @foreach (var item in Model)
                 {
+                    string idNotif = "chatNotif" + item.Id;
+                    var datumZadnjePoruke = "";
+                    if (item.Messages.Count() > 0) datumZadnjePoruke = item.Messages[0].Timestamp.ToShortDateString();
                     <a asp-controller="Chats" asp-action="Details" asp-route-id="@item.Id">
                         <div class="select_chat_list">
                             <div class="chat_people">
                                 <div class="chat_img"> <img src="~/images/chat-svgrepo-com.svg" alt="chat-image"> </div>
                                 <div class="chat_ib">
-                                    <h5> @item.ChatName <span class="chat_date">Danas </span></h5>
+                                    <h5> @item.ChatName <span class="chat_date">@datumZadnjePoruke</span></h5>
                                 </div>
+                                <div id="@idNotif"></div>
                             </div>
                         </div>
                     </a>
@@ -43,3 +47,5 @@
         </div>
     </div>
 </body>
+<script src="~/js/signalr/dist/browser/signalr.js"></script>
+<script src="~/js/notifications.js"></script>

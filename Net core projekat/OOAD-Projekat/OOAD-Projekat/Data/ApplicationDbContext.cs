@@ -27,6 +27,8 @@ namespace OOAD_Projekat.Data
         public DbSet<Message> Messages { get; set; }
         public DbSet<SearchStatistics> SearchStatistics { get; set; }
         public DbSet<ViewedQuestionsHistory> ViewedQuestionsHistory { get; set; }
+        public DbSet<NotifyUser> NotifyUsers{ get; set; }
+        public DbSet<Notification> Notifications{ get; set; }
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
         {

@@ -9,6 +9,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using OOAD_Projekat.Controllers.Hubs;
 using OOAD_Projekat.Data;
+using OOAD_Projekat.Data.NotificationData;
 using OOAD_Projekat.Data.Questions;
 using OOAD_Projekat.Data.Statistics;
 using OOAD_Projekat.Data.TagPosts;
@@ -47,6 +48,7 @@ namespace OOAD_Projekat
             services.AddScoped<ITagsRepository, TagsRepository>();
             services.AddScoped<ITagPostRepository, TagPostRepository>();
             services.AddScoped<IQuestionRecommendation, QuestionRecommendation>();
+            services.AddSingleton<IUserConnectionManager, UserConnectionManager>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -77,6 +79,7 @@ namespace OOAD_Projekat
                     name: "default",
                     pattern: "{controller=Question}/{action=Index}/{id?}");
                 endpoints.MapHub<ChatHub>("/chatHub");
+                endpoints.MapHub<NotificationUserHub>("/NotificationUserHub");
                 endpoints.MapRazorPages();
             });
         }
