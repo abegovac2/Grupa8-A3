@@ -41,15 +41,20 @@ namespace OOAD_Projekat.Data.NotificationData
 
         public async Task RemoveUserFromNotificationList(string UserId, int PostId, NotificationType notificationType)
         {
-            var notifyUser = new NotifyUser
-            {
-                UserId = UserId,
-                PostId = PostId,
-                NotificationType = notificationType
-            };
+            var notifyUser = await _context.NotifyUsers.Where(x => x.UserId == UserId && x.PostId == PostId && x.NotificationType == notificationType).ToListAsync();
 
-            _context.NotifyUsers.Remove(notifyUser);
-            await _context.SaveChangesAsync();
+            /*new NotifyUser
+        {
+            UserId = UserId,
+            PostId = PostId,
+            NotificationType = notificationType
+        };*/
+
+            if (notifyUser.Count() == 1)
+            {
+                _context.NotifyUsers.Remove(notifyUser[0]);
+                await _context.SaveChangesAsync();
+            }
         }
 
         //Notification control
@@ -70,7 +75,7 @@ namespace OOAD_Projekat.Data.NotificationData
         public async Task SendNotification(string UserId,int PostId, NotificationType notificationType, string Message, [FromServices] IHubContext<NotificationUserHub> notifyUser)
         {
 
-            var usersToNotify = await _context.NotifyUsers.Where(x => x.UserId != UserId).ToListAsync();
+            var usersToNotify = await _context.NotifyUsers.Where(x => x.UserId != UserId && x.PostId == PostId && x.NotificationType == notificationType).ToListAsync();
 
             usersToNotify.ForEach(
                 x => {
@@ -101,5 +106,20 @@ namespace OOAD_Projekat.Data.NotificationData
             await _context.SaveChangesAsync();
         }
 
+        public async Task RemoveAllUsersFromNotificationList(int PostId, NotificationType notificationType)
+        {
+            var removeAllUsers = await _context.NotifyUsers.Where(x => x.PostId == PostId && x.NotificationType == notificationType).ToListAsync();
+
+            removeAllUsers.ForEach(notifyUser => _context.NotifyUsers.Remove(notifyUser));
+
+            await _context.SaveChangesAsync();
+        }
+
+        public bool HasNotifications(string UserId, int PostId, NotificationType notificationType)
+        {
+            var hasNotifications = _context.Notifications.Where(x => x.UserId == UserId && x.PostId == PostId && x.NotificationType == notificationType && !x.Seen).ToList();
+
+            return (hasNotifications.Count() != 0);
+        }
     }
 }

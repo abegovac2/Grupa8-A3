@@ -63,10 +63,27 @@ namespace OOAD_Projekat.Data.ChatData
 
         public async Task<List<Chat>> GetChatsForUser(IdentityUser user)
         {
-            return await _context.Chats
+            var list = await _context.Chats
                    .Include(x => x.Users)
+                   .Include(x => x.Messages)
                    .Where(x => x.Users.Any(y => y.UserId == user.Id))
                    .ToListAsync();
+
+            list.ForEach(x => x.Messages.Sort((x,y) =>  x.Timestamp.CompareTo(y.Timestamp)));
+
+            list.Sort((x, y) =>
+            {
+                if (x.Messages.Count() == 0) return 1;
+                else if (y.Messages.Count() == 0) return -1;
+                else{
+                    int xVel = (x.Messages.Count() - 1);
+                    int yVel = (y.Messages.Count() - 1);
+                    return x.Messages[xVel].Timestamp.CompareTo(y.Messages[yVel].Timestamp) * (-1);
+                }
+            });
+
+            return list;
+
         }
 
         public Task<User> GetUserByName(string name)

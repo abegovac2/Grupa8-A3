@@ -19,13 +19,13 @@ function anwserNotification(postsId, notificationId, message) {
 
 
 connection.on("NotifyUser", (postsId, notificationId, message) => {
-    if (notificationId == 0) {
-        chatNotification(userId, postsId, notificationId, message);
-    } else if (notificationId == 1) {
-        questionNotification(userId, postsId, notificationId, message);
-    } else if (notificationId == 2) {
-        anwserNotification(userId, postsId, notificationId, message);
-    }
+    if (notificationId == 2) {
+        chatNotification(postsId, notificationId, message);
+    }else if (notificationId == 1) {
+        anwserNotification(postsId, notificationId, message);
+    }else if (notificationId == 0) {
+        questionNotification(postsId, notificationId, message);
+    } 
 });
 
 connection.start().catch(function (err) {

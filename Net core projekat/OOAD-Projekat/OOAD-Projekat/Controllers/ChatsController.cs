@@ -5,9 +5,12 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
+using OOAD_Projekat.Controllers.Hubs;
 using OOAD_Projekat.Data;
 using OOAD_Projekat.Data.ChatData;
+using OOAD_Projekat.Data.NotificationData;
 using OOAD_Projekat.Models;
 using OOAD_Projekat.Models.ChatModels;
 
@@ -18,7 +21,13 @@ namespace OOAD_Projekat
     {
         private readonly IChatRepository _chatRepository;
 
-        public ChatsController(ApplicationDbContext context) => _chatRepository = new ChatRepository(context);
+        private readonly INotificationRepository _notificationRepository;
+
+        public ChatsController(ApplicationDbContext context, IChatRepository chatRepository, IUserConnectionManager userConnectionManager)
+        {
+            _chatRepository = chatRepository;
+            _notificationRepository = new NotificationRepository(context, userConnectionManager);
+        }
 
         // GET: Chats
         [HttpGet]
@@ -27,8 +36,10 @@ namespace OOAD_Projekat
 
             var user = await _chatRepository.GetUserByName(User.Identity.Name);
             var lista = await _chatRepository.GetChatsForUser(user);
+            var notifications = new List<bool>();
+            lista.ForEach(x => notifications.Add(_notificationRepository.HasNotifications(user.Id, x.Id, NotificationType.CHAT)));
 
-            return View(lista);
+            return View(new Tuple<string, List<Chat>, List<bool>>(user.Id,lista,notifications));
         }
 
         // GET 
@@ -54,9 +65,11 @@ namespace OOAD_Projekat
             var current = await _chatRepository.GetUserByName(User.Identity.Name);
             var userRole = chat.Users.Find(x => x.UserId == current.Id);
 
+            await _notificationRepository.MarkAsSeen(current.Id, (int)id ,NotificationType.CHAT);
+
             if (userRole == null) return NotFound();
 
-            return View(new Tuple<Chat, UserRole>(chat, userRole.Role));
+            return View(new Tuple<string,Chat, UserRole>(current.Id, chat, userRole.Role));
         }
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -151,17 +164,25 @@ namespace OOAD_Projekat
                 ChatType = users.Length != 3 ? ChatType.GROUP : ChatType.DIRECT
             };
 
+            var creator = (await _chatRepository.GetUserByName(User.Identity.Name)).Id;
+
             chat.Users.Add(new ChatUser
             {
-                UserId = (await _chatRepository.GetUserByName(User.Identity.Name)).Id,
+                UserId = creator,
                 Role = UserRole.ADMIN
             });
+
+            var listOfUserIds = new List<string>() { creator};
 
             foreach (var userInChat in users)
             {
                 if (userInChat.Length == 0) continue;
                 var chatUser = await _chatRepository.GetUserByName(userInChat);
+
                 if (chatUser == null) continue;
+
+                listOfUserIds.Add(chatUser.Id);
+
                 chat.Users.Add(
                     new ChatUser
                     {
@@ -172,17 +193,25 @@ namespace OOAD_Projekat
 
             await _chatRepository.CreateNewChat(chat);
 
+            foreach(var user in listOfUserIds)
+            {
+                await _notificationRepository.AddUserToNotificationList(user, chat.Id, NotificationType.CHAT);
+            }
+            
+
             return RedirectToAction("Details", new { id = chat.Id, });
         }
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
         [HttpPost]
-        public async Task<IActionResult> DeleteUser(int ChatId)
+        public async Task<IActionResult> DeleteUser(string UserId, int ChatId)
         {
-            var UserId = (await _chatRepository.GetUserByName(User.Identity.Name)).Id;
+            //var UserId = (await _chatRepository.GetUserByName(User.Identity.Name)).Id;
 
             await _chatRepository.DeleteChatUser(UserId, ChatId);
+
+            await _notificationRepository.RemoveUserFromNotificationList(UserId, ChatId, NotificationType.CHAT);
 
             var numOfUsersInChat = _chatRepository.NumberOfUsersInAChat(ChatId);
             if (numOfUsersInChat <= 1) return await DeleteChat(ChatId);
@@ -194,15 +223,23 @@ namespace OOAD_Projekat
         public async Task<IActionResult> DeleteChat(int Id)
         {
             await _chatRepository.DeleteChat(Id);
+
+            await _notificationRepository.RemoveAllUsersFromNotificationList(Id, NotificationType.CHAT);
+
             return RedirectToAction(nameof(Index));
         }
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////
         [HttpPost]
-        public async Task<IActionResult> SendMessage([FromForm(Name = "chatId")] string chatId, [FromForm(Name = "name")] string name, [FromForm(Name = "text")] string text)
+        public async Task<IActionResult> SendMessage([FromForm(Name = "chatId")] string chatId, [FromForm(Name = "name")] string name, [FromForm(Name = "text")] string text, [FromServices] IHubContext<NotificationUserHub> notifyUser)
         {
             await _chatRepository.SaveMessage(int.Parse(chatId), name, text);
-            Console.WriteLine($"UPISANA PORUKA U BAZU {chatId}, {name}, {text}");
+            //Console.WriteLine($"UPISANA PORUKA U BAZU {chatId}, {name}, {text}");
+
+            var user = await _chatRepository.GetUserByName(name);
+
+            await _notificationRepository.SendNotification( user.Id, int.Parse(chatId), NotificationType.CHAT, text, notifyUser);
+            
             return RedirectToAction("Details", new { id = int.Parse(chatId) });
         }
     }

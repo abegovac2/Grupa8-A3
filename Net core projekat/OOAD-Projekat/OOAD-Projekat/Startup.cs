@@ -9,6 +9,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using OOAD_Projekat.Controllers.Hubs;
 using OOAD_Projekat.Data;
+using OOAD_Projekat.Data.ChatData;
 using OOAD_Projekat.Data.NotificationData;
 using OOAD_Projekat.Data.Questions;
 using OOAD_Projekat.Data.Statistics;
@@ -48,6 +49,7 @@ namespace OOAD_Projekat
             services.AddScoped<ITagsRepository, TagsRepository>();
             services.AddScoped<ITagPostRepository, TagPostRepository>();
             services.AddScoped<IQuestionRecommendation, QuestionRecommendation>();
+            services.AddScoped<IChatRepository, ChatRepository>();
             services.AddSingleton<IUserConnectionManager, UserConnectionManager>();
         }
 

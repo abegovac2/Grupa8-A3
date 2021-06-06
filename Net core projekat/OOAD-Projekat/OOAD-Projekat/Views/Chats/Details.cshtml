@@ -1,4 +1,4 @@
-﻿@model Tuple<OOAD_Projekat.Models.Chat, OOAD_Projekat.Models.ChatModels.UserRole>
+﻿@model Tuple<string,OOAD_Projekat.Models.Chat, OOAD_Projekat.Models.ChatModels.UserRole>
 
 @{
     ViewData["Title"] = "Details";
@@ -8,21 +8,22 @@
 
 <div class="details-page-content">
     <div class="heading-content">
-        <h1>@Model.Item1.ChatName</h1>
+        <h1>@Model.Item2.ChatName</h1>
         <div class="dropdown">
             <button class="dropbtn">Edit</button>
             <div class="dropdown-content">
-                @if (Model.Item2 == OOAD_Projekat.Models.ChatModels.UserRole.ADMIN)
+                @if (Model.Item3 == OOAD_Projekat.Models.ChatModels.UserRole.ADMIN)
                 {
                     <form asp-controller="Chats" asp-action="DeleteChat">
-                        <input type="hidden" name="id" value="@Model.Item1.Id" />
+                        <input type="hidden" name="id" value="@Model.Item2.Id" />
                         <button type="submit">Delete Chat</button>
                     </form>
                 }
                 else
                 {
-                    <form asp-controller="Chats" asp-action="DeleteUserFromChat">
-                        <input type="hidden" name="ChatId" value="@Model.Item1.Id" />
+                    <form asp-controller="Chats" asp-action="DeleteUser">
+                        <input type="hidden" name="UserId" value="@Model.Item1">
+                        <input type="hidden" name="ChatId" value="@Model.Item2.Id" />
                         <button type="submit">Leave Chat</button>
                     </form>
                 }
@@ -30,12 +31,12 @@
                 <div class="dropdown">
                     <button class="dropbtn">Chat Users</button>
                     <div class="dropdown-content">
-                        @foreach (var item in Model.Item1.Users)
+                        @foreach (var item in Model.Item2.Users)
                         {
                             if (item.User.UserName == User.Identity.Name) continue;
                             <div>
                                 <p>@item.User.UserName</p>
-                                @if (Model.Item2 == OOAD_Projekat.Models.ChatModels.UserRole.ADMIN)
+                                @if (Model.Item3 == OOAD_Projekat.Models.ChatModels.UserRole.ADMIN)
                                 {
                                     <form asp-controller="Chats" asp-action="DeleteUser">
                                         <input type="hidden" name="UserId" value="@item.UserId" />
@@ -54,7 +55,7 @@
     <div class="my-container">
         <div class="chat_list">
             <div id="messagesList" class="msg_history">
-                @foreach (var item in Model.Item1.Messages)
+                @foreach (var item in Model.Item2.Messages)
                 {
                     if (!item.Name.Equals(User.Identity.Name))
                     {
@@ -85,7 +86,7 @@
             </div>
             <div class="type_msg" onsubmit="event.preventDefault()">
                 <form id="messageForm">
-                    <input id="chatInput" type="hidden" name="chatId" value="@Model.Item1.Id" />
+                    <input id="chatInput" type="hidden" name="chatId" value="@Model.Item2.Id" />
                     <input id="userInput" type="hidden" name="name" value="@User.Identity.Name" />
                     <div class="my-row">
                         <input id="messageInput" type="text" name="text" class="write_msg" placeholder="Type a message" />
@@ -100,6 +101,7 @@
 
 <script src="~/js/signalr/dist/browser/signalr.js"></script>
 <script src="~/js/chat.js"></script>
+<script src="~/js/notifications.js"></script>
 <script type="text/javascript">
     var element = document.getElementById("messagesList");
     element.scrollTop = element.scrollHeight;

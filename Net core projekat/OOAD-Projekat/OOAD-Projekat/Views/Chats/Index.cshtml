@@ -1,4 +1,4 @@
-﻿@model IEnumerable<OOAD_Projekat.Models.Chat>
+﻿@model Tuple<string, List<OOAD_Projekat.Models.Chat>, List<bool>>
 
 @{
     ViewData["Title"] = "Index";
@@ -9,6 +9,10 @@
 <body>
     <div class="container">
         <h3 class=" text-center">Messaging</h3>
+        <!--For notifications-->
+        <input type="hidden" id="userId" value="@Model.Item1" />
+        <input type="hidden" id="signalRConnectionId" />
+        <!--For notifications-->
         <div class="individual_user">
             <div class="headind_srch">
                 <div class="recent_heading">
@@ -26,11 +30,13 @@
             </div>
 
             <div class="inbox_chat">
-                @foreach (var item in Model)
+                @for(int i = 0; i < Model.Item2.Count(); ++i)
                 {
+                    var item = Model.Item2[i];
                     string idNotif = "chatNotif" + item.Id;
                     var datumZadnjePoruke = "";
-                    if (item.Messages.Count() > 0) datumZadnjePoruke = item.Messages[0].Timestamp.ToShortDateString();
+                    if (item.Messages.Count() > 0) datumZadnjePoruke = item.Messages[item.Messages.Count() - 1].Timestamp.ToShortDateString();
+                    var imalPoruke = Model.Item3[i];
                     <a asp-controller="Chats" asp-action="Details" asp-route-id="@item.Id">
                         <div class="select_chat_list">
                             <div class="chat_people">
@@ -38,7 +44,7 @@
                                 <div class="chat_ib">
                                     <h5> @item.ChatName <span class="chat_date">@datumZadnjePoruke</span></h5>
                                 </div>
-                                <div id="@idNotif"></div>
+                                <p id="@idNotif">@imalPoruke</p>
                             </div>
                         </div>
                     </a>
