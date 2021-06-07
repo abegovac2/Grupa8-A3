@@ -46,8 +46,20 @@ namespace OOAD_Projekat.Data.Questions
 
         public async Task SaveOpening(string UserName, Question question)
         {
-            await applicationDbContext.ViewedQuestionsHistory.AddAsync(new Models.QuestionAndAnwserModels.ViewedQuestionsHistory { UserId = UserName, QuestionId = question.Id });
+            var user = await applicationDbContext.Users.Where(x => x.UserName == UserName).FirstOrDefaultAsync();
+
+            var hasAllReady = await applicationDbContext.ViewedQuestionsHistory.Where(x => x.UserId == user.Id && x.QuestionId == question.Id).FirstOrDefaultAsync();
+
+            if (hasAllReady != null) return;
+
+
+            await applicationDbContext.ViewedQuestionsHistory.AddAsync(new Models.QuestionAndAnwserModels.ViewedQuestionsHistory { UserId = user.Id, QuestionId = question.Id });
             await applicationDbContext.SaveChangesAsync();
+        }
+
+        public async Task<User> getUserByUserName(string name)
+        {
+            return await applicationDbContext.Users.Where(x => x.UserName == name).FirstOrDefaultAsync();
         }
 
 //todo: DeleteQuestion
@@ -60,6 +72,17 @@ namespace OOAD_Projekat.Data.Questions
         {
             var maxId = applicationDbContext.Questions.Max(q => q.Id);
             return applicationDbContext.Questions.FirstOrDefault(q => q.Id == maxId);
+        }
+
+        public Task<Question> getQuestion(int id)
+        {
+            return applicationDbContext.Questions
+                .Include(qqq => qqq.Ratings)
+                .Include(qqq => qqq.Tags)
+                .ThenInclude(ttt => ttt.Tag)
+                .Include(qqq => qqq.Answers)
+                .ThenInclude(aaa => aaa.Ratings)
+                .Where(x => x.Id == id).FirstOrDefaultAsync();
         }
     }
 }

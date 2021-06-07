@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using OOAD_Projekat.Data;
+using OOAD_Projekat.Data.NotificationData;
 using OOAD_Projekat.Data.Questions;
 using OOAD_Projekat.Data.TagPosts;
 using OOAD_Projekat.Data.Tags;
@@ -22,12 +23,14 @@ namespace OOAD_Projekat.Controllers
         private readonly IQuestionRecommendation questionRecommendation;
         private readonly ITagsRepository tagsRepository;
         private readonly ITagPostRepository tagPostRepository;
-        public QuestionController(IQuestionsRepository questionsRepository, IQuestionRecommendation questionRecommendation, ITagsRepository tagsRepository, ITagPostRepository tagPostRepository)
+        private readonly INotificationRepository notificationRepository;
+        public QuestionController(IQuestionsRepository questionsRepository, IQuestionRecommendation questionRecommendation, ITagsRepository tagsRepository, ITagPostRepository tagPostRepository, IUserConnectionManager userConnectionManager, ApplicationDbContext context)
         {
             this.questionsRepository = questionsRepository;
             this.questionRecommendation = questionRecommendation;
             this.tagsRepository = tagsRepository;
             this.tagPostRepository = tagPostRepository;
+            this.notificationRepository = new NotificationRepository(context, userConnectionManager);
         }
 
         public async Task<IActionResult> Index()
@@ -66,22 +69,57 @@ namespace OOAD_Projekat.Controllers
         {
             return View("Index", await questionRecommendation.RecommendQuestions(User.Identity.Name.ToString()));
         }
-        // GET: Questions/Create
+        [Authorize]
         public IActionResult Create()
         {
-
             return View();
         }
+        // GET: Questions/CreateNewQuestion
+        [Authorize]
+        public async Task<IActionResult> CreateNewQuestion(string title, string content)
+        {
+            var user = await questionsRepository.getUserByUserName(User.Identity.Name);
+
+            if (user == null) return NotFound();
+
+            var question = new Question { 
+                Title = title,
+                Content = content,
+                Duplicate = false,
+                HotQuestion = false,
+                User = user,
+                TimeStamp = DateTime.Now,
+                //Tags = nesto treba dodat
+            };
+            await questionsRepository.AddQuestion(question);
+
+            await notificationRepository.AddUserToNotificationList(user.Id,question.Id,NotificationType.QUESTION);
+
+            return RedirectToAction("Details",new { question.Id });
+        }        
         //todo edit question
          public IActionResult Edit(int questionId)
         {
             
             return View();
         }
-        public IActionResult Details()
+
+        [HttpGet]
+        public async Task<IActionResult> Details(int? id)
         {
-            return View();
+
+            if (id == null) return NotFound();
+
+            var question = await questionsRepository.getQuestion((int)id);
+
+            if (question == null) return NotFound();
+
+            if(User.Identity.Name != null)  await questionsRepository.SaveOpening(User.Identity.Name, question);
+
+            return View(question);
         }
+
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Title,Content,Tags")] QuestionViewModel q)
@@ -121,5 +159,6 @@ namespace OOAD_Projekat.Controllers
         {
             await questionsRepository.SaveOpening(User.Identity.Name.ToString(), question);
         }
+
     }
 }

@@ -20,5 +20,14 @@ namespace OOAD_Projekat.Models
 
         public int QuestionID { get; set; }
         public Question Question { get; set; }
+
+        [NotMapped]
+        public IRating ratingCalculate { get; set; }
+
+        public float getAnwserRating()
+        {
+            //return ratingCalculate;
+            throw new NotImplementedException();
+        }
     }
 }

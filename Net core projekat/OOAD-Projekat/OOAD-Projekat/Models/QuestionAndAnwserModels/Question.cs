@@ -30,19 +30,8 @@ namespace OOAD_Projekat.Models
 
         public ICollection<ViewedQuestionsHistory> ViewedQuestionsHistory { get; set; }
 
-        public void AddAnswer(Answer answer)
-        {
-            throw new NotImplementedException();
-        }
+        [NotMapped]
+        public IRating ratingCalculate { get; set; }
 
-        public void Answer(Answer answer)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void AddTag(Tag tag)
-        {
-            throw new NotImplementedException();
-        }
     }
 }

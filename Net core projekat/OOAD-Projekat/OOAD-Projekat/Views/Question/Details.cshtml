@@ -1,6 +1,7 @@
 ﻿@*
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
+@model Question
 @{
 }
 
@@ -11,65 +12,98 @@
             <a class="my-rating-buttons my-rating-button-up">
                 <img src="~/images/plus.svg" />
             </a>
-            <span class="my-rating-total my-positive">55</span>
+            <span class="my-rating-total my-positive">@Model.Ratings.Count()</span>
             <a class="my-rating-buttons my-rating-button-down">
                 <img src="~/images/minus.svg" width="15" height="15" />
             </a>
         </div>
         <div class="my-question-info">
-            <span class="my-question-title">Naslov</span>
+            <span class="my-question-title">@Model.Title</span>
             <div class="my-question-content">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Blanditiis facilis reiciendis possimus tempore unde doloribus enim quaerat totam porro sequi voluptatum et eius ipsam accusantium quidem, aliquid dolore natus consectetur, architecto nostrum. Repellendus culpa cum repellat necessitatibus dignissimos sunt nulla ducimus tenetur, dolore reprehenderit molestiae quis tempora consequuntur dolores blanditiis!
+                <!--Lorem ipsum dolor sit amet consectetur adipisicing elit. Blanditiis facilis reiciendis possimus tempore unde doloribus enim quaerat totam porro sequi voluptatum et eius ipsam accusantium quidem, aliquid dolore natus consectetur, architecto nostrum. Repellendus culpa cum repellat necessitatibus dignissimos sunt nulla ducimus tenetur, dolore reprehenderit molestiae quis tempora consequuntur dolores blanditiis!-->
+                @Model.Content
             </div>
             <div class="my-question-tags">
-                <div class="my-tag">
-                    Tag
+                @foreach (var tag in Model.Tags)
+                {
+                    <div class="my-tag">
+                        @tag.Tag.TagContent
+                    </div>
+                }
+            </div>
+                <!--
+
+            <div class="my-tag">
+                Tag
+            </div>
+            <div class="my-tag">
+                Javascript Bejbi
+            </div>
+            <div class="my-tag">
+                Kratko
+            </div>
+            <div class="my-tag">
+                Malo duzi tag
+            </div>
+        </div>
+            -->
+            </div>
+        </div>
+    <div class="my-answers">
+        <div class="my-answer-number">@Model.Answers.Count() Anwsers</div>
+        @foreach(var anwser in Model.Answers)
+            {
+                <div class="my-answer">
+                    <div class="my-answer-rating">
+                        <a class="my-rating-buttons my-rating-button-up">
+                            <img src="~/images/plus.svg" />
+                        </a>
+                        <span class="my-rating-total my-negative">@anwser.Ratings.Count()</span>
+                        <a class="my-rating-buttons my-rating-button-down">
+                            <img src="~/images/minus.svg" width="15" height="15" />
+                        </a>
+                    </div>
+                    <div class="my-answer-info">
+                        <div class="my-answer-content">
+                            <!--Lorem ipsum dolor sit amet consectetur adipisicing elit. Blanditiis facilis reiciendis possimus tempore unde doloribus enim quaerat totam porro sequi voluptatum et eius ipsam accusantium quidem, aliquid dolore natus consectetur, architecto nostrum. Repellendus culpa cum repellat necessitatibus dignissimos sunt nulla ducimus tenetur, dolore reprehenderit molestiae quis tempora consequuntur dolores blanditiis!-->
+                            @anwser.Content
+                        </div>
+                    </div>
                 </div>
-                <div class="my-tag">
-                    Javascript Bejbi
-                </div>
-                <div class="my-tag">
-                    Kratko
-                </div>
-                <div class="my-tag">
-                    Malo duzi tag
-                </div>
+            }
+        <!--
+    <div class="my-answer">
+        <div class="my-answer-rating">
+            <a class="my-rating-buttons my-rating-button-up">
+                <img src="~/images/plus.svg" />
+            </a>
+            <span class="my-rating-total my-negative">-55</span>
+            <a class="my-rating-buttons my-rating-button-down">
+                <img src="~/images/minus.svg" width="15" height="15" />
+            </a>
+        </div>
+        <div class="my-answer-info">
+            <div class="my-answer-content">
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Blanditiis facilis reiciendis possimus tempore unde doloribus enim quaerat totam porro sequi voluptatum et eius ipsam accusantium quidem, aliquid dolore natus consectetur, architecto nostrum. Repellendus culpa cum repellat necessitatibus dignissimos sunt nulla ducimus tenetur, dolore reprehenderit molestiae quis tempora consequuntur dolores blanditiis!
             </div>
         </div>
     </div>
-    <div class="my-answers">
-        <div class="my-answer-number">12 Anwsers</div>
-        <div class="my-answer">
-            <div class="my-answer-rating">
-                <a class="my-rating-buttons my-rating-button-up">
-                    <img src="~/images/plus.svg" />
-                </a>
-                <span class="my-rating-total my-negative">-55</span>
-                <a class="my-rating-buttons my-rating-button-down">
-                    <img src="~/images/minus.svg" width="15" height="15" />
-                </a>
-            </div>
-            <div class="my-answer-info">
-                <div class="my-answer-content">
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Blanditiis facilis reiciendis possimus tempore unde doloribus enim quaerat totam porro sequi voluptatum et eius ipsam accusantium quidem, aliquid dolore natus consectetur, architecto nostrum. Repellendus culpa cum repellat necessitatibus dignissimos sunt nulla ducimus tenetur, dolore reprehenderit molestiae quis tempora consequuntur dolores blanditiis!
-                </div>
+    <div class="my-answer">
+        <div class="my-answer-rating">
+            <a class="my-rating-buttons my-rating-button-up">
+                <img src="~/images/plus.svg" />
+            </a>
+            <span class="my-rating-total my-positive">55</span>
+            <a class="my-rating-buttons my-rating-button-down">
+                <img src="~/images/minus.svg" width="15" height="15" />
+            </a>
+        </div>
+        <div class="my-answer-info">
+            <div class="my-answer-content">
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Blanditiis facilis reiciendis possimus tempore unde doloribus enim quaerat totam porro sequi voluptatum et eius ipsam accusantium quidem, aliquid dolore natus consectetur, architecto nostrum. Repellendus culpa cum repellat necessitatibus dignissimos sunt nulla ducimus tenetur, dolore reprehenderit molestiae quis tempora consequuntur dolores blanditiis!
             </div>
         </div>
-        <div class="my-answer">
-            <div class="my-answer-rating">
-                <a class="my-rating-buttons my-rating-button-up">
-                    <img src="~/images/plus.svg" />
-                </a>
-                <span class="my-rating-total my-positive">55</span>
-                <a class="my-rating-buttons my-rating-button-down">
-                    <img src="~/images/minus.svg" width="15" height="15" />
-                </a>
-            </div>
-            <div class="my-answer-info">
-                <div class="my-answer-content">
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Blanditiis facilis reiciendis possimus tempore unde doloribus enim quaerat totam porro sequi voluptatum et eius ipsam accusantium quidem, aliquid dolore natus consectetur, architecto nostrum. Repellendus culpa cum repellat necessitatibus dignissimos sunt nulla ducimus tenetur, dolore reprehenderit molestiae quis tempora consequuntur dolores blanditiis!
-                </div>
-            </div>
-        </div>
+    </div>
+        -->
     </div>
 </div>
