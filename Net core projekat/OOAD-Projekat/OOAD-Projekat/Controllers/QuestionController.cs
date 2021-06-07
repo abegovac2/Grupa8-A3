@@ -80,20 +80,20 @@ namespace OOAD_Projekat.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create( string title, string content, string tags)
+        public async Task<IActionResult> Create([Bind("Title,Content,Tags")] QuestionViewModel q)
         {
             var question = new Question();
             if (ModelState.IsValid)
             {
                 question.TimeStamp = DateTime.UtcNow;
-                question.Content = content;
-                question.Title = title;
+                question.Content = q.Content;
+                question.Title = q.Title;
                 await questionsRepository.AddQuestion(question);
                 var AddedQuestion = await questionsRepository.getLastQuestion();
-                if (tags != null)
+                if (q.Tags != null)
                 {
-                    tags = tags + ",";
-                    string[] listOfTags = (tags).Split(",");
+                    q.Tags = q.Tags + ",";
+                    string[] listOfTags = (q.Tags).Split(",");
                     for (int i = 0; i < listOfTags.Length -1; i++)
                     {
                         Tag t = new Tag();
@@ -110,7 +110,7 @@ namespace OOAD_Projekat.Controllers
             
                 return RedirectToAction(nameof(Index));
             }
-            return View(question);
+            return View(q);
         }
         // Metoda koja se poziva kada se udje u detalj pitanja, kako bi sistem za preporuke ispravno radio
         public async Task SaveOpening(Question question)

@@ -76,20 +76,20 @@
             <ul class="navbar-nav ml-auto mr-auto w-50 my-class-w-100">
                 <li class="nav-item">
                     <form class="search-wrapper">
-                            <div class="input-group">
-                                <input class="form-control py-3 border-right-0 border my-input"
-                                       type="search"
-                                       autocomplete="off"
-                                       placeholder="Search..."
-                                       id="search-input" />
-                                <span class="input-group-prepend">
-                                    <div id="search-button" class="input-group-text bg-transparent">
-                                        <i class="fa fa-search"></i>
-                                    </div>
-                                </span>
-                            </div>
-                            <ul class="search-results">
-                            </ul>
+                        <div class="input-group">
+                            <input class="form-control py-3 border-right-0 border my-input"
+                                   type="search"
+                                   autocomplete="off"
+                                   placeholder="Search..."
+                                   id="search-input" />
+                            <span class="input-group-prepend">
+                                <div id="search-button" class="input-group-text bg-transparent">
+                                    <i class="fa fa-search"></i>
+                                </div>
+                            </span>
+                        </div>
+                        <ul class="search-results">
+                        </ul>
                     </form>
                 </li>
             </ul>
@@ -166,7 +166,7 @@
     <script src="~/js/axios.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
-<script type="text/javascript">
+    <script type="text/javascript">
             $(function () {
                 const pretraga = (event) => {
                     event.preventDefault();
@@ -232,6 +232,6 @@
                     $(".search-results").css("display", "none");
                 });
             });
-</script>
+    </script>
 </body>
 </html>
