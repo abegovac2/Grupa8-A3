@@ -366,3 +366,11 @@ img {
     display: flex;
     justify-content: space-between;
 }
+.my_notification{
+    display: block;
+    float: right;
+}
+.my_hidden{
+    display: none;
+    clear: both;
+}

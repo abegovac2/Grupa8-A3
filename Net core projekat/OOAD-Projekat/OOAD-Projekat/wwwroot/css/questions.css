@@ -26,17 +26,18 @@
 }
 
 .my-questions {
-  display: flex;
-  flex-direction: column;
-  margin: 20px;
-  padding: 10px;
+    display: flex;
+    flex-direction: column;
+    margin: 20px;
+    padding: 10px;
 }
+
 .question-card {
-  display: flex;
-  justify-content: space-between;
-  border: 1px solid #dddddd;
-  border-radius: 20px;
-  margin-bottom: 20px;
+    display: flex;
+    justify-content: space-between;
+    border: 1px solid #dddddd;
+    border-radius: 20px;
+    margin-bottom: 20px;
 }
 .question-rating {
   display: flex;

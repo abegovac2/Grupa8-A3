@@ -78,6 +78,10 @@ namespace OOAD_Projekat.Controllers
             
             return View();
         }
+        public IActionResult Details()
+        {
+            return View();
+        }
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Title,Content,Tags")] QuestionViewModel q)

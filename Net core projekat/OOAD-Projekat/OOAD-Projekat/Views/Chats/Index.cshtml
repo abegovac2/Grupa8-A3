@@ -37,6 +37,7 @@
                     var datumZadnjePoruke = "";
                     if (item.Messages.Count() > 0) datumZadnjePoruke = item.Messages[item.Messages.Count() - 1].Timestamp.ToShortDateString();
                     var imalPoruke = Model.Item3[i];
+                    var klasaZaNotifikaciju = imalPoruke ? "my_notification" : "my_hidden";
                     <a asp-controller="Chats" asp-action="Details" asp-route-id="@item.Id">
                         <div class="select_chat_list">
                             <div class="chat_people">
@@ -44,7 +45,8 @@
                                 <div class="chat_ib">
                                     <h5> @item.ChatName <span class="chat_date">@datumZadnjePoruke</span></h5>
                                 </div>
-                                <p id="@idNotif">@imalPoruke</p>
+                                <img src="~/images/notification.svg" width="25" class="@klasaZaNotifikaciju" />
+
                             </div>
                         </div>
                     </a>
