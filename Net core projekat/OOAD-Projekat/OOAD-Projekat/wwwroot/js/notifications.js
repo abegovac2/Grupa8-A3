@@ -6,7 +6,7 @@ function chatNotification(postsId, notificationId, message) {
     var notif = "chatNotif";
     notif = notif.concat(parseInt(postsId));
     var chat = document.getElementById(notif);
-    chat.textContent = "True";
+    chat.className = "my_notification";
 }
 
 function questionNotification( postsId, notificationId, message) {
