@@ -13,5 +13,6 @@ namespace OOAD_Projekat.Data.Tags
         public Task AddTags(Tag t);
 
         public Task<Tag> GetTagByName(string name);
+        public Task<List<Tag>> GetPopular();
     }
 }

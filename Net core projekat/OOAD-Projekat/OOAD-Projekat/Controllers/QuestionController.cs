@@ -74,7 +74,11 @@ namespace OOAD_Projekat.Controllers
         {
             var user = await questionsRepository.getUserByUserName(User.Identity.Name);
             if (user == null) return NotFound();
-            return View();
+
+            QuestionViewModel qvm = new QuestionViewModel();
+            qvm.PopularTags = await tagsRepository.GetPopular();
+
+            return View(qvm);
         }  
         //todo edit question
          public IActionResult Edit(int questionId)

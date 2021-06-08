@@ -16,5 +16,6 @@ namespace OOAD_Projekat.Models.ViewModels
         [Required(AllowEmptyStrings = false, ErrorMessage = "Please enter the content")]
         public string Content { get; set; }
         public string Tags { get; set; }
+        public List<Tag> PopularTags { get; set; }
     }
 }

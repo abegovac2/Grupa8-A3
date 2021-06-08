@@ -39,12 +39,12 @@
                 </div>
                 <!--postojeći tagovi-->
                 <div class="tagovi">
-                    @for (int i = 0; i < 10; i++)
-                    {
-                        <a href="#">tag</a>
-                    }
-
-
+                        @for (int i = 0; i < 10; i++)
+                       {
+                                            <a href="#">
+                        @Model.PopularTags[i].TagContent
+                                        </a>
+                                        }
                 </div>
                 <!--buttons-->
                 <div class="buttons">

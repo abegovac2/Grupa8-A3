@@ -36,7 +36,10 @@ namespace OOAD_Projekat.Data.Tags
         {
             return applicationDbContext.Tags.FirstOrDefault(p => p.TagContent == name);
         }
-
+        public async Task<List<Tag>> GetPopular()
+        {
+            return applicationDbContext.Tags.OrderByDescending(x => x.NumOfUses).Take(10).ToList();
+        }
 
     }
 }
