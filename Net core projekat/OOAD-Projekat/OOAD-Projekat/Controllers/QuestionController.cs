@@ -70,37 +70,15 @@ namespace OOAD_Projekat.Controllers
             return View("Index", await questionRecommendation.RecommendQuestions(User.Identity.Name.ToString()));
         }
         [Authorize]
-        public IActionResult Create()
-        {
-            return View();
-        }
-        // GET: Questions/CreateNewQuestion
-        [Authorize]
-        public async Task<IActionResult> CreateNewQuestion(string title, string content)
+        public async Task<IActionResult> CreateAsync()
         {
             var user = await questionsRepository.getUserByUserName(User.Identity.Name);
-
             if (user == null) return NotFound();
-
-            var question = new Question { 
-                Title = title,
-                Content = content,
-                Duplicate = false,
-                HotQuestion = false,
-                User = user,
-                TimeStamp = DateTime.Now,
-                //Tags = nesto treba dodat
-            };
-            await questionsRepository.AddQuestion(question);
-
-            await notificationRepository.AddUserToNotificationList(user.Id,question.Id,NotificationType.QUESTION);
-
-            return RedirectToAction("Details",new { question.Id });
-        }        
+            return View();
+        }  
         //todo edit question
          public IActionResult Edit(int questionId)
-        {
-            
+        {  
             return View();
         }
 
@@ -124,12 +102,14 @@ namespace OOAD_Projekat.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Title,Content,Tags")] QuestionViewModel q)
         {
+            var user = await questionsRepository.getUserByUserName(User.Identity.Name);
             var question = new Question();
             if (ModelState.IsValid)
             {
                 question.TimeStamp = DateTime.UtcNow;
                 question.Content = q.Content;
                 question.Title = q.Title;
+                question.User = user;
                 await questionsRepository.AddQuestion(question);
                 var AddedQuestion = await questionsRepository.getLastQuestion();
                 if (q.Tags != null)
@@ -149,8 +129,9 @@ namespace OOAD_Projekat.Controllers
                         await tagPostRepository.AddTagPost(tp);
                     }
                 }
-            
-                return RedirectToAction(nameof(Index));
+                await notificationRepository.AddUserToNotificationList(user.Id, AddedQuestion.Id, NotificationType.QUESTION);
+
+                return RedirectToAction("Details", new { question.Id });
             }
             return View(q);
         }
