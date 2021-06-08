@@ -897,3 +897,4 @@ C:\Users\BCI SISTEMI\OneDrive\Documents\GitHub\Grupa8-A3\Net core projekat\OOAD-
 C:\Users\BCI SISTEMI\OneDrive\Documents\GitHub\Grupa8-A3\Net core projekat\OOAD-Projekat\OOAD-Projekat\obj\Debug\net5.0\OOAD-Projekat.pdb
 C:\Users\BCI SISTEMI\OneDrive\Documents\GitHub\Grupa8-A3\Net core projekat\OOAD-Projekat\OOAD-Projekat\obj\Debug\net5.0\OOAD-Projekat.genruntimeconfig.cache
 C:\Users\admir\Documents\GitHub\Grupa8-A3\Net core projekat\OOAD-Projekat\OOAD-Projekat\obj\Debug\net5.0\Razor\Views\Question\Details.cshtml.g.cs
+C:\Users\admir\Documents\GitHub\Grupa8-A3\Net core projekat\OOAD-Projekat\OOAD-Projekat\obj\Debug\net5.0\OOAD-Projekat.csprojAssemblyReference.cache

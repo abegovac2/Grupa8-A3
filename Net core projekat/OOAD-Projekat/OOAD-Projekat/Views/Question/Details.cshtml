@@ -26,9 +26,9 @@
             <div class="my-question-tags">
                 @foreach (var tag in Model.Tags)
                 {
-                    <div class="my-tag">
+                    <a class="my-tag" asp-action="ByTag" asp-controller="Question" asp-route-tagName="@tag.Tag.TagContent">
                         @tag.Tag.TagContent
-                    </div>
+                    </a>
                 }
             </div>
             </div>
@@ -84,7 +84,12 @@
             })
             .then((res) => {
                 // U slucaju uspjeha, refreshovat stranicu
+                console.log(res);
                 location.reload();
+            })
+            .catch((err) => {
+                // Ukoliko korisnik nije loginan a zeli komentarisati
+                window.location.replace("/Identity/Account/Login");
             })
         }
         $(".submit-answer-button").click(submitForm);

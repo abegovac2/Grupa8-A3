@@ -20,12 +20,21 @@ namespace OOAD_Projekat.Controllers
             this.answersRepository = answersRepository;
             this.usersRepository = usersRepository;
         }
-        // Provjeriti zasto ne radi redirekcija?
-        [Authorize]
+
+
         [HttpPost("AddAnswer")]
-        public async Task AddAnswer([FromForm(Name = "questionID")] int questionID, [FromForm(Name = "content")] string content) {
-            var user = await usersRepository.GetUserByUserName(User.Identity.Name);
-            await answersRepository.AddAnswer(questionID, content, user.Id);
+        public async Task<IActionResult> AddAnswer([FromForm(Name = "questionID")] int questionID, [FromForm(Name = "content")] string content) {
+            try
+            {
+                var user = await usersRepository.GetUserByUserName(User.Identity.Name);
+                if (user == null) throw new Exception();
+                await answersRepository.AddAnswer(questionID, content, user.Id);
+                return Ok();
+            }
+            catch (Exception)
+            {
+                return BadRequest();
+            }
         }
     }
 }

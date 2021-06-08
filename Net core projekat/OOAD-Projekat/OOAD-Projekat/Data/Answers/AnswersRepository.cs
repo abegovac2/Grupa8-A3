@@ -1,4 +1,5 @@
-﻿using OOAD_Projekat.Models;
+﻿using Microsoft.AspNetCore.Mvc;
+using OOAD_Projekat.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,6 +15,7 @@ namespace OOAD_Projekat.Data.Answers
         {
             this.applicationDbContext = applicationDbContext;
         }
+
 
         public async Task AddAnswer(int questionID, string content, string userID)
         {
