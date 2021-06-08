@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using OOAD_Projekat.Data.Answers;
 using OOAD_Projekat.Data.Users;
 using System;
@@ -19,11 +20,10 @@ namespace OOAD_Projekat.Controllers
             this.answersRepository = answersRepository;
             this.usersRepository = usersRepository;
         }
-
+        // Provjeriti zasto ne radi redirekcija?
+        [Authorize]
         [HttpPost("AddAnswer")]
         public async Task AddAnswer([FromForm(Name = "questionID")] int questionID, [FromForm(Name = "content")] string content) {
-            Console.WriteLine("QuestionID: " + questionID);
-            Console.WriteLine("Content: " + content);
             var user = await usersRepository.GetUserByUserName(User.Identity.Name);
             await answersRepository.AddAnswer(questionID, content, user.Id);
         }
