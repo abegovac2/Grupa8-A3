@@ -1,5 +1,4 @@
-﻿﻿
-@model OOAD_Projekat.Models.ViewModels.QuestionViewModel
+﻿@model OOAD_Projekat.Models.ViewModels.QuestionViewModel
 
 @{
     ViewData["Title"] = "Create";
@@ -39,12 +38,12 @@
                 </div>
                 <!--postojeći tagovi-->
                 <div class="tagovi">
-                        @for (int i = 0; i < 10; i++)
-                       {
-                                            <a href="#">
-                        @Model.PopularTags[i].TagContent
-                                        </a>
-                                        }
+
+                @for(int i = 0, brojac = 0; i < Model.PopularTags.Count && brojac < 10; ++i, ++brojac)
+                {
+                    <a href="#">@Model.PopularTags[i].TagContent</a>
+                }
+
                 </div>
                 <!--buttons-->
                 <div class="buttons">

@@ -71,7 +71,7 @@ namespace OOAD_Projekat.Data.Questions
         public async Task<Question> getLastQuestion()
         {
             var maxId = applicationDbContext.Questions.Max(q => q.Id);
-            return applicationDbContext.Questions.FirstOrDefault(q => q.Id == maxId);
+            return await applicationDbContext.Questions.FirstOrDefaultAsync(q => q.Id == maxId);
         }
 
         public Task<Question> getQuestion(int id)

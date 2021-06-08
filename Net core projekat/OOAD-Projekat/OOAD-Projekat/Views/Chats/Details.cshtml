@@ -61,7 +61,7 @@
                     {
                         <div class="incoming_msg">
                             <div class="incoming_msg_img">
-                                <img src="https://png2.cleanpng.com/sh/be076cd9cc0a704b0fbdb233c307e4cf/L0KzQYm3V8AzN6lAepH0aYP2gLBuTfNwdaF6jNd7LXnmf7B6TgV0baMyfNHCbnzycbW0hv9vfF5mj9d8b33oPYbpUBEzbpNpeaYENUW4Poq8UsY2OGkASac8MEW2SYq9VcY4PGMziNDw/kisspng-computer-icons-user-download-font-awesome-5b3a2fbda49555.9526508915305399656742.png" alt="Missing picture" />
+                                <img src="~/images/profile.svg" alt="Missing picture" />
                             </div>
                             <div class="received_msg">
                                 <div class="received_withd_msg">
@@ -89,7 +89,7 @@
                     <input id="chatInput" type="hidden" name="chatId" value="@Model.Item2.Id" />
                     <input id="userInput" type="hidden" name="name" value="@User.Identity.Name" />
                     <div class="my-row">
-                        <input id="messageInput" type="text" name="text" class="write_msg" placeholder="Type a message" />
+                        <input id="messageInput" type="text" name="text" class="write_msg" placeholder="Type a message" autocomplete="off" />
                         <button id="sendMessageButton" class="msg_send_btn" type="button">Send</button>
                     </div>
                 </form>

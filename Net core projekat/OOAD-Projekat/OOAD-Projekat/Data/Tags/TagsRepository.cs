@@ -18,8 +18,17 @@ namespace OOAD_Projekat.Data.Tags
 
         public async Task AddTags(Tag t)
         {
-           applicationDbContext.Tags.AddAsync(t);
-           await applicationDbContext.SaveChangesAsync(); 
+            var postojiLiTag = await applicationDbContext.Tags.FirstOrDefaultAsync(_t => _t.TagContent.ToUpper() == t.TagContent.ToUpper());
+            if(postojiLiTag != null)
+            {
+                postojiLiTag.NumOfUses++;
+                await applicationDbContext.SaveChangesAsync();
+            }
+            else
+            {
+                await applicationDbContext.Tags.AddAsync(t);
+                await applicationDbContext.SaveChangesAsync();
+            }
         }
 
         [HttpGet]
@@ -34,11 +43,11 @@ namespace OOAD_Projekat.Data.Tags
         }
         public async Task<Tag> GetTagByName(string name)
         {
-            return applicationDbContext.Tags.FirstOrDefault(p => p.TagContent == name);
+            return await applicationDbContext.Tags.FirstOrDefaultAsync(p => p.TagContent == name);
         }
         public async Task<List<Tag>> GetPopular()
         {
-            return applicationDbContext.Tags.OrderByDescending(x => x.NumOfUses).Take(10).ToList();
+            return await applicationDbContext.Tags.OrderByDescending(x => x.NumOfUses).Take(10).ToListAsync();
         }
 
     }

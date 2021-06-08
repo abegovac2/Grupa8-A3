@@ -39,6 +39,9 @@
     border-radius: 20px;
     margin-bottom: 20px;
 }
+.question-card:hover{
+    cursor: pointer;
+}
 .question-rating {
   display: flex;
   flex-direction: column;

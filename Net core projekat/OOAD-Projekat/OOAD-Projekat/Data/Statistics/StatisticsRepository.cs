@@ -37,6 +37,7 @@ namespace OOAD_Projekat.Data.Statistics
                         .Select(ss => new TermUsageStatistics { Search = ss.Key, Count = ss.Count() })
                         .OrderByDescending(tus => tus.Count)
                         .Take(brojElemenata)
+                        .Distinct()
                         .ToListAsync();
             return data;
         }
@@ -48,6 +49,7 @@ namespace OOAD_Projekat.Data.Statistics
                 .Select(tp => new TagUsageStatistics { Tag = tp.Tag.TagContent, Count = tp.Tag.NumOfUses })
                 .OrderByDescending(tus => tus.Count)
                 .Take(brojElemenata)
+                .Distinct()
                 .ToListAsync();
             return data;
         }
