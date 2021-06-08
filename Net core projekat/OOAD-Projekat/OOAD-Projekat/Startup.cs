@@ -9,12 +9,14 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using OOAD_Projekat.Controllers.Hubs;
 using OOAD_Projekat.Data;
+using OOAD_Projekat.Data.Answers;
 using OOAD_Projekat.Data.ChatData;
 using OOAD_Projekat.Data.NotificationData;
 using OOAD_Projekat.Data.Questions;
 using OOAD_Projekat.Data.Statistics;
 using OOAD_Projekat.Data.TagPosts;
 using OOAD_Projekat.Data.Tags;
+using OOAD_Projekat.Data.Users;
 using OOAD_Projekat.Models;
 using System;
 using System.Collections.Generic;
@@ -51,6 +53,8 @@ namespace OOAD_Projekat
             services.AddScoped<IQuestionRecommendation, QuestionRecommendation>();
             services.AddScoped<IChatRepository, ChatRepository>();
             services.AddSingleton<IUserConnectionManager, UserConnectionManager>();
+            services.AddScoped<IAnswersRepository, AnswersRepository>();
+            services.AddScoped<IUsersRepository, UsersRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

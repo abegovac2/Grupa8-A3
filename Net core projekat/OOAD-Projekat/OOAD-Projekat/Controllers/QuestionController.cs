@@ -159,6 +159,5 @@ namespace OOAD_Projekat.Controllers
         {
             await questionsRepository.SaveOpening(User.Identity.Name.ToString(), question);
         }
-
     }
 }
