@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
+using OOAD_Projekat.Data.ReactionData;
 using OOAD_Projekat.Models;
 using System;
 using System.Collections.Generic;
@@ -11,13 +12,16 @@ namespace OOAD_Projekat.Data.Questions
     public class QuestionsRepository : IQuestionsRepository
     {
         private readonly ApplicationDbContext applicationDbContext;
-        public QuestionsRepository(ApplicationDbContext applicationDbContext)
+        private readonly IReactionRepository reactionRepository;
+        public QuestionsRepository(IReactionRepository reactionRepository, ApplicationDbContext applicationDbContext)
         {
             this.applicationDbContext = applicationDbContext;
+            this.reactionRepository = reactionRepository;
         }
         public async Task<List<Question>> Find(String SearchParam)
         {
             var data = await applicationDbContext.Questions.Where(q => q.Title.ToUpper().Contains(SearchParam)).ToListAsync();
+            data.ForEach(async x => await setupQuestionReactions(x));
             return data;
         }
         public async Task<List<Question>> FindAll()
@@ -28,6 +32,7 @@ namespace OOAD_Projekat.Data.Questions
         public async Task<List<Question>> FindMine(String UserName)
         {
             var data = await applicationDbContext.Questions.Where(q => q.User.Email == UserName).ToListAsync();
+            data.ForEach(async x => await setupQuestionReactions(x));
             return data;
         }
         public async Task AddQuestion(Question question)
@@ -38,9 +43,20 @@ namespace OOAD_Projekat.Data.Questions
 
         public async Task<List<Question>> ByTag(string tagName)
         {
-            return await applicationDbContext.Questions
+            var result = await applicationDbContext.Questions
                 .Join(applicationDbContext.TagPosts, q => q.Id, tp => tp.QuestionId, (q, tp) => new { question = q, tag = tp })
                 .Where(qtp => qtp.tag.Tag.TagContent.ToUpper().Contains(tagName)).Select(q => q.question).ToListAsync();
+
+            /*result.ForEach(async (qqq) =>
+            {
+                qqq.ratingCalculate = new QuestionRating();
+                var qRating = await reactionRepository.GetReactionsForPost(qqq.Id, PostType.QUESTION);
+                qqq.ratingCalculate.SetReactions(qRating);
+            });*/
+
+            result.ForEach(async x => await setupQuestionReactions(x));
+
+            return result;
         }
         
 
@@ -52,7 +68,6 @@ namespace OOAD_Projekat.Data.Questions
 
             if (hasAllReady != null) return;
 
-
             await applicationDbContext.ViewedQuestionsHistory.AddAsync(new Models.QuestionAndAnwserModels.ViewedQuestionsHistory { UserId = user.Id, QuestionId = question.Id });
             await applicationDbContext.SaveChangesAsync();
         }
@@ -63,26 +78,68 @@ namespace OOAD_Projekat.Data.Questions
         }
 
 //todo: DeleteQuestion
-        public Task DeleteQuestion(Question question)
+        public async Task DeleteQuestion(int questionId)
         {
-            throw new NotImplementedException();
+            await reactionRepository.DeleteReactionsForPost(questionId, PostType.QUESTION);
+
+            var anwsers = await applicationDbContext.Answers.Where(x => x.QuestionID == questionId).ToListAsync();
+
+            anwsers.ForEach(x =>
+            {
+                applicationDbContext.Answers.Remove(x);
+                reactionRepository.DeleteReactionsForPost(x.Id, PostType.ANWSER);
+            });
+
+            await applicationDbContext.SaveChangesAsync();
         }
 
         public async Task<Question> getLastQuestion()
         {
             var maxId = applicationDbContext.Questions.Max(q => q.Id);
-            return await applicationDbContext.Questions.FirstOrDefaultAsync(q => q.Id == maxId);
+            var res = await applicationDbContext.Questions.FirstOrDefaultAsync(q => q.Id == maxId);
+            res.ratingCalculate = new QuestionRating();
+            var react = reactionRepository.GetReactionsForPost( maxId, PostType.QUESTION);
+            res.ratingCalculate.SetReactions(react);
+            return res;
         }
 
-        public Task<Question> getQuestion(int id)
+        private async Task setupQuestionReactions(Question question)
         {
-            return applicationDbContext.Questions
-                .Include(qqq => qqq.Ratings)
+            question.ratingCalculate = new QuestionRating();
+            var rating = reactionRepository.GetReactionsForPost(question.Id, PostType.QUESTION);
+            question.ratingCalculate.SetReactions(rating);
+
+            question.Answers.ForEach(x =>
+            {
+               x.ratingCalculate = new AnwserRating();
+               var ratring1 = reactionRepository.GetReactionsForPost(x.Id, PostType.ANWSER);
+               x.ratingCalculate.SetReactions(ratring1);
+            });
+        }
+
+        public async Task<Question> getQuestion(int id)
+        {
+            var result = await applicationDbContext.Questions
                 .Include(qqq => qqq.Tags)
                 .ThenInclude(ttt => ttt.Tag)
                 .Include(qqq => qqq.Answers)
-                .ThenInclude(aaa => aaa.Ratings)
                 .Where(x => x.Id == id).FirstOrDefaultAsync();
+
+            if (result == null) return result;
+
+            await setupQuestionReactions(result);
+            
+            return result;
+
+        }
+
+        public async Task<List<Question>> FindUnanwseredQuestions()
+        {
+            var result = await applicationDbContext.Questions.Where(qqq => qqq.Anwsered == false).ToListAsync();
+
+            result.ForEach(async x => await setupQuestionReactions(x));
+
+            return result;
         }
     }
 }

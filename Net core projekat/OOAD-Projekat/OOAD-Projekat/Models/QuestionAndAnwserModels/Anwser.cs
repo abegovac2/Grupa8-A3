@@ -17,7 +17,7 @@ namespace OOAD_Projekat.Models
         public DateTime TimeStamp { get; set; }
         public bool AcceptedAsAnwser { get; set; }
 
-        public ICollection<Rating> Ratings { get; set; }
+        //public ICollection<Rating> Ratings { get; set; }
 
         public int QuestionID { get; set; }
         public Question Question { get; set; }

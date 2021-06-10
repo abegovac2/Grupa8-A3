@@ -20,8 +20,9 @@ namespace OOAD_Projekat.Data
         public DbSet<Tag> Tags { get; set; }
         public DbSet<TagPost> TagPosts { get; set; }
 
-        public DbSet<Rating> Ratings { get; set; }
-        public DbSet<PostType> PostTypes { get; set; }
+        //public DbSet<Rating> Ratings { get; set; }
+        public DbSet<Reaction> Reactions{ get; set; }
+        //public DbSet<PostType> PostTypes { get; set; }
         public DbSet<ChatUser> ChatUsers { get; set; }
         public DbSet<Chat> Chats { get; set; }
         public DbSet<Message> Messages { get; set; }
@@ -44,9 +45,9 @@ namespace OOAD_Projekat.Data
 
             // Configure Enum PostType in Rating
 
-            builder.Entity<Rating>().Property(r => r.PostTypeId).HasConversion<int>();
-            builder.Entity<PostType>().Property(p => p.PostTypeId).HasConversion<int>();
-            builder.Entity<PostType>().HasData(Enum.GetValues(typeof(PostTypeId)).Cast<PostTypeId>().Select(e => new PostType() { PostTypeId= e, name = e.ToString() }));
+            //builder.Entity<Rating>().Property(r => r.PostTypeId).HasConversion<int>();
+            //builder.Entity<PostType>().Property(p => p.PostTypeId).HasConversion<int>();
+            //builder.Entity<PostType>().HasData(Enum.GetValues(typeof(PostTypeId)).Cast<PostTypeId>().Select(e => new PostType() { PostTypeId= e, name = e.ToString() }));
 
             // Configure default user properties
 

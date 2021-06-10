@@ -13,6 +13,7 @@ using OOAD_Projekat.Data.Answers;
 using OOAD_Projekat.Data.ChatData;
 using OOAD_Projekat.Data.NotificationData;
 using OOAD_Projekat.Data.Questions;
+using OOAD_Projekat.Data.ReactionData;
 using OOAD_Projekat.Data.Statistics;
 using OOAD_Projekat.Data.TagPosts;
 using OOAD_Projekat.Data.Tags;
@@ -55,6 +56,7 @@ namespace OOAD_Projekat
             services.AddSingleton<IUserConnectionManager, UserConnectionManager>();
             services.AddScoped<IAnswersRepository, AnswersRepository>();
             services.AddScoped<IUsersRepository, UsersRepository>();
+            services.AddScoped<IReactionRepository, ReactionRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

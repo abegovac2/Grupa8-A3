@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using OOAD_Projekat.Data;
 
 namespace OOAD_Projekat.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210610000815_added_post_type_to_reactions")]
+    partial class added_post_type_to_reactions
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -331,6 +333,19 @@ namespace OOAD_Projekat.Data.Migrations
                     b.ToTable("Questions");
                 });
 
+            modelBuilder.Entity("OOAD_Projekat.Models.QuestionAndAnwserModels.RatingModels.PostType", b =>
+                {
+                    b.Property<int>("PostTypeId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("PostTypeId");
+
+                    b.ToTable("PostTypes");
+                });
+
             modelBuilder.Entity("OOAD_Projekat.Models.QuestionAndAnwserModels.RatingModels.TagPost", b =>
                 {
                     b.Property<int>("TagId")
@@ -371,7 +386,7 @@ namespace OOAD_Projekat.Data.Migrations
                     b.Property<int>("PostId")
                         .HasColumnType("int");
 
-                    b.Property<int>("PostType")
+                    b.Property<int?>("PostTypeId")
                         .HasColumnType("int");
 
                     b.Property<int>("ReactionType")
@@ -384,6 +399,8 @@ namespace OOAD_Projekat.Data.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("PostTypeId");
 
                     b.ToTable("Reactions");
                 });
@@ -646,6 +663,15 @@ namespace OOAD_Projekat.Data.Migrations
                     b.Navigation("Question");
 
                     b.Navigation("User");
+                });
+
+            modelBuilder.Entity("OOAD_Projekat.Models.Reaction", b =>
+                {
+                    b.HasOne("OOAD_Projekat.Models.QuestionAndAnwserModels.RatingModels.PostType", "PostType")
+                        .WithMany()
+                        .HasForeignKey("PostTypeId");
+
+                    b.Navigation("PostType");
                 });
 
             modelBuilder.Entity("OOAD_Projekat.Models.Chat", b =>

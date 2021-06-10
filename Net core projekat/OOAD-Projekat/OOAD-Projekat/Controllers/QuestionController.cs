@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc.ModelBinding;
 using OOAD_Projekat.Data;
 using OOAD_Projekat.Data.NotificationData;
 using OOAD_Projekat.Data.Questions;
+using OOAD_Projekat.Data.ReactionData;
 using OOAD_Projekat.Data.TagPosts;
 using OOAD_Projekat.Data.Tags;
 using OOAD_Projekat.Models;
@@ -24,13 +25,22 @@ namespace OOAD_Projekat.Controllers
         private readonly ITagsRepository tagsRepository;
         private readonly ITagPostRepository tagPostRepository;
         private readonly INotificationRepository notificationRepository;
-        public QuestionController(IQuestionsRepository questionsRepository, IQuestionRecommendation questionRecommendation, ITagsRepository tagsRepository, ITagPostRepository tagPostRepository, IUserConnectionManager userConnectionManager, ApplicationDbContext context)
+        private readonly IReactionRepository reactionRepository;
+
+        public QuestionController(IQuestionsRepository questionsRepository,
+            IQuestionRecommendation questionRecommendation,
+            ITagsRepository tagsRepository,
+            ITagPostRepository tagPostRepository,
+            IUserConnectionManager userConnectionManager,
+            IReactionRepository reactionRepository,
+            ApplicationDbContext context)
         {
             this.questionsRepository = questionsRepository;
             this.questionRecommendation = questionRecommendation;
             this.tagsRepository = tagsRepository;
             this.tagPostRepository = tagPostRepository;
             this.notificationRepository = new NotificationRepository(context, userConnectionManager);
+            this.reactionRepository = reactionRepository;
         }
 
         public async Task<IActionResult> Index()
@@ -61,7 +71,7 @@ namespace OOAD_Projekat.Controllers
         // TODO
         public IActionResult Unanswered()
         {
-            return View("Index", new List<Question>());
+            return View("Index", questionsRepository.FindUnanwseredQuestions());
         }
         // TODO
         [Authorize]
@@ -80,10 +90,14 @@ namespace OOAD_Projekat.Controllers
 
             return View(qvm);
         }  
-        //todo edit question
+        //todo need a view
          public IActionResult Edit(int questionId)
-        {  
-            return View();
+        {
+            var result = questionsRepository.getQuestion(questionId);
+
+            if (result == null) return NotFound();
+
+            return View(result);
         }
 
         [HttpGet]
@@ -144,5 +158,17 @@ namespace OOAD_Projekat.Controllers
         {
             await questionsRepository.SaveOpening(User.Identity.Name.ToString(), question);
         }
+
+        [HttpPost]
+        public async Task<IActionResult> AddReaction([FromForm(Name = "questionId")] string quesitonId, [FromForm(Name = "postId")] string postId, [FromForm(Name = "postType")] PostType postType, [FromForm(Name = "reactionType")] ReactionType reactionType)
+        {
+            var user = await questionsRepository.getUserByUserName(User.Identity.Name);
+
+            await reactionRepository.AddReactionFromPost(user.Id, int.Parse(postId), postType, reactionType);
+
+            return RedirectToAction("Details", new { id = int.Parse(quesitonId) });
+        }
+
+
     }
 }

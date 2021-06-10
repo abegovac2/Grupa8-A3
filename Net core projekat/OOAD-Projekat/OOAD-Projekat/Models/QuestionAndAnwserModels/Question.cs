@@ -18,15 +18,14 @@ namespace OOAD_Projekat.Models
         public bool Anwsered { get; set; }
         public bool HotQuestion { get; set; }
 
-        // One to Many relatinship with rating
-        public ICollection<Rating> Ratings { get; set; }
+        //public ICollection<Rating> Ratings { get; set; }
 
         // Mark question as duplicate
         public bool Duplicate { get; set; }
         // Many to many relationship with tags
         public ICollection<TagPost> Tags { get; set; }
         // One to many relationship with answers
-        public ICollection<Answer> Answers { get; set; }
+        public List<Answer> Answers { get; set; }
 
         public ICollection<ViewedQuestionsHistory> ViewedQuestionsHistory { get; set; }
 

@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace OOAD_Projekat.Models.QuestionAndAnwserModels.RatingModels
+﻿namespace OOAD_Projekat.Models
 {
-    public class PostType
+    public enum PostType
     {
-        public PostTypeId PostTypeId { get; set; }
-        public string name { get; set; }
+        QUESTION = 0,
+        ANWSER = 1
     }
 }
