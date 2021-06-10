@@ -1,5 +1,75 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@model OOAD_Projekat.Models.ViewModels.QuestionViewModel
+
 @{
+    ViewData["Title"] = "Edit";
+
+}
+
+
+<link href="~/css/createQuestion.css" rel="stylesheet" type="text/css" />
+<link rel="stylesheet" href="https://cdn.metroui.org.ua/v4/css/metro-all.min.css">
+
+<div class="wrapper-1">
+    <div class="col-md-7 col-lg-10 col-sm-12">
+        <h2>Edit your question</h2>
+        <div class="container_form">
+            <input type="hidden" asp-action="Edit" asp-for="Id"/>
+            <form asp-controller="Question" asp-action="Edit">
+                <!--Naziv pitanja-->
+                <div class="form-group naziv">
+                    <label asp-for="Title">Title</label>
+                    <textarea name="title" class="form-control" rows="1">@Model.Title</textarea>
+                    <span asp-validation-for="Title" class="text-danger"></span>
+                </div>
+
+                <!--Unos pitanja-->
+                <div class="form-group unos">
+                    <label asp-for="Content" class="control-label"></label>
+                    <textarea name="content" class="form-control" rows="4" value="">@Model.Content</textarea>
+                    <span asp-validation-for="Content" class="text-danger"></span>
+                </div>
+                <!--kreiranje taga-->
+                <div class="form-group unos_taga">
+                    <label>Create tag:</label>
+                    <div class="class-1">
+
+                        <input type="text" name="tags"
+                               data-role="taginput" value="@Model.Tags">
+
+                    </div>
+
+                </div>
+                <!--postojeći tagovi-->
+                <div class="tagovi">
+                    @for (int i = 0, brojac = 0; i < Model.PopularTags.Count && brojac < 10; ++i, ++brojac)
+                    {
+                        <a href="#">@Model.PopularTags[i].TagContent</a>
+                    }
+                </div>
+                <!--buttons-->
+                <div class="buttons">
+                    <button type="button" class="btn btn-outline-dark">Back</button>
+                    <input class="btn btn-outline-dark submit" type="submit" value="Submit">
+                </div>
+            </form>
+        </div>
+
+    </div>
+</div>
+
+<script type="text/javascript">
+    //Stop Form Submission of Enter Key Press
+    function stopRKey(evt) {
+        var evt = (evt) ? evt : ((event) ? event : null);
+        var node = (evt.target) ? evt.target : ((evt.srcElement) ? evt.srcElement : null);
+        if ((evt.keyCode == 13) && (node.type == "text")) { return false; }
+    }
+    document.onkeypress = stopRKey;
+</script>
+<script src="https://cdn.metroui.org.ua/v4.3.2/js/metro.min.js"></script>
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
 }

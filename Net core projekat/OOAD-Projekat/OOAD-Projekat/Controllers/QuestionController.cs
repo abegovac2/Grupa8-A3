@@ -14,6 +14,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace OOAD_Projekat.Controllers
@@ -89,17 +90,78 @@ namespace OOAD_Projekat.Controllers
             qvm.PopularTags = await tagsRepository.GetPopular();
 
             return View(qvm);
-        }  
+        }
         //todo need a view
-         public IActionResult Edit(int questionId)
+        [HttpGet]
+        public async Task<IActionResult> Edit(int? id)
         {
-            var result = questionsRepository.getQuestion(questionId);
+            if (id == null) return NotFound();
 
-            if (result == null) return NotFound();
+            var question = await questionsRepository.getQuestion((int)id);
 
-            return View(result);
+            if (question == null) return NotFound();
+
+            var user = await questionsRepository.getUserByUserName(User.Identity.Name);
+            if (user == null) return NotFound();
+
+            StringBuilder builder = new StringBuilder();
+            foreach (var tag in question.Tags)
+            {
+                builder.Append(tag.Tag.TagContent).Append(",");
+            }
+            var popularTags = await tagsRepository.GetPopular();
+            var qvm = new QuestionViewModel((int)id, question.Title, question.Content, builder.ToString(), popularTags, user);
+
+            return View(qvm);
         }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit([Bind("Title,Content,Tags,User,Id,PopularTags")] QuestionViewModel q)
+        {
+            var question = await questionsRepository.getQuestion(q.Id);
+            if (ModelState.IsValid)
+            {
+                question.Content = q.Content;
+                question.Title = q.Title;
+                var oldTags = question.Tags; 
+                await questionsRepository.UpdateQuestion(question);
+                
+                if (q.Tags != null)
+                {
+                    q.Tags = q.Tags + ",";
+                    string[] listOfTags = (q.Tags).Split(",");
+
+                    var listOfOldTags = oldTags.Select(x => x.Tag.TagContent).ToList<String>();
+                    var newTags = listOfTags.Except(listOfOldTags).ToArray<String>();
+                    var changedTags = listOfOldTags.Except(listOfTags).ToArray<String>();
+
+                    for (int i = 0; i < newTags.Length - 1; i++)
+                    {
+                        Tag t = new Tag();
+                        t.TagContent = newTags[i];
+                        t.NumOfUses = 1;
+                        await tagsRepository.AddTags(t);
+                        var addedTag = await tagsRepository.GetTagByName(newTags[i]);
+                        TagPost tp = new TagPost();
+                        tp.QuestionId = question.Id;
+                        tp.TagId =  addedTag.Id;
+
+                        await tagPostRepository.AddTagPost(tp);
+                    }
+                    for(int i = 0; i < changedTags.Length ; i++)
+                    {
+                        Tag t = await tagsRepository.GetTagByName(changedTags[i]);
+                        await tagsRepository.DeleteTags(t);
+                    }
+                }
+                
+
+                return RedirectToAction("Details", new { question.Id });
+            }
+            q.PopularTags = await tagsRepository.GetPopular();
+            return View(q);
+        }
         [HttpGet]
         public async Task<IActionResult> Details(int? id)
         {
@@ -139,11 +201,14 @@ namespace OOAD_Projekat.Controllers
                         Tag t = new Tag();
                         t.TagContent = listOfTags[i];
                         t.NumOfUses = 1;
+
                         await tagsRepository.AddTags(t);
                         var addedTag = await tagsRepository.GetTagByName(listOfTags[i]);
+
                         TagPost tp = new TagPost();
                         tp.QuestionId = AddedQuestion.Id;
                         tp.TagId = addedTag.Id;
+                      
                         await tagPostRepository.AddTagPost(tp);
                     }
                 }

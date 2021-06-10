@@ -30,6 +30,7 @@ namespace OOAD_Projekat.Data.Tags
                 await applicationDbContext.SaveChangesAsync();
             }
         }
+        
 
         [HttpGet]
         public async Task<List<Tag>> GetTags(string searchParam)
@@ -43,12 +44,24 @@ namespace OOAD_Projekat.Data.Tags
         }
         public async Task<Tag> GetTagByName(string name)
         {
-            return await applicationDbContext.Tags.FirstOrDefaultAsync(p => p.TagContent == name);
+            return await applicationDbContext.Tags.FirstOrDefaultAsync(p => p.TagContent.ToUpper() == name.ToUpper());
         }
         public async Task<List<Tag>> GetPopular()
         {
             return await applicationDbContext.Tags.OrderByDescending(x => x.NumOfUses).Take(10).ToListAsync();
         }
 
+        public async Task DeleteTags(Tag t)
+        {
+            var postojiLiTag = await applicationDbContext.Tags.FirstOrDefaultAsync(_t => _t.TagContent.ToUpper() == t.TagContent.ToUpper());
+            if (postojiLiTag != null)
+            {
+                postojiLiTag.NumOfUses--;
+                if(postojiLiTag.NumOfUses == 0)
+                        applicationDbContext.Tags.Remove(t);
+
+                await applicationDbContext.SaveChangesAsync();
+            }
+        }
     }
 }

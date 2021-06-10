@@ -15,8 +15,13 @@ namespace OOAD_Projekat.Data.TagPosts
         }
         public async Task AddTagPost(TagPost tagPost)
         {
-            applicationDbContext.TagPosts.Add(tagPost);
-            await applicationDbContext.SaveChangesAsync();
+            var vecPostoji = applicationDbContext.TagPosts.Where(x => x.TagId == tagPost.TagId && x.QuestionId == tagPost.QuestionId).FirstOrDefault();
+            if(vecPostoji == null)
+            {
+                 applicationDbContext.TagPosts.Add(tagPost);
+                 await applicationDbContext.SaveChangesAsync();
+            }
+           
         }
     }
 }

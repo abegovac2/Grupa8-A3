@@ -19,5 +19,6 @@ namespace OOAD_Projekat.Data.Questions
         public Task SaveOpening(string UserName, Question question);
         public Task<User> getUserByUserName(string name);
         public Task<List<Question>> FindUnanwseredQuestions();
+        Task UpdateQuestion(Question question);
     }
 }

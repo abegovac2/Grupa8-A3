@@ -141,5 +141,11 @@ namespace OOAD_Projekat.Data.Questions
 
             return result;
         }
+
+        public async Task UpdateQuestion(Question question)
+        {
+            applicationDbContext.Questions.Update(question);
+            await applicationDbContext.SaveChangesAsync();
+        }
     }
 }
