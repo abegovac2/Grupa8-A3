@@ -47,13 +47,6 @@ namespace OOAD_Projekat.Data.Questions
                 .Join(applicationDbContext.TagPosts, q => q.Id, tp => tp.QuestionId, (q, tp) => new { question = q, tag = tp })
                 .Where(qtp => qtp.tag.Tag.TagContent.ToUpper().Contains(tagName)).Select(q => q.question).ToListAsync();
 
-            /*result.ForEach(async (qqq) =>
-            {
-                qqq.ratingCalculate = new QuestionRating();
-                var qRating = await reactionRepository.GetReactionsForPost(qqq.Id, PostType.QUESTION);
-                qqq.ratingCalculate.SetReactions(qRating);
-            });*/
-
             result.ForEach(async x => await setupQuestionReactions(x));
 
             return result;
@@ -108,6 +101,11 @@ namespace OOAD_Projekat.Data.Questions
             question.ratingCalculate = new QuestionRating();
             var rating = reactionRepository.GetReactionsForPost(question.Id, PostType.QUESTION);
             question.ratingCalculate.SetReactions(rating);
+        }
+
+        private async Task setupQuestionAndAnwserReactions(Question question)
+        {
+            await setupQuestionReactions(question);
 
             question.Answers.ForEach(x =>
             {
@@ -127,7 +125,7 @@ namespace OOAD_Projekat.Data.Questions
 
             if (result == null) return result;
 
-            await setupQuestionReactions(result);
+            await setupQuestionAndAnwserReactions(result);
             
             return result;
 
@@ -146,6 +144,22 @@ namespace OOAD_Projekat.Data.Questions
         {
             applicationDbContext.Questions.Update(question);
             await applicationDbContext.SaveChangesAsync();
+        }
+
+        public async Task<List<Question>> getPopularQestions()
+        {
+            var questions = await applicationDbContext.Questions.ToListAsync();
+
+            questions.ForEach(async x => await setupQuestionReactions(x));
+
+            questions.Sort((x, y) => {
+                var xVel = x.ratingCalculate.CalculateRating();
+                var yVel = y.ratingCalculate.CalculateRating();
+                if (xVel.Item1 == yVel.Item1) return xVel.Item2 - yVel.Item2;
+                return xVel.Item1 - yVel.Item1;
+            });
+
+            return questions;
         }
     }
 }

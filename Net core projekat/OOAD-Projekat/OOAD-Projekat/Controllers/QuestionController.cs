@@ -65,14 +65,14 @@ namespace OOAD_Projekat.Controllers
             return View("Index", await questionsRepository.ByTag(tagName.Trim().ToUpper()));
         }
         // TODO
-        public IActionResult Popular()
+        public async Task<IActionResult> Popular()
         {
-            return View("Index", new List<Question>());
+            return View("Index", await questionsRepository.getPopularQestions());
         }
         // TODO
-        public IActionResult Unanswered()
+        public async Task<IActionResult> Unanswered()
         {
-            return View("Index", questionsRepository.FindUnanwseredQuestions());
+            return View("Index", await questionsRepository.FindUnanwseredQuestions());
         }
         // TODO
         [Authorize]

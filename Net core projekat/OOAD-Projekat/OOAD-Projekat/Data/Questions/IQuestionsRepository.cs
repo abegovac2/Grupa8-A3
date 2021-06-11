@@ -14,6 +14,7 @@ namespace OOAD_Projekat.Data.Questions
         public Task AddQuestion(Question question);
         public Task DeleteQuestion(int questionId);
         public Task<Question> getLastQuestion();
+        public Task<List<Question>> getPopularQestions();
         public Task<Question> getQuestion(int id);
         public Task<List<Question>> ByTag(String tagName);
         public Task SaveOpening(string UserName, Question question);
