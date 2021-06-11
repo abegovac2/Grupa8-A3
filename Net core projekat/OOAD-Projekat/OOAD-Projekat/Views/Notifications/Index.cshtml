@@ -1,0 +1,71 @@
+﻿@model List<Notification>
+@{
+    ViewData["Title"] = "Notifications";
+}
+
+
+<style>
+    body {
+        margin-top: 20px;
+        background-color: #f0f2f5;
+    }
+
+    .dropdown-list-image {
+        position: relative;
+        height: 2.5rem;
+        width: 2.5rem;
+    }
+
+        .dropdown-list-image img {
+            height: 2.5rem;
+            width: 2.5rem;
+        }
+
+    .btn-light {
+        color: #2cdd9b;
+        background-color: #e5f7f0;
+        border-color: #d8f7eb;
+    }
+</style>
+<div>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-9 right">
+                <div class="box shadow-sm rounded bg-white mb-3">
+                    <div class="box-title border-bottom p-3">
+                        <h6 class="m-0">Notifications</h6>
+                    </div>
+                    </div>
+                </div>
+                <div class="box shadow-sm rounded bg-white mb-3">
+                    <div class="box-body p-0">
+                        @foreach (var notif in Model)
+                        {
+                            string type = "";
+                            string picture = "";
+                            var controller = "";
+                            if (notif.NotificationType == NotificationType.CHAT)
+                            {
+                                type = "Chat Notification";
+                                picture = "~images/chat-svgrepo-com.svg";
+                                controller = "Chats";
+                            }
+                            else if (notif.NotificationType == NotificationType.QUESTION) {
+                                type = "Question Notification";
+                                picture = "";
+                                controller = "Question";
+                            }
+                        <div class="p-3 d-flex align-items-center border-bottom osahan-post-header">
+                            <div class="dropdown-list-image mr-3">
+                                <img class="rounded-circle" src="@picture" alt="" />
+                            </div>
+                            <a asp-controller="@controller" asp-action="Details" asp-route-id="@notif.PostId"><button type="submit" class="btn btn-outline-success btn-sm">Go to</button></a>
+                        </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
