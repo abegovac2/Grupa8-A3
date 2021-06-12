@@ -6,11 +6,31 @@ function chatNotification(postsId, notificationId, message) {
     var notif = "chatNotif";
     notif = notif.concat(parseInt(postsId));
     var chat = document.getElementById(notif);
-    chat.className = "my_notification";
+    if(chat != null) chat.className = "my_notification";
+
+    var notificationList = document.getElementById("notificationList");
+    if (notificationList == null) return;
+
+    var html = '<a class="my-notification-single" href=/Chats/Details/'+ postsId +'>';
+    html += '<img width="50" height="50" src="/images/chat-svgrepo-com.svg" />';
+    html += '<p>' + message.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;") + '</p>';
+    html += '<img width = "30" height = "30" src = "/images/notification.svg" />';
+    html += '</a>'
+
+    notificationList.innerHTML += html;
 }
 
 function questionNotification( postsId, notificationId, message) {
+    var notificationList = document.getElementById("notificationList");
+    if (notificationList == null) return;
 
+    var html = '<a class="my-notification-single" href=/Question/Details/"' + postsId + '">';
+    html += '<img width="50" height="50" src="/images/question-mark.svg" />';
+    html += '<p>' + message.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;") + '</p>';
+    html += '<img width = "30" height = "30" src = "/images/notification.svg" />';
+    html += '</a>'
+
+    notificationList.innerHTML += html;
 }
 
 function anwserNotification(postsId, notificationId, message) {

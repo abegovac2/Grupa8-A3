@@ -1,4 +1,4 @@
-﻿@model List<Notification>
+﻿@model Tuple<string,List<Notification>>
 @{
     ViewData["Title"] = "Notifications";
 }
@@ -10,8 +10,12 @@
         <div class="my-notification-stripe">
             Notifications
         </div>
-        <div class="my-notifications-list">
-            @foreach (var notif in Model)
+        <!--For notifications-->
+        <input type="hidden" id="userId" value="@Model.Item1" />
+        <input type="hidden" id="signalRConnectionId" />
+        <!--For notifications-->
+        <div id="notificationList" class="my-notifications-list">
+            @foreach (var notif in Model.Item2)
             {
                 var controller = "";
                 if (notif.NotificationType == NotificationType.CHAT)
@@ -22,19 +26,21 @@
                 {
                     controller = "Question";
                 }
-            <a class="my-notification-single" asp-controller="@controller" asp-action="Details" asp-route-id="@notif.PostId">
-                @if (notif.NotificationType == NotificationType.CHAT)
-                {
-                    <img width="50" height="50" src="~/images/chat-svgrepo-com.svg" />
-                }
-                else
-                {
-                    <img width="50" height="50" src="~/images/question-mark.svg" />
-                }
-                <p>@notif.Message</p>
-                <img width="30" height="30" src="~/images/notification.svg" />
-            </a>
+                <a class="my-notification-single" asp-controller="@controller" asp-action="Details" asp-route-id="@notif.PostId">
+                    @if (notif.NotificationType == NotificationType.CHAT)
+                    {
+                        <img width="50" height="50" src="~/images/chat-svgrepo-com.svg" />
+                    }
+                    else
+                    {
+                        <img width="50" height="50" src="~/images/question-mark.svg" />
+                    }
+                    <p>@notif.Message</p>
+                    <img width="30" height="30" src="~/images/notification.svg" />
+                </a>
             }
         </div>
     </div>
 </div>
+<script src="~/js/signalr/dist/browser/signalr.js"></script>
+<script src="~/js/notifications.js"></script>

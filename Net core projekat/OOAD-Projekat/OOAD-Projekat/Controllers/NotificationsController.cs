@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using OOAD_Projekat.Data;
+using OOAD_Projekat.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,7 +26,7 @@ namespace OOAD_Projekat.Controllers
 
             var notifications = await _context.Notifications.Where(x => x.UserId == user.Id && x.Seen == false).ToListAsync();
 
-            return View("Index",notifications);
+            return View("Index", new Tuple<string, List<Notification>>(user.Id, notifications));
         }
     }
 }

@@ -70,7 +70,6 @@ namespace OOAD_Projekat.Data.Questions
             return await applicationDbContext.Users.Where(x => x.UserName == name).FirstOrDefaultAsync();
         }
 
-//todo: DeleteQuestion
         public async Task DeleteQuestion(int questionId)
         {
             await reactionRepository.DeleteReactionsForPost(questionId, PostType.QUESTION);
@@ -118,6 +117,7 @@ namespace OOAD_Projekat.Data.Questions
         public async Task<Question> getQuestion(int id)
         {
             var result = await applicationDbContext.Questions
+                .Include(x => x.User)
                 .Include(qqq => qqq.Tags)
                 .ThenInclude(ttt => ttt.Tag)
                 .Include(qqq => qqq.Answers)

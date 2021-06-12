@@ -7,6 +7,7 @@ using OOAD_Projekat.Data.Questions;
 using OOAD_Projekat.Data.ReactionData;
 using OOAD_Projekat.Data.TagPosts;
 using OOAD_Projekat.Data.Tags;
+using OOAD_Projekat.Data.Users;
 using OOAD_Projekat.Models;
 using OOAD_Projekat.Models.QuestionAndAnwserModels.RatingModels;
 using OOAD_Projekat.Models.ViewModels;
@@ -27,6 +28,7 @@ namespace OOAD_Projekat.Controllers
         private readonly ITagPostRepository tagPostRepository;
         private readonly INotificationRepository notificationRepository;
         private readonly IReactionRepository reactionRepository;
+        private readonly IUsersRepository usersRepository;
 
         public QuestionController(IQuestionsRepository questionsRepository,
             IQuestionRecommendation questionRecommendation,
@@ -34,6 +36,7 @@ namespace OOAD_Projekat.Controllers
             ITagPostRepository tagPostRepository,
             IUserConnectionManager userConnectionManager,
             IReactionRepository reactionRepository,
+            IUsersRepository usersRepository,
             ApplicationDbContext context)
         {
             this.questionsRepository = questionsRepository;
@@ -42,6 +45,7 @@ namespace OOAD_Projekat.Controllers
             this.tagPostRepository = tagPostRepository;
             this.notificationRepository = new NotificationRepository(context, userConnectionManager);
             this.reactionRepository = reactionRepository;
+            this.usersRepository = usersRepository;
         }
 
         public async Task<IActionResult> Index()
@@ -172,7 +176,15 @@ namespace OOAD_Projekat.Controllers
 
             if (question == null) return NotFound();
 
-            if(User.Identity.Name != null)  await questionsRepository.SaveOpening(User.Identity.Name, question);
+            if (User.Identity.Name != null)
+            {
+                await questionsRepository.SaveOpening(User.Identity.Name, question);
+
+                var user = await usersRepository.GetUserByUserName(User.Identity.Name);
+
+                await notificationRepository.MarkAsSeen(user.Id, (int)id, NotificationType.QUESTION);
+            }
+            
 
             return View(question);
         }

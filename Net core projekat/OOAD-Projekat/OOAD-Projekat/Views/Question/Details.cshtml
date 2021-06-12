@@ -8,6 +8,10 @@
 <script src="~/js/axios.min.js"></script>
 <link href="~/css/questionDetails.css" rel="stylesheet" type="text/css" />
 <div class="questions-details-page-content">
+    <!--For notifications-->
+    <input type="hidden" id="userId" value="@Model.User.Id" />
+    <input type="hidden" id="signalRConnectionId" />
+    <!--For notifications-->
     <div class="my-question">
         <div class="my-question-rating">
             <a class="my-rating-buttons my-rating-button-up">
@@ -53,7 +57,6 @@
                 </div>
                 <div class="my-answer-info">
                     <div class="my-answer-content">
-                        <!--Lorem ipsum dolor sit amet consectetur adipisicing elit. Blanditiis facilis reiciendis possimus tempore unde doloribus enim quaerat totam porro sequi voluptatum et eius ipsam accusantium quidem, aliquid dolore natus consectetur, architecto nostrum. Repellendus culpa cum repellat necessitatibus dignissimos sunt nulla ducimus tenetur, dolore reprehenderit molestiae quis tempora consequuntur dolores blanditiis!-->
                         @anwser.Content
                     </div>
                 </div>
@@ -103,10 +106,10 @@
         $.post({
             url: '@Url.Action("AddReaction", "Question")',
             data: {
-                questionId = "@Model.Id"
-                postId = postId,
-                postType = postType,
-                reactionType = reactionType
+                questionId: @Model.Id,
+                postId: postId,
+                postType: postType,
+                reactionType: reactionType
             },
             success: null,
             error: null
@@ -115,3 +118,6 @@
     }
 
 </script>
+
+<script src="~/js/signalr/dist/browser/signalr.js"></script>
+<script src="~/js/notifications.js"></script>

@@ -18,7 +18,7 @@ var createReceiveMessage = function (user, message, time) {
     incoming_img.className = "incoming_msg_img";
     var img = document.createElement("img");
 
-    img.src = "https://ptetutorials.com/images/user-profile.png";
+    img.src = "/images/profile.svg";
     img.alt = "sunil";
 
     incoming_img.appendChild(img);
