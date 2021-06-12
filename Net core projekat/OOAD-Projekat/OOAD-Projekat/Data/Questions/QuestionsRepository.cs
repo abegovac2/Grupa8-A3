@@ -81,6 +81,9 @@ namespace OOAD_Projekat.Data.Questions
                 applicationDbContext.Answers.Remove(x);
                 reactionRepository.DeleteReactionsForPost(x.Id, PostType.ANWSER);
             });
+            var q = await getQuestion(questionId);
+
+            applicationDbContext.Questions.Remove(q);
 
             await applicationDbContext.SaveChangesAsync();
         }

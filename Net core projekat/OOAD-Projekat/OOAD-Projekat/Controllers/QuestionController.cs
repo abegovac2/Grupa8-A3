@@ -121,48 +121,55 @@ namespace OOAD_Projekat.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit([Bind("Title,Content,Tags,User,Id,PopularTags")] QuestionViewModel q)
+        public async Task<IActionResult> Edit([Bind("Title,Content,Tags,User,Id,PopularTags")] QuestionViewModel q, string submit)
         {
-            var question = await questionsRepository.getQuestion(q.Id);
-            if (ModelState.IsValid)
+            if (submit == "Delete")
             {
-                question.Content = q.Content;
-                question.Title = q.Title;
-                var oldTags = question.Tags; 
-                await questionsRepository.UpdateQuestion(question);
-                
-                if (q.Tags != null)
-                {
-                    q.Tags = q.Tags + ",";
-                    string[] listOfTags = (q.Tags).Split(",");
-
-                    var listOfOldTags = oldTags.Select(x => x.Tag.TagContent).ToList<String>();
-                    var newTags = listOfTags.Except(listOfOldTags).ToArray<String>();
-                    var changedTags = listOfOldTags.Except(listOfTags).ToArray<String>();
-
-                    for (int i = 0; i < newTags.Length - 1; i++)
-                    {
-                        Tag t = new Tag();
-                        t.TagContent = newTags[i];
-                        t.NumOfUses = 1;
-                        await tagsRepository.AddTags(t);
-                        var addedTag = await tagsRepository.GetTagByName(newTags[i]);
-                        TagPost tp = new TagPost();
-                        tp.QuestionId = question.Id;
-                        tp.TagId =  addedTag.Id;
-
-                        await tagPostRepository.AddTagPost(tp);
-                    }
-                    for(int i = 0; i < changedTags.Length ; i++)
-                    {
-                        Tag t = await tagsRepository.GetTagByName(changedTags[i]);
-                        await tagsRepository.DeleteTags(t);
-                    }
-                }
-                
-
-                return RedirectToAction("Details", new { question.Id });
+                await questionsRepository.DeleteQuestion(q.Id);
+                return RedirectToAction("Index");
             }
+            else
+            {
+                var question = await questionsRepository.getQuestion(q.Id);
+                if (ModelState.IsValid)
+                {
+                    question.Content = q.Content;
+                    question.Title = q.Title;
+                    var oldTags = question.Tags;
+                    await questionsRepository.UpdateQuestion(question);
+
+                    if (q.Tags != null)
+                    {
+                        q.Tags = q.Tags + ",";
+                        string[] listOfTags = (q.Tags).Split(",");
+
+                        var listOfOldTags = oldTags.Select(x => x.Tag.TagContent).ToList<String>();
+                        var newTags = listOfTags.Except(listOfOldTags).ToArray<String>();
+                        var changedTags = listOfOldTags.Except(listOfTags).ToArray<String>();
+
+                        for (int i = 0; i < newTags.Length - 1; i++)
+                        {
+                            Tag t = new Tag();
+                            t.TagContent = newTags[i];
+                            t.NumOfUses = 1;
+                            await tagsRepository.AddTags(t);
+                            var addedTag = await tagsRepository.GetTagByName(newTags[i]);
+                            TagPost tp = new TagPost();
+                            tp.QuestionId = question.Id;
+                            tp.TagId = addedTag.Id;
+
+                            await tagPostRepository.AddTagPost(tp);
+                        }
+                        for (int i = 0; i < changedTags.Length; i++)
+                        {
+                            Tag t = await tagsRepository.GetTagByName(changedTags[i]);
+                            await tagsRepository.DeleteTags(t);
+                        }
+                    }
+                    return RedirectToAction("Details", new { question.Id });
+                }
+            }
+
             q.PopularTags = await tagsRepository.GetPopular();
             return View(q);
         }
