@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
 using OOAD_Projekat.Models;
+using OOAD_Projekat.Data.Users;
 
 namespace OOAD_Projekat.Areas.Identity.Pages.Account
 {
@@ -21,14 +22,17 @@ namespace OOAD_Projekat.Areas.Identity.Pages.Account
         private readonly UserManager<User> _userManager;
         private readonly SignInManager<User> _signInManager;
         private readonly ILogger<LoginModel> _logger;
-
+        private readonly IUsersRepository usersRepository;
         public LoginModel(SignInManager<User> signInManager, 
             ILogger<LoginModel> logger,
-            UserManager<User> userManager)
+            UserManager<User> userManager,
+            IUsersRepository usersRepository
+            )
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _logger = logger;
+            this.usersRepository = usersRepository;
         }
 
         [BindProperty]
@@ -80,13 +84,19 @@ namespace OOAD_Projekat.Areas.Identity.Pages.Account
         
             if (ModelState.IsValid)
             {
-                // This doesn't count login failures towards account lockout
-                // To enable password failures to trigger account lockout, set lockoutOnFailure: true
+                // Provjera jel korisnik banovan
+                var userBlockInfo = await usersRepository.GetUserBlockedStatus(Input.Email);
+                if (userBlockInfo)
+                {
+                    ModelState.AddModelError(string.Empty, "Account is banned.");
+                    return Page();
+                }
                 var result = await _signInManager.PasswordSignInAsync(Input.Email, Input.Password, Input.RememberMe, lockoutOnFailure: false);
                 if (result.Succeeded)
-                {
+                { 
                     _logger.LogInformation("User logged in.");
                     return LocalRedirect(returnUrl);
+
                 }
                 if (result.RequiresTwoFactor)
                 {

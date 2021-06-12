@@ -18,5 +18,9 @@ namespace OOAD_Projekat.Data.Users
         {
             return await applicationDbContext.Users.Where(x => x.UserName == name).FirstOrDefaultAsync();
         }
+        public async Task<bool> GetUserBlockedStatus(string name)
+        {
+            return await applicationDbContext.Users.Where(x => x.UserName == name).Select(x => x.Blocked).FirstOrDefaultAsync();
+        }
     }
 }
