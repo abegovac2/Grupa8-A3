@@ -13,6 +13,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
 using OOAD_Projekat.Models;
 using OOAD_Projekat.Data.Users;
+using OOAD_Projekat.Utils;
 
 namespace OOAD_Projekat.Areas.Identity.Pages.Account
 {
@@ -23,16 +24,19 @@ namespace OOAD_Projekat.Areas.Identity.Pages.Account
         private readonly SignInManager<User> _signInManager;
         private readonly ILogger<LoginModel> _logger;
         private readonly IUsersRepository usersRepository;
+        private readonly IMailSender mailSender;
         public LoginModel(SignInManager<User> signInManager, 
             ILogger<LoginModel> logger,
             UserManager<User> userManager,
-            IUsersRepository usersRepository
+            IUsersRepository usersRepository,
+            IMailSender mailSender
             )
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _logger = logger;
             this.usersRepository = usersRepository;
+            this.mailSender = mailSender;
         }
 
         [BindProperty]
@@ -94,6 +98,10 @@ namespace OOAD_Projekat.Areas.Identity.Pages.Account
                 var result = await _signInManager.PasswordSignInAsync(Input.Email, Input.Password, Input.RememberMe, lockoutOnFailure: false);
                 if (result.Succeeded)
                 { 
+                    mailSender.Send(Input.Email, Input.Email,
+                        @"Last Login from Location: " + Request.HttpContext.Connection.RemoteIpAddress.ToString() +
+                        " .If that's not you, consider changing your password."
+                    );
                     _logger.LogInformation("User logged in.");
                     return LocalRedirect(returnUrl);
 

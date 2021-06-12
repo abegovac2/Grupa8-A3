@@ -19,6 +19,7 @@ using OOAD_Projekat.Data.TagPosts;
 using OOAD_Projekat.Data.Tags;
 using OOAD_Projekat.Data.Users;
 using OOAD_Projekat.Models;
+using OOAD_Projekat.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -58,6 +59,8 @@ namespace OOAD_Projekat
             services.AddScoped<IAnswersRepository, AnswersRepository>();
             services.AddScoped<IUsersRepository, UsersRepository>();
             services.AddScoped<IReactionRepository, ReactionRepository>();
+            services.Configure<MailInfo>(Configuration.GetSection("MailInfo"));
+            services.AddScoped<IMailSender, MailSender>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -78,7 +81,10 @@ namespace OOAD_Projekat
             app.UseStaticFiles();
 
             app.UseRouting();
-
+            app.UseForwardedHeaders(new ForwardedHeadersOptions
+            {
+                ForwardedHeaders = Microsoft.AspNetCore.HttpOverrides.ForwardedHeaders.XForwardedFor | Microsoft.AspNetCore.HttpOverrides.ForwardedHeaders.XForwardedProto
+            });
             app.UseAuthentication();
             app.UseAuthorization();
 

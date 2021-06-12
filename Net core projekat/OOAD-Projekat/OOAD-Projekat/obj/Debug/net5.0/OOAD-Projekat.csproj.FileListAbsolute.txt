@@ -903,3 +903,6 @@ C:\Users\BCI SISTEMI\OneDrive\Documents\GitHub\Grupa8-A3\Net core projekat\OOAD-
 C:\Users\admir\Documents\GitHub\Grupa8-A3\Net core projekat\OOAD-Projekat\OOAD-Projekat\obj\Debug\net5.0\Razor\Views\Admin\UserList.cshtml.g.cs
 C:\Users\admir\Documents\GitHub\Grupa8-A3\Net core projekat\OOAD-Projekat\OOAD-Projekat\obj\Debug\net5.0\Razor\Views\Notifications\Index.cshtml.g.cs
 C:\Users\admir\Documents\GitHub\Grupa8-A3\Net core projekat\OOAD-Projekat\OOAD-Projekat\obj\Debug\net5.0\Razor\Views\Question\Edit.cshtml.g.cs
+C:\Users\admir\Documents\GitHub\Grupa8-A3\Net core projekat\OOAD-Projekat\OOAD-Projekat\bin\Debug\net5.0\MailKit.dll
+C:\Users\admir\Documents\GitHub\Grupa8-A3\Net core projekat\OOAD-Projekat\OOAD-Projekat\bin\Debug\net5.0\MimeKit.dll
+C:\Users\admir\Documents\GitHub\Grupa8-A3\Net core projekat\OOAD-Projekat\OOAD-Projekat\bin\Debug\net5.0\BouncyCastle.Crypto.dll
