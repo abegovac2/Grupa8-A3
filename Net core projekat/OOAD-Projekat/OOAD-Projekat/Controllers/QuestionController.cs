@@ -168,9 +168,8 @@ namespace OOAD_Projekat.Controllers
                     }
                     return RedirectToAction("Details", new { question.Id });
                 }
-            }
-
-            q.PopularTags = await tagsRepository.GetPopular();
+                q.PopularTags = await tagsRepository.GetPopular();
+            }         
             return View(q);
         }
         [HttpGet]
@@ -235,6 +234,7 @@ namespace OOAD_Projekat.Controllers
 
                 return RedirectToAction("Details", new { question.Id });
             }
+            q.PopularTags = await tagsRepository.GetPopular();
             return View(q);
         }
         // Metoda koja se poziva kada se udje u detalj pitanja, kako bi sistem za preporuke ispravno radio
