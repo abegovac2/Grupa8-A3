@@ -7842,23 +7842,24 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\BCI SISTEMI\\.nuget\\packages\\": {},
-    "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
+    "C:\\Users\\admir\\.nuget\\packages\\": {},
+    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\BCI SISTEMI\\OneDrive\\Documents\\GitHub\\Grupa8-A3\\Net core projekat\\OOAD-Projekat\\OOAD-Projekat\\OOAD-Projekat.csproj",
+      "projectUniqueName": "C:\\Users\\admir\\Documents\\GitHub\\Grupa8-A3\\Net core projekat\\OOAD-Projekat\\OOAD-Projekat\\OOAD-Projekat.csproj",
       "projectName": "OOAD-Projekat",
-      "projectPath": "C:\\Users\\BCI SISTEMI\\OneDrive\\Documents\\GitHub\\Grupa8-A3\\Net core projekat\\OOAD-Projekat\\OOAD-Projekat\\OOAD-Projekat.csproj",
-      "packagesPath": "C:\\Users\\BCI SISTEMI\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\BCI SISTEMI\\OneDrive\\Documents\\GitHub\\Grupa8-A3\\Net core projekat\\OOAD-Projekat\\OOAD-Projekat\\obj\\",
+      "projectPath": "C:\\Users\\admir\\Documents\\GitHub\\Grupa8-A3\\Net core projekat\\OOAD-Projekat\\OOAD-Projekat\\OOAD-Projekat.csproj",
+      "packagesPath": "C:\\Users\\admir\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\admir\\Documents\\GitHub\\Grupa8-A3\\Net core projekat\\OOAD-Projekat\\OOAD-Projekat\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
-        "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
       ],
       "configFilePaths": [
-        "C:\\Users\\BCI SISTEMI\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\admir\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -7937,7 +7938,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.200\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.201\\RuntimeIdentifierGraph.json"
       }
     }
   }

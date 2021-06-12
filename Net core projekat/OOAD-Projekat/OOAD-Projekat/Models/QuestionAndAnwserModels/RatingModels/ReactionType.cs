@@ -2,6 +2,6 @@
 {
     public enum ReactionType
     {
-        LIKE, DISLIKE
+        LIKE = 0, DISLIKE = 1
     }
 }

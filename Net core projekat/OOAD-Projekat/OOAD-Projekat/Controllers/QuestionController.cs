@@ -190,9 +190,10 @@ namespace OOAD_Projekat.Controllers
 
                 await notificationRepository.MarkAsSeen(user.Id, (int)id, NotificationType.QUESTION);
             }
-            
 
-            return View(question);
+            var detailsViewModel = new DetailsViewModel();
+            detailsViewModel.Question = question;
+            return View(detailsViewModel);
         }
 
 
@@ -243,14 +244,15 @@ namespace OOAD_Projekat.Controllers
             await questionsRepository.SaveOpening(User.Identity.Name.ToString(), question);
         }
 
-        [HttpPost]
-        public async Task<IActionResult> AddReaction([FromForm(Name = "questionId")] string quesitonId, [FromForm(Name = "postId")] string postId, [FromForm(Name = "postType")] PostType postType, [FromForm(Name = "reactionType")] ReactionType reactionType)
+        [Authorize]
+        public async Task<IActionResult> AddReaction(string questionID, string postId, int postType, int reactionType)
         {
+            if (!((postType == 0 || postType == 1) && (reactionType == 0 || reactionType == 1))) return BadRequest();
             var user = await questionsRepository.getUserByUserName(User.Identity.Name);
 
-            await reactionRepository.AddReactionFromPost(user.Id, int.Parse(postId), postType, reactionType);
+            await reactionRepository.AddReactionFromPost(user.Id, int.Parse(postId), (PostType) postType, (ReactionType) reactionType);
 
-            return RedirectToAction("Details", new { id = int.Parse(quesitonId) });
+            return RedirectToAction("Details", new { id = int.Parse(questionID) });
         }
 
 

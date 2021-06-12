@@ -1,38 +1,46 @@
 ﻿@*
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
-@model Question
+@model DetailsViewModel
 @{
     ViewData["Title"] = "Details";
 }
+<!-- LIKE 0, DISLIKE 1-->
+<!-- QUESTION 0, ANSWER 1-->
+
+
 <script src="~/js/axios.min.js"></script>
 <link href="~/css/questionDetails.css" rel="stylesheet" type="text/css" />
 <div class="questions-details-page-content">
     <!--For notifications-->
-    <input type="hidden" id="userId" value="@Model.User.Id" />
+    <input type="hidden" id="userId" value="@Model.Question.User.Id" />
     <input type="hidden" id="signalRConnectionId" />
     <!--For notifications-->
     <div class="my-question">
         <div class="my-question-rating">
-            <a class="my-rating-buttons my-rating-button-up">
+
+            <!-- Znacenje parametara Slanje reakcije na question 0 i like 0-->
+            <a class="my-rating-buttons my-rating-button-up" asp-action="AddReaction" asp-controller="Question" asp-route-questionID="@Model.Question.Id" asp-route-postId="@Model.Question.Id" asp-route-postType="0" asp-route-reactionType="0">
                 <img src="~/images/plus.svg" />
             </a>
             @{
-                var item = Model.ratingCalculate.CalculateRating();
-                <span class="my-rating-total my-positive">@(item.Item1 - item.Item2)</span>
+                var item = Model.Question.ratingCalculate.CalculateRating();
+                var questionRating = item.Item1 - item.Item2;
+                var questionRatingClassName = questionRating >= 0 ? "my-positive" : "my-negative";
+                <span class="my-rating-total @questionRatingClassName">@questionRating</span>
             }
-            <!--ovdje dodat on click da ima rejtinga kakvog onclick="sendReaciton("@Model.Id",@PostType.QUESTION,@ReactionType.DISLIKE)"-->
-            <a class="my-rating-buttons my-rating-button-down">
+            <!-- Znacenje parametara Slanje reakcije na question 0 i dislike 1-->
+            <a class="my-rating-buttons my-rating-button-down" asp-action="AddReaction" asp-controller="Question" asp-route-questionID="@Model.Question.Id" asp-route-postId="@Model.Question.Id" asp-route-postType="0" asp-route-reactionType="1">
                 <img src="~/images/minus.svg" width="15" height="15" />
             </a>
         </div>
         <div class="my-question-info">
-            <span class="my-question-title">@Model.Title</span>
+            <span class="my-question-title">@Model.Question.Title</span>
             <div class="my-question-content">
-                @Model.Content
+                @Model.Question.Content
             </div>
             <div class="my-question-tags">
-                @foreach (var tag in Model.Tags)
+                @foreach (var tag in Model.Question.Tags)
                 {
                     <a class="my-tag" asp-action="ByTag" asp-controller="Question" asp-route-tagName="@tag.Tag.TagContent">
                         @tag.Tag.TagContent
@@ -42,16 +50,16 @@
         </div>
     </div>
     <div class="my-answers">
-        <div class="my-answer-number">@Model.Answers.Count() Anwsers</div>
-        @foreach (var anwser in Model.Answers)
+        <div class="my-answer-number">@Model.Question.Answers.Count() Anwsers</div>
+        @foreach (var anwser in Model.Question.Answers)
         {
             <div class="my-answer">
                 <div class="my-answer-rating">
-                    <a class="my-rating-buttons my-rating-button-up">
+                    <a class="my-rating-buttons my-rating-button-up" asp-action="AddReaction" asp-controller="Question" asp-route-questionID="@Model.Question.Id" asp-route-postId="@anwser.Id" asp-route-postType="1" asp-route-reactionType="0">
                         <img src="~/images/plus.svg" />
                     </a>
                     <span class="my-rating-total my-negative">@anwser.ratingCalculate.CalculateRating().Item3</span>
-                    <a class="my-rating-buttons my-rating-button-down">
+                    <a class="my-rating-buttons my-rating-button-down" asp-action="AddReaction" asp-controller="Question" asp-route-questionID="@Model.Question.Id" asp-route-postId="@anwser.Id" asp-route-postType="1" asp-route-reactionType="1">
                         <img src="~/images/minus.svg" width="15" height="15" />
                     </a>
                 </div>
@@ -71,7 +79,8 @@
         </form>
     </div>
 </div>
-
+<script src="~/js/signalr/dist/browser/signalr.js"></script>
+<script src="~/js/notifications.js"></script>
 <script>
     document.addEventListener("DOMContentLoaded", function () {
 
@@ -81,7 +90,7 @@
 
             const formData = new FormData();
             formData.append("content", content);
-            formData.append("questionID", @Model.Id);
+            formData.append("questionID", @Model.Question.Id);
 
             axios({
                 method: "post",
@@ -102,22 +111,4 @@
         $(".submit-answer-button").click(submitForm);
     });
 
-    var sendReaciton = function (postId, postType, reactionType) {
-        $.post({
-            url: '@Url.Action("AddReaction", "Question")',
-            data: {
-                questionId: @Model.Id,
-                postId: postId,
-                postType: postType,
-                reactionType: reactionType
-            },
-            success: null,
-            error: null
-        })
-        sendMessageSR()
-    }
-
 </script>
-
-<script src="~/js/signalr/dist/browser/signalr.js"></script>
-<script src="~/js/notifications.js"></script>

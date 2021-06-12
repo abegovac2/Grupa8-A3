@@ -97,6 +97,5 @@ namespace OOAD_Projekat.Data.ReactionData
             await _context.SaveChangesAsync();
 
         }
-
     }
 }
