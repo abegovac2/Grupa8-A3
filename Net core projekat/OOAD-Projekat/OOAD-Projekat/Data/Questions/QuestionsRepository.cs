@@ -26,7 +26,9 @@ namespace OOAD_Projekat.Data.Questions
         }
         public async Task<List<Question>> FindAll()
         {
-            return await applicationDbContext.Questions.ToListAsync();
+            var data =  await applicationDbContext.Questions.ToListAsync();
+            data.ForEach(async x => await setupQuestionReactions(x));
+            return data;
         }
         [Authorize]
         public async Task<List<Question>> FindMine(String UserName)

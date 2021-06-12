@@ -13,7 +13,7 @@ namespace OOAD_Projekat.Models
 
             reactions.ForEach(x => numOfLikes += (x.ReactionType == ReactionType.LIKE ? 1 : 0));
 
-            double res = (numOfLikes / (reactions.Count == 0 ? 1 : reactions.Count))*5;
+            double res = ((int)((numOfLikes / (double)(reactions.Count == 0 ? 1 : reactions.Count))*50))/10.0;
 
             return new Tuple<int, int, double>(-1, -1, res);
         }

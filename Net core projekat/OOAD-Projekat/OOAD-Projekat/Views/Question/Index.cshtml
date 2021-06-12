@@ -34,10 +34,11 @@
     <div class="my-questions">
         @foreach (var question in Model)
         {
+            var rating = question.ratingCalculate.CalculateRating();
             <div class="question-card" onclick="location.replace('@Url.Action("Details","Question", new { id = question.Id })')">
                 <div class="question-rating">
-                    <span class="upvotes">0</span>
-                    <span class="downvotes">0</span>
+                    <span class="upvotes">@rating.Item1</span>
+                    <span class="downvotes">@rating.Item2</span>
                 </div>
                 <div class="question-content">
                     <span class="question-title">@question.Title</span>
