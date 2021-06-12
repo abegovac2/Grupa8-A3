@@ -1,0 +1,45 @@
+﻿.notifications-page-content {
+    width: 100%;
+    height: 100%;
+    margin: auto;
+    padding-top: 20px;
+}
+.notifications-wrapper {
+    border: 1px solid #e8eaed;
+    border-radius: 10px;
+}
+.my-notification-stripe {
+    background-color: #05728F;
+    padding: 20px;
+    color: #fff;
+    font-size: 1.3rem;
+    font-weight: bold;
+    border-radius: 10px;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+.my-notification-single {
+    display: flex;
+    padding: 20px;
+    justify-content: space-between;
+    text-decoration: none;
+    color: #000;
+    border-bottom: 1px solid #e8eaed;
+}
+.my-notification-single:hover{
+    text-decoration: none;
+}
+.my-notification-single:last-child{
+    border-bottom: none;
+}
+.my-notification-single p{
+    margin-left: 10px;
+    margin-right: 5px;
+    text-align: justify;
+}
+@media screen and (max-width: 991px) {
+    .notifications-page-content{
+        padding: 20px;
+    }
+}

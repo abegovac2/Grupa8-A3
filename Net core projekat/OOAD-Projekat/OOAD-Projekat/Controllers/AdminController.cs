@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using OOAD_Projekat.Data;
@@ -10,6 +11,8 @@ using System.Threading.Tasks;
 
 namespace OOAD_Projekat.Controllers
 {
+    [Authorize(Roles = "admin")]
+
     public class AdminController : Controller
     {
         private readonly ApplicationDbContext _context;
