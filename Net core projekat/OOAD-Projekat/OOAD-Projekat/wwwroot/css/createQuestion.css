@@ -50,13 +50,13 @@
     margin-top: 1rem;
 }
 
-    .buttons button {
+    .buttons a {
         margin-left: auto;
     }
 
 .tagovi a:hover {
     background-color: black;
-    color: white;
+    color: #fff;
 }
 
 body > div.wrapper > div.content > div > div > div > form > div.tagovi > a {
