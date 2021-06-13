@@ -24,7 +24,7 @@ function questionNotification( postsId, notificationId, message) {
     var notificationList = document.getElementById("notificationList");
     if (notificationList == null) return;
 
-    var html = '<a class="my-notification-single" href=/Question/Details/"' + postsId + '">';
+    var html = '<a class="my-notification-single" href=/Question/Details/' + parseInt(postsId) + '>';
     html += '<img width="50" height="50" src="/images/question-mark.svg" />';
     html += '<p>' + message.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;") + '</p>';
     html += '<img width = "30" height = "30" src = "/images/notification.svg" />';
