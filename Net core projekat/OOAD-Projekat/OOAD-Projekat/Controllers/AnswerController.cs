@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
 using OOAD_Projekat.Controllers.Hubs;
 using OOAD_Projekat.Data;
@@ -7,8 +6,6 @@ using OOAD_Projekat.Data.Answers;
 using OOAD_Projekat.Data.NotificationData;
 using OOAD_Projekat.Data.Users;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace OOAD_Projekat.Controllers
@@ -36,14 +33,15 @@ namespace OOAD_Projekat.Controllers
 
 
         [HttpPost("AddAnswer")]
-        public async Task<IActionResult> AddAnswer([FromForm(Name = "questionID")] int questionID, [FromForm(Name = "content")] string content, [FromServices] IHubContext<NotificationUserHub> notifyUser) {
+        public async Task<IActionResult> AddAnswer([FromForm(Name = "questionID")] int questionID, [FromForm(Name = "content")] string content, [FromServices] IHubContext<NotificationUserHub> notifyUser)
+        {
             try
             {
                 var user = await usersRepository.GetUserByUserName(User.Identity.Name);
                 if (user == null) throw new Exception();
                 await answersRepository.AddAnswer(questionID, content, user.Id);
 
-                if(content.Length > 20)
+                if (content.Length > 20)
                 {
                     content = content.Substring(0, 17);
                     content += "...";

@@ -19,7 +19,8 @@ namespace OOAD_Projekat.Utils
             msg.From.Add(new MailboxAddress("Dont Reply", mailInfo.Value.mail));
             msg.To.Add(new MailboxAddress(name, email));
             msg.Subject = "Login information - Dont reply";
-            msg.Body = new TextPart("plain") {
+            msg.Body = new TextPart("plain")
+            {
                 Text = message
             };
             smtpClient.Connect("smtp.gmail.com", 587, MailKit.Security.SecureSocketOptions.StartTls);

@@ -1,11 +1,8 @@
-﻿using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
 using OOAD_Projekat.Controllers.Hubs;
 using OOAD_Projekat.Models;
-using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -64,21 +61,23 @@ namespace OOAD_Projekat.Data.NotificationData
             var notifications = await _context.Notifications.Where(x => x.UserId == UserId && x.PostId == PostId && x.NotificationType == notificationType).ToListAsync();
 
             notifications.ForEach(
-                x =>{
+                x =>
+                {
                     x.Seen = true;
                     _context.Notifications.Update(x);
                 });
-            
+
             await _context.SaveChangesAsync();
         }
 
-        public async Task SendNotification(string UserId,int PostId, NotificationType notificationType, string Message, [FromServices] IHubContext<NotificationUserHub> notifyUser)
+        public async Task SendNotification(string UserId, int PostId, NotificationType notificationType, string Message, [FromServices] IHubContext<NotificationUserHub> notifyUser)
         {
 
             var usersToNotify = await _context.NotifyUsers.Where(x => x.UserId != UserId && x.PostId == PostId && x.NotificationType == notificationType).ToListAsync();
 
             usersToNotify.ForEach(
-                x => {
+                x =>
+                {
                     var notif = new Notification
                     {
                         UserId = x.UserId,

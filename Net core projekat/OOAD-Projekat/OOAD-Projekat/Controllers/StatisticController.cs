@@ -1,12 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using OOAD_Projekat.Data;
 using OOAD_Projekat.Data.Statistics;
 using OOAD_Projekat.Models.Statistics;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 // TODO View za statistiku :)

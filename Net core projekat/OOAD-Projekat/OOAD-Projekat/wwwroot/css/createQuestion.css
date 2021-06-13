@@ -54,10 +54,6 @@
         margin-left: auto;
     }
 
-.tagovi a:hover {
-    background-color: black;
-    color: #fff;
-}
 
 body > div.wrapper > div.content > div > div > div > form > div.tagovi > a {
     padding: 0.1em 0.5em;
@@ -79,4 +75,18 @@ body > div.wrapper > div.content > div > div > div > form > div.tagovi > a {
 
 .class-1 button {
     margin-left: auto;
+}
+
+.my-tag-create{
+    background-color: #fff;
+    color: #000;
+}
+.my-tag-create:hover{
+    background-color: #000;
+    color: #fff !important;
+}
+
+.my-tag-selected {
+    background-color: #000;
+    color: #fff !important;
 }

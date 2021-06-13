@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace OOAD_Projekat.Models.QuestionAndAnwserModels
+﻿namespace OOAD_Projekat.Models.QuestionAndAnwserModels
 {
     public class ViewedQuestionsHistory
     {

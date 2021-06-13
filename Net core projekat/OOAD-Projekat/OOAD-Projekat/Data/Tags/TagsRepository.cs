@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using OOAD_Projekat.Models;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -19,7 +18,7 @@ namespace OOAD_Projekat.Data.Tags
         public async Task AddTags(Tag t)
         {
             var postojiLiTag = await applicationDbContext.Tags.FirstOrDefaultAsync(_t => _t.TagContent.ToUpper() == t.TagContent.ToUpper());
-            if(postojiLiTag != null)
+            if (postojiLiTag != null)
             {
                 postojiLiTag.NumOfUses++;
                 await applicationDbContext.SaveChangesAsync();
@@ -30,13 +29,13 @@ namespace OOAD_Projekat.Data.Tags
                 await applicationDbContext.SaveChangesAsync();
             }
         }
-        
+
 
         [HttpGet]
         public async Task<List<Tag>> GetTags(string searchParam)
         {
             // Defaultni search, kad se tek otvori stranica
-            if(searchParam == "")
+            if (searchParam == "")
             {
                 return await applicationDbContext.Tags.ToListAsync();
             }
@@ -57,11 +56,13 @@ namespace OOAD_Projekat.Data.Tags
             if (postojiLiTag != null)
             {
                 postojiLiTag.NumOfUses--;
-                if(postojiLiTag.NumOfUses == 0)
-                        applicationDbContext.Tags.Remove(t);
+                if (postojiLiTag.NumOfUses == 0)
+                    applicationDbContext.Tags.Remove(postojiLiTag);
 
                 await applicationDbContext.SaveChangesAsync();
             }
         }
+
+
     }
 }

@@ -35,32 +35,37 @@
         @foreach (var question in Model)
         {
             var rating = question.ratingCalculate.CalculateRating();
-            <div class="question-card" onclick="location.replace('@Url.Action("Details","Question", new { id = question.Id })')">
-                <div class="question-rating">
-                    <span class="upvotes">@rating.Item1</span>
-                    <span class="downvotes">@rating.Item2</span>
-                </div>
-                <div class="question-content">
-                    <span class="question-title">@question.Title</span>
-                    <span class="question-text">
-                        @question.Content
-                    </span>
-                </div>
-                <div class="question-options">
-                    <div class="my-dropdown">
-                        <i class="fa fa-cog my-button no-border"
-                           aria-hidden="true"></i>
-                        <div class="my-dropdown-content">
-                            <a asp-controller="Question" asp-action="Edit" asp-route-id="@question.Id">Edit</a>
-                            <a asp-controller="Question" asp-action="Edit" asp-route-id="@question.Id">Delete</a>
-                        </div>
-                    </div>
-                    <a href="#">
-                        <i class="fa fa-user my-button no-border"
-                           aria-hidden="true"></i>
-                    </a>
-                </div>
+        <div class="question-card" onclick="location.replace('@Url.Action("Details","Question", new { id = question.Id })')">
+            <div class="question-rating">
+                <span class="upvotes">@rating.Item1</span>
+                <span class="downvotes">@rating.Item2</span>
             </div>
+            <div class="question-content">
+                <span class="question-title">@question.Title</span>
+                <span class="question-text">
+                    @question.Content
+                </span>
+            </div>
+            @{
+                if (User.Identity.Name == question.User.UserName || User.IsInRole("admin"))
+                {
+                    <div class="question-options">
+                        <div class="my-dropdown">
+                            <i class="fa fa-cog my-button no-border"
+                               aria-hidden="true"></i>
+                            <div class="my-dropdown-content">
+                                <a asp-controller="Question" asp-action="Edit" asp-route-id="@question.Id">Edit</a>
+                                <a asp-controller="Question" asp-action="Edit" asp-route-id="@question.Id">Delete</a>
+                            </div>
+                        </div>
+                        <a href="#">
+                            <i class="fa fa-user my-button no-border"
+                               aria-hidden="true"></i>
+                        </a>
+                    </div>
+                }
+            }
+        </div>
         }
     </div>
 </div>

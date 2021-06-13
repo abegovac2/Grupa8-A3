@@ -1,7 +1,6 @@
 ﻿using OOAD_Projekat.Models.ChatModels;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace OOAD_Projekat.Models
 {
@@ -10,7 +9,7 @@ namespace OOAD_Projekat.Models
         [Key]
         public int Id { get; set; }
         public string ChatName { get; set; }
-        public ChatType ChatType{ get; set; }
+        public ChatType ChatType { get; set; }
         public List<ChatUser> Users { get; set; }
         public List<Message> Messages { get; set; }
 

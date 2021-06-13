@@ -1,13 +1,11 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using OOAD_Projekat.Models;
-using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace OOAD_Projekat.Data.Users
 {
-    public class UsersRepository: IUsersRepository
+    public class UsersRepository : IUsersRepository
     {
         private readonly ApplicationDbContext applicationDbContext;
         public UsersRepository(ApplicationDbContext applicationDbContext)

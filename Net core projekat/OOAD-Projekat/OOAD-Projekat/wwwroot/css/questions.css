@@ -42,6 +42,12 @@
 .question-card:hover{
     cursor: pointer;
 }
+.question-title{
+    font-size: 1.3rem;
+    align-self: center;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
 .question-rating {
   display: flex;
   flex-direction: column;
@@ -50,13 +56,15 @@
   padding: 5px;
 }
 .question-content {
-  display: flex;
-  flex-direction: column;
-  margin-right: 20px;
-  padding: 5px;
+    display: flex;
+    flex-direction: column;
+    margin-right: 20px;
+    padding: 5px;
+    width: 100%;
 }
 .question-text {
   text-align: justify;
+  align-self: center;
 }
 .question-options {
   display: flex;

@@ -26,12 +26,12 @@
                     <span asp-validation-for="Content" class="text-danger"></span>
                 </div>
                 <!--kreiranje taga-->
-                <div class="form-group unos_taga">
+                <div class="form-group unos_taga" onclick="g()">
                     <label>Create tag:</label>
                     <div class="class-1">
 
                         <input type="text" name="tags"
-                               data-role="taginput" value=" ">
+                               data-role="taginput" value="" id="my-tag-input">
 
                     </div>
 
@@ -41,7 +41,7 @@
 
                 @for(int i = 0, brojac = 0; i < Model.PopularTags.Count && brojac < 10; ++i, ++brojac)
                 {
-                    <a href="#">@Model.PopularTags[i].TagContent</a>
+                    <a href="#" id="tag-@Model.PopularTags[i].Id" onclick="f(@Model.PopularTags[i].Id)">@Model.PopularTags[i].TagContent</a>
                 }
 
                 </div>
@@ -64,6 +64,36 @@
         if ((evt.keyCode == 13) && (node.type == "text")) { return false; }
     }
     document.onkeypress = stopRKey;
+
+    let f = (id) => {
+        const element = document.getElementById(`tag-${id}`);
+        const myTagInput = document.getElementById('my-tag-input');
+        const newValue = myTagInput.value + "," + element.innerHTML;
+        if (element.classList.contains("my-tag-selected")) {
+            const oldValue = myTagInput.value.split(",").filter((el) => el !== element.innerHTML).join(",");
+            element.classList.remove("my-tag-selected");
+            myTagInput.setAttribute('value', oldValue);
+        }
+        else {
+            element.className += "my-tag-selected";
+            myTagInput.setAttribute('value', Array.from(new Set(newValue.split(","))).join(","));
+        }
+    }
+    let g = () => {
+        const myTagInput = document.getElementById('my-tag-input');
+        const newValueArray = myTagInput.value.split(",");
+        const listItems = document.getElementsByClassName("tagovi")[0].children;
+        const listArray = Array.from(listItems);
+        for (let i = 0; i < listArray.length; i++) {
+            const item = listArray[i];
+            const klaseItema = item.classList;
+            if (klaseItema.contains("my-tag-selected")) {
+                if (!newValueArray.contains(item.innerHTML)) {
+                    item.classList.remove("my-tag-selected");
+                }
+            }
+        }
+    }
 </script>
 <script src="https://cdn.metroui.org.ua/v4.3.2/js/metro.min.js"></script>
 

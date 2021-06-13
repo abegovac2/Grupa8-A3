@@ -20,20 +20,20 @@ namespace OOAD_Projekat.Data.Questions
         }
         public async Task<List<Question>> Find(String SearchParam)
         {
-            var data = await applicationDbContext.Questions.Where(q => q.Title.ToUpper().Contains(SearchParam)).ToListAsync();
+            var data = await applicationDbContext.Questions.Where(q => q.Title.ToUpper().Contains(SearchParam)).Include(q => q.User).ToListAsync();
             data.ForEach(async x => await setupQuestionReactions(x));
             return data;
         }
         public async Task<List<Question>> FindAll()
         {
-            var data =  await applicationDbContext.Questions.ToListAsync();
+            var data = await applicationDbContext.Questions.Include(q => q.User).ToListAsync();
             data.ForEach(async x => await setupQuestionReactions(x));
             return data;
         }
         [Authorize]
         public async Task<List<Question>> FindMine(String UserName)
         {
-            var data = await applicationDbContext.Questions.Where(q => q.User.Email == UserName).ToListAsync();
+            var data = await applicationDbContext.Questions.Where(q => q.User.Email == UserName).Include(q => q.User).ToListAsync();
             data.ForEach(async x => await setupQuestionReactions(x));
             return data;
         }
@@ -47,13 +47,13 @@ namespace OOAD_Projekat.Data.Questions
         {
             var result = await applicationDbContext.Questions
                 .Join(applicationDbContext.TagPosts, q => q.Id, tp => tp.QuestionId, (q, tp) => new { question = q, tag = tp })
-                .Where(qtp => qtp.tag.Tag.TagContent.ToUpper().Contains(tagName)).Select(q => q.question).ToListAsync();
+                .Where(qtp => qtp.tag.Tag.TagContent.ToUpper().Contains(tagName)).Select(q => q.question).Include(q => q.User).ToListAsync();
 
             result.ForEach(async x => await setupQuestionReactions(x));
 
             return result;
         }
-        
+
 
         public async Task SaveOpening(string UserName, Question question)
         {
@@ -93,9 +93,9 @@ namespace OOAD_Projekat.Data.Questions
         public async Task<Question> getLastQuestion()
         {
             var maxId = applicationDbContext.Questions.Max(q => q.Id);
-            var res = await applicationDbContext.Questions.FirstOrDefaultAsync(q => q.Id == maxId);
+            var res = await applicationDbContext.Questions.Include(q => q.User).FirstOrDefaultAsync(q => q.Id == maxId);
             res.ratingCalculate = new QuestionRating();
-            var react = reactionRepository.GetReactionsForPost( maxId, PostType.QUESTION);
+            var react = reactionRepository.GetReactionsForPost(maxId, PostType.QUESTION);
             res.ratingCalculate.SetReactions(react);
             return res;
         }
@@ -113,9 +113,9 @@ namespace OOAD_Projekat.Data.Questions
 
             question.Answers.ForEach(x =>
             {
-               x.ratingCalculate = new AnwserRating();
-               var ratring1 = reactionRepository.GetReactionsForPost(x.Id, PostType.ANWSER);
-               x.ratingCalculate.SetReactions(ratring1);
+                x.ratingCalculate = new AnwserRating();
+                var ratring1 = reactionRepository.GetReactionsForPost(x.Id, PostType.ANWSER);
+                x.ratingCalculate.SetReactions(ratring1);
             });
         }
 
@@ -131,14 +131,14 @@ namespace OOAD_Projekat.Data.Questions
             if (result == null) return result;
 
             await setupQuestionAndAnwserReactions(result);
-            
+
             return result;
 
         }
 
         public async Task<List<Question>> FindUnanwseredQuestions()
         {
-            var result = await applicationDbContext.Questions.Where(qqq => qqq.Anwsered == false).ToListAsync();
+            var result = await applicationDbContext.Questions.Where(qqq => qqq.Anwsered == false).Include(q => q.User).ToListAsync();
 
             result.ForEach(async x => await setupQuestionReactions(x));
 
@@ -153,11 +153,12 @@ namespace OOAD_Projekat.Data.Questions
 
         public async Task<List<Question>> getPopularQestions()
         {
-            var questions = await applicationDbContext.Questions.ToListAsync();
+            var questions = await applicationDbContext.Questions.Include(q => q.User).ToListAsync();
 
             questions.ForEach(async x => await setupQuestionReactions(x));
 
-            questions.Sort((x, y) => {
+            questions.Sort((x, y) =>
+            {
                 var xVel = x.ratingCalculate.CalculateRating();
                 var yVel = y.ratingCalculate.CalculateRating();
                 if (xVel.Item1 == yVel.Item1) return xVel.Item2 - yVel.Item2;

@@ -1,8 +1,5 @@
 ﻿using OOAD_Projekat.Models;
-using OOAD_Projekat.Models.QuestionAndAnwserModels.RatingModels;
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace OOAD_Projekat.Data.ReactionData

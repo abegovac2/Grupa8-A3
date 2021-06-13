@@ -52,16 +52,16 @@ namespace OOAD_Projekat.Data.Questions
         {
             // U sustini dictionary <Tag, double>
             var dict = new Dictionary<string, double>();
-            foreach(var question in questions)
+            foreach (var question in questions)
             {
 
-                foreach(var tag in question.Tags)
+                foreach (var tag in question.Tags)
                 {
                     var tagContent = tag.Tag.TagContent;
                     // Prvo pojavljivanje taga, postavi defaultnu ocjenu na 1
                     if (!dict.ContainsKey(tag.Tag.TagContent))
                     {
-                        dict[tagContent] = 1.0; 
+                        dict[tagContent] = 1.0;
                     }
                     // Uvecaj ocjenu za 1
                     else
@@ -97,15 +97,15 @@ namespace OOAD_Projekat.Data.Questions
         private Dictionary<Question, double> DetermineQuestionScores(Dictionary<string, double> tagScore, ICollection<Question> notOpenedQuestions)
         {
             Dictionary<Question, double> questionScores = new Dictionary<Question, double>();
-            foreach(var question in notOpenedQuestions)
+            foreach (var question in notOpenedQuestions)
             {
                 double score = 0.0;
-                if(question.Tags == null)
+                if (question.Tags == null)
                 {
                     questionScores[question] = 0.0;
                     continue;
                 }
-                foreach(var tag in question.Tags)
+                foreach (var tag in question.Tags)
                 {
                     var tagContent = tag.Tag.TagContent;
                     if (tagScore.ContainsKey(tagContent))

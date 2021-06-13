@@ -1,18 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.SignalR;
-using Microsoft.EntityFrameworkCore;
 using OOAD_Projekat.Controllers.Hubs;
 using OOAD_Projekat.Data;
 using OOAD_Projekat.Data.ChatData;
 using OOAD_Projekat.Data.NotificationData;
 using OOAD_Projekat.Models;
 using OOAD_Projekat.Models.ChatModels;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace OOAD_Projekat
 {
@@ -39,7 +37,7 @@ namespace OOAD_Projekat
             var notifications = new List<bool>();
             lista.ForEach(x => notifications.Add(_notificationRepository.HasNotifications(user.Id, x.Id, NotificationType.CHAT)));
 
-            return View(new Tuple<string, List<Chat>, List<bool>>(user.Id,lista,notifications));
+            return View(new Tuple<string, List<Chat>, List<bool>>(user.Id, lista, notifications));
         }
 
         // GET 
@@ -65,11 +63,11 @@ namespace OOAD_Projekat
             var current = await _chatRepository.GetUserByName(User.Identity.Name);
             var userRole = chat.Users.Find(x => x.UserId == current.Id);
 
-            await _notificationRepository.MarkAsSeen(current.Id, (int)id ,NotificationType.CHAT);
+            await _notificationRepository.MarkAsSeen(current.Id, (int)id, NotificationType.CHAT);
 
             if (userRole == null) return NotFound();
 
-            return View(new Tuple<string,Chat, UserRole>(current.Id, chat, userRole.Role));
+            return View(new Tuple<string, Chat, UserRole>(current.Id, chat, userRole.Role));
         }
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -150,7 +148,7 @@ namespace OOAD_Projekat
             if (chatName.Length == 0)
             {
                 chatName = User.Identity.Name + ",";
-                for(int i = 0; i < users.Length; ++i)
+                for (int i = 0; i < users.Length; ++i)
                 {
                     if (users[i].Length != 0) chatName += users[i];
                     else continue;
@@ -172,7 +170,7 @@ namespace OOAD_Projekat
                 Role = UserRole.ADMIN
             });
 
-            var listOfUserIds = new List<string>() { creator};
+            var listOfUserIds = new List<string>() { creator };
 
             foreach (var userInChat in users)
             {
@@ -193,11 +191,11 @@ namespace OOAD_Projekat
 
             await _chatRepository.CreateNewChat(chat);
 
-            foreach(var user in listOfUserIds)
+            foreach (var user in listOfUserIds)
             {
                 await _notificationRepository.AddUserToNotificationList(user, chat.Id, NotificationType.CHAT);
             }
-            
+
 
             return RedirectToAction("Details", new { id = chat.Id, });
         }
@@ -215,7 +213,7 @@ namespace OOAD_Projekat
 
             var numOfUsersInChat = _chatRepository.NumberOfUsersInAChat(ChatId);
             if (numOfUsersInChat <= 1) return await DeleteChat(ChatId);
-            
+
             return RedirectToAction("Details", new { id = ChatId, });
         }
 
@@ -238,8 +236,8 @@ namespace OOAD_Projekat
 
             var user = await _chatRepository.GetUserByName(name);
 
-            await _notificationRepository.SendNotification( user.Id, int.Parse(chatId), NotificationType.CHAT, text, notifyUser);
-            
+            await _notificationRepository.SendNotification(user.Id, int.Parse(chatId), NotificationType.CHAT, text, notifyUser);
+
             return RedirectToAction("Details", new { id = int.Parse(chatId) });
         }
     }

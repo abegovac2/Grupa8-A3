@@ -1,7 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-using OOAD_Projekat.Models;
-using OOAD_Projekat.Models.QuestionAndAnwserModels.RatingModels;
-using System;
+﻿using OOAD_Projekat.Models;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -48,7 +45,8 @@ namespace OOAD_Projekat.Data.ReactionData
                     ReactionType = reactionType
                 };
 
-                _context.Reactions.Add(reaction);            }
+                _context.Reactions.Add(reaction);
+            }
             else
             {
                 if (reaction.ReactionType == reactionType) return;

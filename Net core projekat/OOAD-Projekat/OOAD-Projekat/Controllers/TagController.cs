@@ -1,9 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using OOAD_Projekat.Data.Tags;
 using OOAD_Projekat.Models;
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace OOAD_Projekat.Controllers
