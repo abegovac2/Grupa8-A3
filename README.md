@@ -83,3 +83,6 @@ Nefunkcionalni zahtjevi su osobine sistema koje sistem nudi kao platforma svim k
 * Sistem će prilikom izbora taga, vršiti preporuku taga u roku od 1 s
 * Prilikom pretrage pitanja, bilo po tagovima ili po tekstu, sistem će prikazivati pitanja paginacijom , ovaj proces u zavisnosti od broja parametara može trajati maximalno do 10 s
 * Web aplikacija će se moći koristiti i na drugim uređajima koji ne spadaju u grupu personalnih računara, npr. tableti, mobiteli itd.
+
+Aplikacija je deployana na:
+https://bitstack.azurewebsites.net/
